@@ -5,14 +5,15 @@ import kernel.structural.SensorsLot;
 
 import java.util.List;
 
-public class Modelling implements Law {
+public class Modelling extends AbstractLaw {
+
     @Override
-    public String getName() {
+    public List<Measurement> play(SensorsLot lot) {
         return null;
     }
 
     @Override
-    public List<Measurement> play(SensorsLot lot) {
+    public Law applyLaw(Law law) {
         return null;
     }
 }
