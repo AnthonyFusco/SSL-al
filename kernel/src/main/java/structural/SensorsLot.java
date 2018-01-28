@@ -1,7 +1,7 @@
-package kernel.structural;
+package structural;
 
 import kernel.NamedElement;
-import kernel.structural.laws.Law;
+import structural.laws.Law;
 
 import java.util.List;
 

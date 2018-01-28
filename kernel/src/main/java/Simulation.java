@@ -1,7 +1,7 @@
 package kernel;
 
-import kernel.structural.laws.Law;
-import kernel.structural.SensorsLot;
+import structural.laws.Law;
+import structural.SensorsLot;
 
 import java.util.List;
 

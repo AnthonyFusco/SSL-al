@@ -1,4 +1,4 @@
-package kernel.structural;
+package structural;
 
 import kernel.NamedElement;
 
