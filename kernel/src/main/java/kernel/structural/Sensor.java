@@ -1,4 +1,4 @@
-package structural;
+package kernel.structural;
 
 import kernel.NamedElement;
 
@@ -9,5 +9,10 @@ public class Sensor implements NamedElement {
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void setName(String name) {
+
     }
 }

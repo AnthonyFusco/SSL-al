@@ -1,7 +1,7 @@
-package structural.laws;
+package kernel.structural.laws;
 
 import kernel.Measurement;
-import structural.SensorsLot;
+import kernel.structural.SensorsLot;
 
 import java.util.List;
 
@@ -15,5 +15,10 @@ public class Modelling extends AbstractLaw {
     @Override
     public Law applyLaw(Law law) {
         return null;
+    }
+
+    @Override
+    public void setName(String name) {
+
     }
 }

@@ -1,4 +1,4 @@
-package behavioral;
+package kernel.behavioral;
 
 public enum DataSourceType {
     CSV, JSON

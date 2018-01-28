@@ -1,6 +1,6 @@
 package kernel;
 
-import structural.Sensor;
+import kernel.structural.Sensor;
 
 public class Measurement {
     private Sensor sensor;

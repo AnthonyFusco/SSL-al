@@ -1,4 +1,4 @@
-package structural.laws;
+package kernel.structural.laws;
 
 
 

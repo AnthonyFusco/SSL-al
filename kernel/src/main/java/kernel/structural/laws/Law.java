@@ -1,8 +1,8 @@
-package structural.laws;
+package kernel.structural.laws;
 
 import kernel.Measurement;
 import kernel.NamedElement;
-import structural.SensorsLot;
+import kernel.structural.SensorsLot;
 
 import java.util.List;
 
