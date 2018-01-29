@@ -60,5 +60,10 @@ class SslDSL {
 		script.setBinding(binding)
 		
 		script.run()
+
+	}
+
+	SslBinding getBinding() {
+		return binding
 	}
 }

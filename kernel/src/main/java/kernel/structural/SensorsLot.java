@@ -11,6 +11,8 @@ public class SensorsLot implements NamedElement {
     private int sensorsNumber;
     private String name;
 
+
+
     @Override
     public String getName() {
         return name;
@@ -23,5 +25,13 @@ public class SensorsLot implements NamedElement {
 
     public List<Sensor> getSensors() {
         return sensors;
+    }
+
+    public void setSensorsNumber(int sensorsNumber) {
+        this.sensorsNumber = sensorsNumber;
+    }
+
+    public void setLaw(Law law) {
+        this.law = law;
     }
 }

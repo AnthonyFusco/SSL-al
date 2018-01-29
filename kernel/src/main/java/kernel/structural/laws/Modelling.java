@@ -16,9 +16,4 @@ public class Modelling extends AbstractLaw {
     public Law applyLaw(Law law) {
         return null;
     }
-
-    @Override
-    public void setName(String name) {
-
-    }
 }
