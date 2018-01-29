@@ -2,14 +2,22 @@ package dsl
 
 abstract class SslBaseScript extends Script {
 
-    private SslBinding getSslBinding() {
-        return (SslBinding)getBinding()
-    }
+	def createLaw(String name) {
+        [asFct: { String strategy -> ((SslBinding)getBinding()).getModel().createLaw(name, strategy)}]
 
-	def sensorsLot(String name) {
-        println name
-        getSslBinding().getModel().createSensorsLot(name)
 	}
+
+
+
+    def createSensorsSet(String name) {
+        boolean error = true
+        [sensorsNumber: { int n ->
+            [withLaw : { String law ->
+                ((SslBinding)getBinding()).getModel().createSensorsLot(name, n, law)
+                error = false
+            }]
+        }]
+    }
 
 	int count = 0
 	abstract void scriptBody()

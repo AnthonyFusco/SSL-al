@@ -21,7 +21,15 @@ public class SslModel {
 		laws = new ArrayList<>();
 	}
 	
-	public void createSensorsLot(String name) {
+	public void createSensorsLot(String name, int sensorsNumber, String lawName) {
+		SensorsLot sensorsLot = new SensorsLot();
+		sensorsLot.setName(name);
+
+		this.sensorsLots.add(sensorsLot);
+		this.binding.setVariable(name, sensorsLot);
+	}
+
+	public void createLaw(String name, String strategy) {
 		SensorsLot sensorsLot = new SensorsLot();
 		sensorsLot.setName(name);
 
