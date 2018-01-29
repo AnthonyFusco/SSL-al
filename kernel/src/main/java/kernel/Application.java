@@ -34,4 +34,12 @@ public class Application implements NamedElement, Visitable {
     public void setDeclaredLaws(List<Law> declaredLaws) {
         this.laws = declaredLaws;
     }
+
+    public List<Law> getLaws() {
+        return laws;
+    }
+
+    public List<SensorsLot> getSensorsLots() {
+        return sensorsLots;
+    }
 }

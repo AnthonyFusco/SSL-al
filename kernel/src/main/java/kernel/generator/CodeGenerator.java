@@ -23,7 +23,8 @@ public class CodeGenerator extends Visitor<StringBuilder> {
 		w("// Wiring code generated from an ArduinoML model");
 		w(String.format("// Application name: %s\n", app.getName()));
 
-
+		app.getLaws().forEach(law -> w("law " + law.getName() + " declared"));
+		app.getSensorsLots().forEach(sensorsLot -> w("sensor " + sensorsLot.getName() + " declared"));
 	}
 
 }
