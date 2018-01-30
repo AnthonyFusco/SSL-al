@@ -8,6 +8,7 @@ import kernel.structural.laws.FileLaw
 import kernel.structural.laws.Law
 import kernel.structural.laws.LawType
 import kernel.structural.laws.MarkovChainLaw
+import kernel.structural.laws.MathFunctionLaw
 
 abstract class SslBaseScript extends Script {
 
@@ -55,6 +56,15 @@ abstract class SslBaseScript extends Script {
                     }]
                 }
                 [transitions: closure]
+            }]
+            [itReturns: { String en ->
+                def closure2
+                closure2 = { String func ->
+                    [like: { String funcx ->
+                        ((MathFunctionLaw) law).addFunctionExpression(funcx)
+                        [and: closure]
+                    }]
+                }
             }]
         }]
 
