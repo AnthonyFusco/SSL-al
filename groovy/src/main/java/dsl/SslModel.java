@@ -59,7 +59,6 @@ public class SslModel {
 	public void runSimulation(String name) {
 		if (Objects.isNull(name)) return;
         Application app = new Application();
-		app.setDeclaredLaws(laws);
 		app.setDeclaredSensorsLots(sensorsLots);
 
 		SslVisitor visitor = new SslVisitor();

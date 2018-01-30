@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Application implements NamedElement, Visitable {
     private List<SensorsLot> sensorsLots;
-    private List<Law> laws;
     private String name;
 
     @Override
@@ -24,14 +23,6 @@ public class Application implements NamedElement, Visitable {
 
     public void setDeclaredSensorsLots(List<SensorsLot> sensorsLots) {
         this.sensorsLots = sensorsLots;
-    }
-
-    public void setDeclaredLaws(List<Law> declaredLaws) {
-        this.laws = declaredLaws;
-    }
-
-    public List<Law> getLaws() {
-        return laws;
     }
 
     public List<SensorsLot> getSensorsLots() {
