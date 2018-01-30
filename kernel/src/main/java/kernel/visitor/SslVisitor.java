@@ -28,6 +28,9 @@ public class SslVisitor implements Visitor {
             List<String> measurements = new ArrayList<>();
             for (Sensor sensor : lot.getSensors()) {
                 Measurement measurement = sensor.generateNextMeasurement(t);
+                if (measurement == null) {
+                    continue; //todo handle the case ?
+                }
                 String data = lot.getName() + " value=" + measurement.getValue() + " " + measurement.getTimeStamp();
                 measurements.add(data);
                 try {
@@ -40,6 +43,7 @@ public class SslVisitor implements Visitor {
         }
     }
 
+    //todo not here
     private void postToDatabase(List<String> measurements) {
         try {
             URL url = new URL("http://localhost:8086/write?db=influxdb");

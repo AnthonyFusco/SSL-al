@@ -1,20 +1,27 @@
 package kernel.structural.laws;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import kernel.Measurement;
+
+import java.util.*;
 
 public class MarkovChainLaw implements Law {
     private String name;
     private List<String> states = new ArrayList<>();
     private String initialState;
+    private String currentState;
     private Map<String, MarkovTransition> transitions = new HashMap<>();
 
-
-
     @Override
-    public Object generateNextValue(int t) {
+    public Measurement generateNextMeasurement(int t) {
+        Random r = new Random();
+        MarkovTransition mt = transitions.get(initialState);
+        if (r.nextFloat() < mt.getProbability()){
+            initialState = initialState;
+        }else{
+            initialState = mt.getTargetState();
+        }
+
+        Measurement m = new Measurement("name",t+"",initialState);
         return null;
     }
 
