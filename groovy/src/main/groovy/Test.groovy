@@ -3,10 +3,6 @@ law "random1" ofType "Random"
 
 law "markov1" ofType "MarkovChain" states (["state1", "state2"]) transitions "state1" to "state2" with 0.2 and "state2" to "state1" with 0.7
 
-law "polynome1" ofType "MathFunctionLaw" itReturns "INT" like "0 si x < 0.27"
-                                                        and "2x^2 + 5x^1 + 0x^0 si x < 2.28"
-                                                        and "0 si x > 2.27"
-
 law "file1" ofType "File" fromPath "/home/afusco/Cours/security/SSL-al/groovy/src/main/resources/rawdata/data1.csv" format "CSV" withColumns ([t: 0, s: 1, v: 8])
 
 addNoise "file1", -5, 5

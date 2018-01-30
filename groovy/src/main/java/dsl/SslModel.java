@@ -48,6 +48,7 @@ public class SslModel {
 			case Random: law = new RandomLaw(); break;
 			case MarkovChain: law = new MarkovChainLaw(); break;
             case File: law = new FileLaw(); break;
+            case MathFunction: law = new MathFunctionLaw(); break;
 		}
 		law.setName(name);
 

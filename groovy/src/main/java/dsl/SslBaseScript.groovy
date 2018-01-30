@@ -56,15 +56,18 @@ abstract class SslBaseScript extends Script {
                     }]
                 }
                 [transitions: closure]
-            }]
-            [itReturns: { String en ->
+            },
+            itReturns: { String en ->
+                ((MathFunctionLaw) law).setDomain(MathFunctionLaw.DomainType.valueOf(en))
+
+
+
                 def closure2
-                closure2 = { String func ->
-                    [like: { String funcx ->
-                        ((MathFunctionLaw) law).addFunctionExpression(funcx)
-                        [and: closure]
-                    }]
+                closure2 = { String expression ->
+                    ((MathFunctionLaw) law).addFunctionExpression(expression)
+                    [and: closure2]
                 }
+                [like: closure2]
             }]
         }]
 

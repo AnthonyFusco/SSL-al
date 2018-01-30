@@ -9,19 +9,20 @@ public class MathFunctionLaw implements Law {
     private String name;
 
     //Valeurs retournees
-    public enum domaineType {BOOL,STRING,INT};
-    public domaineType domaine;
+    public enum DomainType {BOOL,STRING,INT};
+    public DomainType domain;
 
     //Formules maths
     public String formuleInegalite;
     public String operator;
     public ArrayList<FunctionExpression> functions;
 
-    public MathFunctionLaw(String function, domaineType domaine){
-        String[] tmp = function.split("si");
+    public MathFunctionLaw(){
         functions = new ArrayList<>();
+    }
 
-        this.domaine = domaine;
+    public void setDomain(DomainType domain) {
+        this.domain = domain;
     }
 
     public void addFunctionExpression(String s){
