@@ -2,6 +2,7 @@ package dsl;
 
 import exceptions.LawNotFoundException;
 import groovy.lang.Binding;
+import kernel.Application;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.Law;
 import kernel.structural.laws.Replay;
@@ -51,12 +52,12 @@ public class SslModel {
 		this.binding.setVariable(name, law);
 	}
 
-	/*public String generateCode(String appName) {
+	public void runSimulation() {
         Application app = new Application();
-		app.setName(appName);
 		app.setDeclaredLaws(laws);
 		app.setDeclaredSensorsLots(sensorsLots);
-		
-		return codeGenerator.getResult().toString();
-	}*/
+
+
+        System.out.println("run finished");
+    }
 }

@@ -4,19 +4,14 @@ abstract class SslBaseScript extends Script {
 
 	def createLaw(String name) {
         [asFct: { String strategy -> ((SslBinding)getBinding()).getModel().createLaw(name, strategy)}]
-
 	}
 
-
-
     def createSensorsSet(String name) {
-        boolean error = true
-        [sensorsNumber: { int n ->
-            [withLaw : { String law ->
-                ((SslBinding)getBinding()).getModel().createSensorsLot(name, n, law)
-                error = false
-            }]
-        }]
+		[sensorsNumber: { int n ->
+			[withLaw : { String law ->
+				((SslBinding)getBinding()).getModel().createSensorsLot(name, n, law)
+			}]
+		}]
     }
 
 	int count = 0
