@@ -15,7 +15,6 @@ public class Sensor implements NamedElement {
         this.name = UUID.randomUUID().toString();
     }
 
-
     @Override
     public String getName() {
         return name;

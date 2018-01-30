@@ -27,16 +27,12 @@ public class SslModel {
 	
 	public void createSensorsLot(String name, int sensorsNumber, String lawName, int simulationDuration)
             throws LawNotFoundException {
-		SensorsLot sensorsLot = new SensorsLot();
-		sensorsLot.setName(name);
 
 		Optional<Law> lawFound = findLawByName(lawName);
         if (!lawFound.isPresent()) {
             throw new LawNotFoundException();
         }
-        sensorsLot.setLaw(lawFound.get());
-        sensorsLot.setSensorsNumber(sensorsNumber);
-        sensorsLot.setSimulationDuration(simulationDuration);
+		SensorsLot sensorsLot = new SensorsLot(name, sensorsNumber, simulationDuration, lawFound.get());
         this.sensorsLots.add(sensorsLot);
         this.binding.setVariable(name, sensorsLot);
     }

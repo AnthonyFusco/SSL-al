@@ -14,7 +14,6 @@ public class SslVisitor implements Visitor {
     }
 
     private void visitSensorsLot(SensorsLot lot) {
-        lot.generatesSensors();
         for (int t = 0; t < lot.getSimulationDuration(); t++) {
             for (Sensor sensor : lot.getSensors()) {
                 System.out.println(sensor.generateNextMeasurement(t));
