@@ -1,9 +1,9 @@
 package kernel;
 
-import kernel.generator.Visitable;
-import kernel.generator.Visitor;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.Law;
+import kernel.visitor.Visitable;
+import kernel.visitor.Visitor;
 
 import java.util.List;
 
@@ -26,11 +26,6 @@ public class Application implements NamedElement, Visitable {
         this.sensorsLots = sensorsLots;
     }
 
-    @Override
-    public void accept(Visitor visitor) {
-        visitor.visit(this);
-    }
-
     public void setDeclaredLaws(List<Law> declaredLaws) {
         this.laws = declaredLaws;
     }
@@ -41,5 +36,10 @@ public class Application implements NamedElement, Visitable {
 
     public List<SensorsLot> getSensorsLots() {
         return sensorsLots;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }
