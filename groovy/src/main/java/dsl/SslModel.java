@@ -1,15 +1,15 @@
 package dsl;
 
-import java.util.*;
-
 import exceptions.LawNotFoundException;
 import groovy.lang.Binding;
-import kernel.Application;
-import kernel.generator.CodeGenerator;
-import kernel.generator.Visitor;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.Law;
 import kernel.structural.laws.Replay;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 public class SslModel {
     private List<SensorsLot> sensorsLots;
@@ -51,15 +51,12 @@ public class SslModel {
 		this.binding.setVariable(name, law);
 	}
 
-	public String generateCode(String appName) {
+	/*public String generateCode(String appName) {
         Application app = new Application();
 		app.setName(appName);
 		app.setDeclaredLaws(laws);
 		app.setDeclaredSensorsLots(sensorsLots);
-
-		CodeGenerator codeGenerator = new CodeGenerator();
-		app.accept(codeGenerator);
 		
 		return codeGenerator.getResult().toString();
-	}
+	}*/
 }
