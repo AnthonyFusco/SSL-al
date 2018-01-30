@@ -1,11 +1,38 @@
-// Create context for Groovy script files which names end with ssl.
-def sslContext = context(filetypes: ['groovy'], scope: scriptScope())
+contribute(currentType('groovy.lang.Script')) {
 
-contributor(sslContext) {
-    //property name: 'random', type: 'java.lang.String'
-    property name: 'test', type: 'java.lang.String'
-
-    method name: 'createLaw', type: 'void', params: [name: 'java.lang.String']
-    method name: 'asFct', type: 'void', params: [name: 'java.lang.String']
-    method name: 'withDuration', type: 'void', params: [name: 'java.lang.Integer']
+    method name: 'law', type: 'LawDeclaration', params: [name: 'java.lang.String']
+    method name: 'sensorLot', type: 'SensorLotDeclaration', params: [name: 'java.lang.String']
+    method name: 'addNoise', type: 'void', params: [
+            law: 'java.lang.String',
+            inf: 'java.lang.Integer',
+            sup: 'java.lang.Integer'
+    ]
+    method name: 'addOffset', type: 'void', params: [
+            law: 'java.lang.String',
+            offset: 'java.lang.Integer'
+    ]
 }
+
+
+contribute(currentType('LawDeclaration')){
+    method name: 'ofType', type: 'LawDeclaration', params: [type: 'java.lang.String']
+    method name: 'states', type: 'StatesDeclaration', params: [states: 'java.util.List']
+
+}
+
+contribute(currentType('StatesDeclaration')){
+    method name: 'transitions', type: 'TransitionDeclaration', params: [from: 'java.lang.String']
+}
+
+contribute(currentType('TransitionDeclaration')){
+    method name: 'to', type: 'TransitionDeclaration', params: [to: 'java.lang.String']
+    method name: 'with', type: 'TransitionDeclaration', params: [p: 'java.lang.Double']
+    method name: 'and', type: 'TransitionDeclaration', params: [from: 'java.lang.String']
+}
+
+contribute(currentType('SensorLotDeclaration')){
+    method name: 'sensorsNumber', type: 'SensorLotDeclaration', params: [n: 'java.lang.Integer']
+    method name: 'withLaw', type: 'SensorLotDeclaration', params: [law: 'java.lang.String']
+    method name: 'withDuration', type: 'SensorLotDeclaration', params: [duration: 'java.lang.Integer']
+}
+

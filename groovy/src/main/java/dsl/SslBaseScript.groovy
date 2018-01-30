@@ -2,7 +2,7 @@ package dsl
 
 import exceptions.MethodCallException
 import kernel.behavioral.DataSourceType
-
+import kernel.structural.SensorsLot
 import kernel.structural.laws.FileLaw
 
 import kernel.structural.laws.Law
@@ -11,7 +11,7 @@ import kernel.structural.laws.MarkovChainLaw
 
 abstract class SslBaseScript extends Script {
 
-	def law(String name) {
+    def law(String name) {
         [ofType : { String typeKey ->
             LawType lawType = LawType.valueOf(typeKey)
             Law law = ((SslBinding) getBinding()).getModel().createLaw(name, lawType)
@@ -60,7 +60,7 @@ abstract class SslBaseScript extends Script {
 
 	}
 
-    def addNoise(String lawTarget, List<Integer> noiseRange) {
+    def addNoise(String lawTarget, int inf, int sup) {
         //TODO apply noise to law
     }
 
@@ -71,8 +71,9 @@ abstract class SslBaseScript extends Script {
     def sensorLot(String name) {
 		[sensorsNumber: { int n ->
 			[withLaw : { String law ->
+                SensorsLot lot = ((SslBinding)getBinding()).getModel().createSensorsLot(name, n, law)
                 [withDuration : { int t ->
-                    ((SslBinding)getBinding()).getModel().createSensorsLot(name, n, law, t)
+                    lot.setSimulationDuration(t)
                 }]
 			}]
 		}]

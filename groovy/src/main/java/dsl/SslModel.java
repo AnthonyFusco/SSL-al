@@ -24,16 +24,17 @@ public class SslModel {
 		laws = new ArrayList<>();
 	}
 	
-	public void createSensorsLot(String name, int sensorsNumber, String lawName, int simulationDuration)
+	public SensorsLot createSensorsLot(String name, int sensorsNumber, String lawName)
             throws LawNotFoundException {
 
 		Optional<Law> lawFound = findLawByName(lawName);
         if (!lawFound.isPresent()) {
             throw new LawNotFoundException();
         }
-		SensorsLot sensorsLot = new SensorsLot(name, sensorsNumber, simulationDuration, lawFound.get());
+		SensorsLot sensorsLot = new SensorsLot(name, sensorsNumber, lawFound.get());
         this.sensorsLots.add(sensorsLot);
         this.binding.setVariable(name, sensorsLot);
+        return sensorsLot;
     }
 
     private Optional<Law> findLawByName(String lawName) {

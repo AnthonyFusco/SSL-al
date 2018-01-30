@@ -12,10 +12,9 @@ public class SensorsLot implements NamedElement {
     private String name;
     private int simulationDuration;
 
-    public SensorsLot(String name, int sensorsNumber, int simulationDuration, Law law) {
+    public SensorsLot(String name, int sensorsNumber, Law law) {
         this.name = name;
         this.sensorsNumber = sensorsNumber;
-        this.simulationDuration = simulationDuration;
         this.sensors = generatesSensors(law);
     }
 
@@ -39,6 +38,10 @@ public class SensorsLot implements NamedElement {
             sensors.add(new Sensor(law));
         }
         return sensors;
+    }
+
+    public void setSimulationDuration(int simulationDuration) {
+        this.simulationDuration = simulationDuration;
     }
 
     public int getSimulationDuration() {
