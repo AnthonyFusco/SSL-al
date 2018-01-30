@@ -2,7 +2,7 @@
 def sslContext = context(filetypes: ['groovy'], scope: scriptScope())
 
 contributor(sslContext) {
-    property name: 'random', type: 'java.lang.String'
+    //property name: 'random', type: 'java.lang.String'
     property name: 'test', type: 'java.lang.String'
 
     method name: 'createLaw', type: 'void', params: [name: 'java.lang.String']

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomLaw implements Law {
+    private String name;
 
     @Override
     public List<Measurement> play(SensorsLot lot) {
@@ -29,11 +30,11 @@ public class RandomLaw implements Law {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public void setName(String name) {
-
+        this.name = name;
     }
 }
