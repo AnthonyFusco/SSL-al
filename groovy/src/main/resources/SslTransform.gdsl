@@ -6,6 +6,6 @@ contributor(sslContext) {
     property name: 'test', type: 'java.lang.String'
 
     method name: 'createLaw', type: 'void', params: [name: 'java.lang.String']
-    property name: 'asFct', type: 'void', params: [name: 'java.lang.String']
-    property name: 'withDuration', type: 'void', params: [name: 'java.lang.Integer']
+    method name: 'asFct', type: 'void', params: [name: 'java.lang.String']
+    method name: 'withDuration', type: 'void', params: [name: 'java.lang.Integer']
 }

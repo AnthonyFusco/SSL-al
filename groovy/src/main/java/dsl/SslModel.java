@@ -48,6 +48,7 @@ public class SslModel {
 
     public void createLaw(String name, String strategy) {
 	    if(Objects.isNull(name)) return;
+        if(Objects.isNull(strategy)) return;
 		Law law = new RandomLaw();
 		law.setName(name);
 
@@ -55,7 +56,8 @@ public class SslModel {
 		this.binding.setVariable(name, law);
 	}
 
-	public void runSimulation() {
+	public void runSimulation(String name) {
+		if (Objects.isNull(name)) return;
         Application app = new Application();
 		app.setDeclaredLaws(laws);
 		app.setDeclaredSensorsLots(sensorsLots);

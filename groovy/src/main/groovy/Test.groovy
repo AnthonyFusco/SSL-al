@@ -1,3 +1,4 @@
-createLaw "lawName" asFct "random"
-createSensorsSet "set1" sensorsNumber 50 withLaw "lawName" withDuration 10
-runSimulation
+law "random1" ofType "random"
+sensorLot "parking" sensorsNumber 50 withLaw "random1" withDuration 10
+
+runSimulation "fac"
