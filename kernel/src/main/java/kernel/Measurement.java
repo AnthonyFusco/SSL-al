@@ -2,16 +2,16 @@ package kernel;
 
 public class Measurement {
     private String sensorName;
-    private int timeStamp;
+    private String timeStamp;
     private Object value;
 
-    public Measurement(String sensorName, int timeStamp, Object value) {
+    public Measurement(String sensorName, String timeStamp, Object value) {
         this.sensorName = sensorName;
         this.timeStamp = timeStamp;
         this.value = value;
     }
 
-    public int getTimeStamp() {
+    public String getTimeStamp() {
         return timeStamp;
     }
 
