@@ -1,5 +1,6 @@
 package dsl
 
+import kernel.structural.laws.LawType
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 
@@ -11,15 +12,16 @@ class SslDSL {
 
 	SslDSL() {
 		binding = new SslBinding()
-		binding.setModel(new SslModel(binding));
+		binding.setModel(new SslModel(binding))
 		configuration = getDSLConfiguration()
 		configuration.setScriptBaseClass("dsl.SslBaseScript")
 		shell = new GroovyShell(configuration)
-		
-		/*binding.setVariable("high", SIGNAL.HIGH)
-		binding.setVariable("low", SIGNAL.LOW)*/
+
+        for (LawType type : LawType.values()) {
+            binding.setVariable(type.toString(), type)
+        }
 	}
-	
+
 	private static CompilerConfiguration getDSLConfiguration() {
 		def secure = new SecureASTCustomizer()
 		secure.with {
@@ -39,7 +41,7 @@ class SslDSL {
 			tokensWhitelist= []
 			//types allowed to be used  (including primitive types)
 			constantTypesClassesWhiteList= [
-				int, Integer, Number, Integer.TYPE, String, Object
+				int, Integer, Number, Integer.TYPE, String, Object, BigDecimal
 			]
 			//classes who are allowed to be receivers of method calls
 			receiversClassesWhiteList= [
