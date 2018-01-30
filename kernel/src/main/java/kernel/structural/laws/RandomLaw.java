@@ -1,13 +1,17 @@
 package kernel.structural.laws;
 
+import kernel.Measurement;
+
+import java.time.Instant;
 import java.util.Random;
 
 public class RandomLaw implements Law {
     private String name;
 
     @Override
-    public Object generateNextValue(int t) {
-        return new Random().nextInt() % 10;
+    public Measurement generateNextMeasurement(int t) {
+        String timestamp = String.valueOf(Instant.now().getEpochSecond()) + "000000000";
+        return new Measurement(name,timestamp, new Random().nextInt() % 10);
     }
 
     @Override

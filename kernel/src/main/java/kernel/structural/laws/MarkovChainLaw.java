@@ -1,5 +1,7 @@
 package kernel.structural.laws;
 
+import kernel.Measurement;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +13,8 @@ public class MarkovChainLaw implements Law {
     private String initialState;
     private Map<String, MarkovTransition> transitions = new HashMap<>();
 
-
-
     @Override
-    public Object generateNextValue(int t) {
+    public Measurement generateNextMeasurement(int t) {
         return null;
     }
 

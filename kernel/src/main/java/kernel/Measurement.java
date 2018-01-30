@@ -9,6 +9,7 @@ public class Measurement {
         this.sensorName = sensorName;
         this.timeStamp = timeStamp;
         this.value = value;
+
     }
 
     public String getTimeStamp() {

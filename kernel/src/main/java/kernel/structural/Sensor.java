@@ -29,6 +29,11 @@ public class Sensor implements NamedElement {
     public Measurement generateNextMeasurement(int t) {
         //todo timestamp en fonction de t
         String timestamp = String.valueOf(Instant.now().getEpochSecond()) + "000000000";
-        return new Measurement(name, timestamp, law.generateNextValue(t));
+        Measurement value = law.generateNextMeasurement(t);
+        if (value == null) {
+            return null;
+        }
+        return value;
+//        return new Measurement(name, timestamp, law.generateNextMeasurement(t));
     }
 }
