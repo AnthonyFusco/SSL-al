@@ -34,4 +34,8 @@ public class SensorsLot implements NamedElement {
     public void setLaw(Law law) {
         this.law = law;
     }
+
+    public Law getLaw() {
+        return law;
+    }
 }

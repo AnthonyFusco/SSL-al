@@ -5,7 +5,8 @@ import groovy.lang.Binding;
 import kernel.Application;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.Law;
-import kernel.structural.laws.Replay;
+import kernel.structural.laws.RandomLaw;
+import kernel.visitor.SslVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class SslModel {
 
     public void createLaw(String name, String strategy) {
 	    if(Objects.isNull(name)) return;
-		Law law = new Replay();
+		Law law = new RandomLaw();
 		law.setName(name);
 
 		this.laws.add(law);
@@ -57,7 +58,7 @@ public class SslModel {
 		app.setDeclaredLaws(laws);
 		app.setDeclaredSensorsLots(sensorsLots);
 
-
-        System.out.println("run finished");
+		SslVisitor visitor = new SslVisitor();
+		visitor.visit(app);
     }
 }

@@ -1,11 +1,9 @@
 package kernel.visitor;
 
 import kernel.Application;
-import kernel.structural.laws.Modelling;
-import kernel.structural.laws.Replay;
+import kernel.structural.SensorsLot;
 
 public interface Visitor {
     void visit(Application application);
-    void visit(Modelling law);
-    void visit(Replay law);
+    void visit(SensorsLot lot);
 }

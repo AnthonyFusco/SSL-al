@@ -1,8 +1,7 @@
 package kernel.visitor;
 
 import kernel.Application;
-import kernel.structural.laws.Modelling;
-import kernel.structural.laws.Replay;
+import kernel.structural.SensorsLot;
 
 public class SslVisitor implements Visitor {
 
@@ -11,14 +10,10 @@ public class SslVisitor implements Visitor {
 
     }
 
-    @Override
-    public void visit(Modelling law) {
-
-    }
 
     @Override
-    public void visit(Replay law) {
-
+    public void visit(SensorsLot lot) {
+        lot.getLaw().play(lot);
     }
 
 }
