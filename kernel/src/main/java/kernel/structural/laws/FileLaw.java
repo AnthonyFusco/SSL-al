@@ -2,10 +2,14 @@ package kernel.structural.laws;
 
 import kernel.behavioral.DataSourceType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class FileLaw implements Law {
     private String name;
     private String path;
     private DataSourceType dataSourceType;
+    private Map<String, Object> columnsDescriptions = new HashMap<>();
 
     @Override
     public Object generateNextValue(int t) {
@@ -36,5 +40,13 @@ public class FileLaw implements Law {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public Map<String, Object> getColumnsDescriptions() {
+        return columnsDescriptions;
+    }
+
+    public void setColumnsDescriptions(Map<String, Object> columnsDescriptions) {
+        this.columnsDescriptions = columnsDescriptions;
     }
 }

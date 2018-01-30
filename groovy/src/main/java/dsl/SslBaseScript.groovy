@@ -2,7 +2,9 @@ package dsl
 
 import exceptions.MethodCallException
 import kernel.behavioral.DataSourceType
+
 import kernel.structural.laws.FileLaw
+
 import kernel.structural.laws.Law
 import kernel.structural.laws.LawType
 import kernel.structural.laws.MarkovChainLaw
@@ -25,6 +27,13 @@ abstract class SslBaseScript extends Script {
                         if (dataSourceType != DataSourceType.CSV) {
                             throw new MethodCallException(dataSourceType.toString() + " does not allow withColumns declaration")
                         }
+                        ((FileLaw) law).setColumnsDescriptions(map)
+                    },
+                    withProperties: { Map<String, String> map ->
+                        if (dataSourceType != DataSourceType.JSON) {
+                            throw new MethodCallException(dataSourceType.toString() + " does not allow withProperties declaration")
+                        }
+                        ((FileLaw) law).setColumnsDescriptions(map)
                     }]
                 }]
             },
