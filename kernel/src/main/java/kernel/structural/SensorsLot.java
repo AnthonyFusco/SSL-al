@@ -3,6 +3,7 @@ package kernel.structural;
 import kernel.NamedElement;
 import kernel.structural.laws.Law;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SensorsLot implements NamedElement {
@@ -10,8 +11,7 @@ public class SensorsLot implements NamedElement {
     private Law law;
     private int sensorsNumber;
     private String name;
-
-
+    private int simulationDuration;
 
     @Override
     public String getName() {
@@ -37,5 +37,20 @@ public class SensorsLot implements NamedElement {
 
     public Law getLaw() {
         return law;
+    }
+
+    public void generatesSensors() {
+        sensors = new ArrayList<>();
+        for (int i = 0; i < sensorsNumber; i++) {
+            sensors.add(new Sensor(law));
+        }
+    }
+
+    public int getSimulationDuration() {
+        return simulationDuration;
+    }
+
+    public void setSimulationDuration(int simulationDuration) {
+        this.simulationDuration = simulationDuration;
     }
 }

@@ -1,14 +1,12 @@
 package kernel;
 
-import kernel.structural.Sensor;
-
 public class Measurement {
-    private Sensor sensor;
+    private String sensorName;
     private int timeStamp;
     private Object value;
 
-    public Measurement(Sensor sensor, int timeStamp, Object value) {
-        this.sensor = sensor;
+    public Measurement(String sensorName, int timeStamp, Object value) {
+        this.sensorName = sensorName;
         this.timeStamp = timeStamp;
         this.value = value;
     }
@@ -21,7 +19,12 @@ public class Measurement {
         return value;
     }
 
-    public Sensor getSensor() {
-        return sensor;
+    public String getSensorName() {
+        return sensorName;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + timeStamp + ", " + sensorName + ", " + value + ")";
     }
 }

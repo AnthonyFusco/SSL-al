@@ -9,7 +9,9 @@ abstract class SslBaseScript extends Script {
     def createSensorsSet(String name) {
 		[sensorsNumber: { int n ->
 			[withLaw : { String law ->
-				((SslBinding)getBinding()).getModel().createSensorsLot(name, n, law)
+                [withDuration : { int t ->
+                    ((SslBinding)getBinding()).getModel().createSensorsLot(name, n, law, t)
+                }]
 			}]
 		}]
     }

@@ -25,7 +25,8 @@ public class SslModel {
 		laws = new ArrayList<>();
 	}
 	
-	public void createSensorsLot(String name, int sensorsNumber, String lawName) throws LawNotFoundException {
+	public void createSensorsLot(String name, int sensorsNumber, String lawName, int simulationDuration)
+            throws LawNotFoundException {
 		SensorsLot sensorsLot = new SensorsLot();
 		sensorsLot.setName(name);
 
@@ -35,6 +36,7 @@ public class SslModel {
         }
         sensorsLot.setLaw(lawFound.get());
         sensorsLot.setSensorsNumber(sensorsNumber);
+        sensorsLot.setSimulationDuration(simulationDuration);
         this.sensorsLots.add(sensorsLot);
         this.binding.setVariable(name, sensorsLot);
     }

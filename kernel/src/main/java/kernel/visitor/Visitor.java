@@ -5,5 +5,4 @@ import kernel.structural.SensorsLot;
 
 public interface Visitor {
     void visit(Application application);
-    void visit(SensorsLot lot);
 }
