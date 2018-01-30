@@ -10,7 +10,6 @@ public class Ssl {
 		SslDSL dsl = new SslDSL();
 		if(args.length > 0) {
 			dsl.eval(new File(args[0]));
-
 		} else {
 			System.out.println("/!\\ Missing arg: Please specify the path to a Groovy script file to execute");
 		}
