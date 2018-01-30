@@ -1,6 +1,8 @@
 package dsl
 
 import exceptions.MethodCallException
+import kernel.behavioral.DataSourceType
+import kernel.structural.laws.FileLaw
 import kernel.structural.laws.Law
 import kernel.structural.laws.LawType
 import kernel.structural.laws.MarkovChainLaw
@@ -11,16 +13,20 @@ abstract class SslBaseScript extends Script {
         [ofType : { String typeKey ->
             LawType lawType = LawType.valueOf(typeKey)
             Law law = ((SslBinding) getBinding()).getModel().createLaw(name, lawType)
-            /*if (lawType == LawType.Random) {
-
-            } else if (lawType == LawType.MarkovChain) {
-
-            }*/
-            [withColumns: { Map<String, Integer> map ->
+            [fromPath : { String path ->
                 if (lawType != LawType.File) {
-                    throw new MethodCallException(lawType.toString() + " does not allow withColumns declaration")
+                    throw new MethodCallException(lawType.toString() + " does not allow fromPath declaration")
                 }
-
+                ((FileLaw) law).setPath(path)
+                [format: { String formatName ->
+                    DataSourceType dataSourceType = DataSourceType.valueOf(formatName)
+                    ((FileLaw) law).setDataSourceType(dataSourceType)
+                    [withColumns: { Map<String, Integer> map ->
+                        if (dataSourceType != DataSourceType.CSV) {
+                            throw new MethodCallException(dataSourceType.toString() + " does not allow withColumns declaration")
+                        }
+                    }]
+                }]
             },
             states: { List<String> listStates ->
                 if (lawType != LawType.MarkovChain) {
@@ -44,6 +50,14 @@ abstract class SslBaseScript extends Script {
         }]
 
 	}
+
+    def addNoise(String lawTarget, List<Integer> noiseRange) {
+        //TODO apply noise to law
+    }
+
+    def addOffset(String lawTarget, int offset) {
+        //TODO apply offset to law
+    }
 
     def sensorLot(String name) {
 		[sensorsNumber: { int n ->

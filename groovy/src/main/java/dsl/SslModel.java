@@ -4,10 +4,7 @@ import exceptions.LawNotFoundException;
 import groovy.lang.Binding;
 import kernel.Application;
 import kernel.structural.SensorsLot;
-import kernel.structural.laws.Law;
-import kernel.structural.laws.LawType;
-import kernel.structural.laws.MarkovChainLaw;
-import kernel.structural.laws.RandomLaw;
+import kernel.structural.laws.*;
 import kernel.visitor.SslVisitor;
 
 import java.util.ArrayList;
@@ -45,14 +42,12 @@ public class SslModel {
     }
 
     public Law createLaw(String name, LawType strategy) {
-//	    if(Objects.isNull(name)) return;
-//        if(Objects.isNull(strategy)) return;
 		Law law = null;
 		switch (strategy) {
 			case Random: law = new RandomLaw(); break;
 			case MarkovChain: law = new MarkovChainLaw(); break;
+            case File: law = new FileLaw(); break;
 		}
-		assert law != null;
 		law.setName(name);
 
 		this.laws.add(law);
