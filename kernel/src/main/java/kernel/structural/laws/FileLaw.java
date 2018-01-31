@@ -39,7 +39,8 @@ public class FileLaw implements Law {
 
                 String timestamp = String.valueOf(Instant.now().getEpochSecond()) + "000000000"; //for debug
 
-                return new Measurement(currentRecord.get(sColumn).trim(), currentRecord.get(tColumn).trim(),
+                return new Measurement(currentRecord.get(sColumn).trim(),
+                        currentRecord.get(tColumn).trim() + "000000000",
                         currentRecord.get(vColumn).trim());
             } catch (IOException e) {
                 e.printStackTrace();
