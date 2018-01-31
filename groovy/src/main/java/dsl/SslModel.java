@@ -5,6 +5,7 @@ import groovy.lang.Binding;
 import kernel.Application;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.*;
+import kernel.structural.laws.markov.MarkovChainLaw;
 import kernel.visitor.SslVisitor;
 
 import java.util.ArrayList;

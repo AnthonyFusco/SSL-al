@@ -4,16 +4,15 @@ import exceptions.MethodCallException
 import kernel.behavioral.DataSourceType
 import kernel.structural.SensorsLot
 import kernel.structural.laws.FileLaw
-
 import kernel.structural.laws.Law
 import kernel.structural.laws.LawType
-import kernel.structural.laws.MarkovChainLaw
 import kernel.structural.laws.MathFunctionLaw
+import kernel.structural.laws.markov.MarkovChainLaw
 
 abstract class SslBaseScript extends Script {
 
     def law(String name) {
-        [ofType : { String typeKey ->
+        [ofType: { String typeKey ->
             LawType lawType = LawType.valueOf(typeKey)
             Law law = ((SslBinding) getBinding()).getModel().createLaw(name, lawType)
             [fromPath : { String path ->
@@ -24,54 +23,61 @@ abstract class SslBaseScript extends Script {
                 [format: { String formatName ->
                     DataSourceType dataSourceType = DataSourceType.valueOf(formatName)
                     ((FileLaw) law).setDataSourceType(dataSourceType)
-                    [withColumns: { Map<String, Integer> map ->
+                    [withColumns   : { Map<String, Integer> map ->
                         if (dataSourceType != DataSourceType.CSV) {
                             throw new MethodCallException(dataSourceType.toString() + " does not allow withColumns declaration")
                         }
                         ((FileLaw) law).setColumnsDescriptions(map)
                     },
-                    withProperties: { Map<String, String> map ->
-                        if (dataSourceType != DataSourceType.JSON) {
-                            throw new MethodCallException(dataSourceType.toString() + " does not allow withProperties declaration")
-                        }
-                        ((FileLaw) law).setColumnsDescriptions(map)
-                    }]
+                     withProperties: { Map<String, String> map ->
+                         if (dataSourceType != DataSourceType.JSON) {
+                             throw new MethodCallException(dataSourceType.toString() + " does not allow withProperties declaration")
+                         }
+                         ((FileLaw) law).setColumnsDescriptions(map)
+                     }]
                 }]
             },
-            states: { List<String> listStates ->
-                if (lawType != LawType.MarkovChain) {
-                    throw new MethodCallException(lawType.toString() + " does not allow states declaration")
-                }
-                for (String state : listStates) {
-                    ((MarkovChainLaw) law).declareState(state)
-                }
+             states   : { List<String> listStates ->
+                 if (lawType != LawType.MarkovChain) {
+                     throw new MethodCallException(lawType.toString() + " does not allow states declaration")
+                 }
 
-                def closure
-                closure = { String originState ->
-                    [to : { String targetState ->
-                        [with : { double p ->
-                            ((MarkovChainLaw) law).addTransition(originState, targetState, p)
-                            [and: closure]
-                        }]
-                    }]
-                }
-                [transitions: closure]
-            },
-            itReturns: { String en ->
-                ((MathFunctionLaw) law).setDomain(MathFunctionLaw.DomainType.valueOf(en))
+                 if (listStates.isEmpty()) {
+                     throw new MethodCallException(lawType.toString() + " state list must not be empty")
+                 }
+
+                 ((MarkovChainLaw) law).setCurrentState(listStates.get(0))
+
+                 for (String state : listStates) {
+                     ((MarkovChainLaw) law).declareState(state)
+                 }
+
+                 def closure
+                 closure = { String originState ->
+                     [to: { String targetState ->
+                         [with: { double p ->
+                             ((MarkovChainLaw) law).addTransition(originState, targetState, p)
+                             [and: closure]
+                         }]
+                     }]
+                 }
+                 [transitions: closure]
+             },
+             itReturns: { String en ->
+                 ((MathFunctionLaw) law).setDomain(MathFunctionLaw.DomainType.valueOf(en))
 
 
 
-                def closure2
-                closure2 = { String expression ->
-                    ((MathFunctionLaw) law).addFunctionExpression(expression)
-                    [and: closure2]
-                }
-                [like: closure2]
-            }]
+                 def closure2
+                 closure2 = { String expression ->
+                     ((MathFunctionLaw) law).addFunctionExpression(expression)
+                     [and: closure2]
+                 }
+                 [like: closure2]
+             }]
         }]
 
-	}
+    }
 
     def addNoise(String lawTarget, int inf, int sup) {
         //TODO apply noise to law
@@ -82,28 +88,30 @@ abstract class SslBaseScript extends Script {
     }
 
     def sensorLot(String name) {
-		[sensorsNumber: { int n ->
-			[withLaw : { String law ->
-                SensorsLot lot = ((SslBinding)getBinding()).getModel().createSensorsLot(name, n, law)
-                [withDuration : { int t ->
+        [sensorsNumber: { int n ->
+            [withLaw: { String law ->
+                SensorsLot lot = ((SslBinding) getBinding()).getModel().createSensorsLot(name, n, law)
+                [withDuration: { int t ->
                     lot.setSimulationDuration(t)
                 }]
-			}]
-		}]
+            }]
+        }]
     }
 
-	def runSimulation(String name) {
-		((SslBinding)getBinding()).getModel().runSimulation(name)
-	}
+    def runSimulation(String name) {
+        ((SslBinding) getBinding()).getModel().runSimulation(name)
+    }
 
-	int count = 0
-	abstract void scriptBody()
-	def run() {
-		if(count == 0) {
-			count++
-			scriptBody()
-		} else {
-			println "Run method is disabled"
-		}
-	}
+    int count = 0
+
+    abstract void scriptBody()
+
+    def run() {
+        if (count == 0) {
+            count++
+            scriptBody()
+        } else {
+            println "Run method is disabled"
+        }
+    }
 }

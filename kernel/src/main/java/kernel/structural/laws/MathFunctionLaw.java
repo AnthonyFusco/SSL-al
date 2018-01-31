@@ -2,22 +2,20 @@ package kernel.structural.laws;
 
 import kernel.Measurement;
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class MathFunctionLaw implements Law {
 
-    private String name;
-
-    //Valeurs retournees
-    public enum DomainType {BOOL,STRING,INT};
     public DomainType domain;
-
     //Formules maths
     public String formuleInegalite;
+
+    ;
     public String operator;
     public ArrayList<FunctionExpression> functions;
-
-    public MathFunctionLaw(){
+    private String name;
+    public MathFunctionLaw() {
         functions = new ArrayList<>();
     }
 
@@ -25,9 +23,9 @@ public class MathFunctionLaw implements Law {
         this.domain = domain;
     }
 
-    public void addFunctionExpression(String s){
-        String [] tmp = s.split("si");
-        FunctionExpression f = new FunctionExpression(tmp[0],tmp[1]);
+    public void addFunctionExpression(String s) {
+        String[] tmp = s.split("si");
+        FunctionExpression f = new FunctionExpression(tmp[0], tmp[1]);
         f.findInegaliteRight();
         f.findFormuleLeft();
     }
@@ -41,8 +39,7 @@ public class MathFunctionLaw implements Law {
             }
         }
 
-        Measurement m = new Measurement("name",t+"",value);
-        return m;
+        return new Measurement("name", System.currentTimeMillis(), value);
     }
 
     @Override
@@ -52,6 +49,11 @@ public class MathFunctionLaw implements Law {
 
     @Override
     public void setName(String name) {
-        this.name=name;
+        this.name = name;
+    }
+
+    //Valeurs retournees
+    public enum DomainType {
+        BOOL, STRING, INT
     }
 }

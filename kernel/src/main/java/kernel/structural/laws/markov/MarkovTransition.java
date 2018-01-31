@@ -1,4 +1,4 @@
-package kernel.structural.laws;
+package kernel.structural.laws.markov;
 
 public class MarkovTransition {
     private double probability;

@@ -1,22 +1,23 @@
 package kernel;
 
-public class Measurement {
+public class Measurement<T> {
     private String sensorName;
-    private String timeStamp;
-    private Object value;
+    private Long timeStamp;
+    private T value;
+    private Class clazz;
 
-    public Measurement(String sensorName, String timeStamp, Object value) {
+    public Measurement(String sensorName, long timeStamp, T value) {
         this.sensorName = sensorName;
         this.timeStamp = timeStamp;
         this.value = value;
-
+        this.clazz = value.getClass();
     }
 
-    public String getTimeStamp() {
+    public Long getTimeStamp() {
         return timeStamp;
     }
 
-    public Object getValue() {
+    public T getValue() {
         return value;
     }
 
@@ -27,5 +28,9 @@ public class Measurement {
     @Override
     public String toString() {
         return "(" + timeStamp + ", " + sensorName + ", " + value + ")";
+    }
+
+    public Class getClazz() {
+        return clazz;
     }
 }

@@ -10,8 +10,8 @@ public class RandomLaw implements Law {
 
     @Override
     public Measurement generateNextMeasurement(int t) {
-        String timestamp = String.valueOf(Instant.now().getEpochSecond()) + "000000000";
-        return new Measurement(name,timestamp, new Random().nextInt() % 10);
+        long timestamp = System.currentTimeMillis();
+        return new Measurement<>(name, timestamp, new Random().nextInt() % 10);
     }
 
     @Override
