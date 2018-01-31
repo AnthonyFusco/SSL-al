@@ -20,6 +20,14 @@
             <artifactId>commons-csv</artifactId>
             <version>1.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mariuszgromada.math/MathParser.org-mXparser -->
+        <dependency>
+            <groupId>org.mariuszgromada.math</groupId>
+            <artifactId>MathParser.org-mXparser</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.influxdb</groupId>
             <artifactId>influxdb-java</artifactId>
