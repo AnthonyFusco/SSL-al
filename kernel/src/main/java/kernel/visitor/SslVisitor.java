@@ -39,7 +39,6 @@ public class SslVisitor implements Visitor {
                 if (measurement == null) {
                     continue; //todo handle the case ?
                 }
-//                String data = lot.getName() + " value=" + measurement.getValue() + " " + measurement.getTimeStamp();
                 measurements.add(measurement);
                 try {
                     Thread.sleep(100);
@@ -48,32 +47,6 @@ public class SslVisitor implements Visitor {
                 }
             }
             sendToInfluxDB(measurements);
-        }
-    }
-
-    //todo not here
-    private void postToDatabase(List<String> measurements) {
-        try {
-            URL url = new URL("http://localhost:8086/write?db=influxdb");
-            HttpURLConnection con = (HttpURLConnection) url.openConnection();
-            con.setDoOutput(true);
-            con.setRequestMethod("POST");
-
-            //write
-            try (OutputStreamWriter writer = new OutputStreamWriter(con.getOutputStream())) {
-                String toWrite = String.join("\n", measurements);
-                System.out.println(toWrite);
-                writer.write(toWrite);
-            }
-            //read response
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
-                String decodedString;
-                while ((decodedString = in.readLine()) != null) {
-                    System.out.println(decodedString);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

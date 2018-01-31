@@ -8,7 +8,8 @@ law "file1" ofType "File" fromPath "/home/afusco/Cours/security/SSL-al/groovy/sr
 addNoise "file1", -5, 5
 addOffset  "file1", 10
 
-//sensorLot "parking" sensorsNumber 50 withLaw "random1" withDuration 10
-sensorLot "csv" sensorsNumber 2 withLaw "file1" withDuration 10
+//sensorLot "parking" sensorsNumber 2 withLaw "random1" withDuration 10
+//sensorLot "csv" sensorsNumber 2 withLaw "file1" withDuration 10
+sensorLot "markov" sensorsNumber 2 withLaw "markov1" withDuration 10
 
 runSimulation "fac"
