@@ -2,6 +2,8 @@ package kernel.structural.laws.markov;
 
 import kernel.Measurement;
 import kernel.structural.laws.Law;
+import net.andreinc.mockneat.MockNeat;
+import net.andreinc.mockneat.unit.objects.Probabilities;
 
 import java.time.Instant;
 import java.util.*;
@@ -12,16 +14,30 @@ public class MarkovChainLaw implements Law {
     private String currentState;
     private Map<String, MarkovTransition> transitions = new HashMap<>();
 
+
+    /*
+
+     */
+
+    //Prend une matrice en input
+    private double [][] matrice;
+    //On set le current state a 0, soit la premiere ligne de la matrice
+    private int currState = 0;
+    // On set la taille de la matrice (qui doit etre carree).
+    private int tailleMatrice;
+
     @Override
     public Measurement generateNextMeasurement(int t) {
-        Random r = new Random();
-        MarkovTransition mt = transitions.get(currentState);
-        if (r.nextFloat() >= mt.getProbability()) {
-            currentState = mt.getTargetState();
+        MockNeat mockNeat = MockNeat.threadLocal();
+        Probabilities p = mockNeat.probabilites(Integer.class);
+
+        for(int i = 0 ; i < tailleMatrice; i++){
+            p.add(matrice[currState][i],i);
         }
+        currState = (Integer)p.val();
 
         long timestamp = System.currentTimeMillis();
-        return new Measurement<>(name, timestamp, currentState);
+        return new Measurement<>(name, timestamp, currState);
     }
 
     @Override
@@ -44,5 +60,25 @@ public class MarkovChainLaw implements Law {
 
     public void setCurrentState(String currentState) {
         this.currentState = currentState;
+    }
+
+    public void setStates(List<String> states) {
+        this.states = states;
+    }
+
+    public void setTransitions(Map<String, MarkovTransition> transitions) {
+        this.transitions = transitions;
+    }
+
+    public void setCurrState(int currState) {
+        this.currState = currState;
+    }
+
+    public void setMatrice(double[][] matrice) {
+        this.matrice = matrice;
+    }
+
+    public void setTailleMatrice(int tailleMatrice) {
+        this.tailleMatrice = tailleMatrice;
     }
 }
