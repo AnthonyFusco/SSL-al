@@ -37,7 +37,7 @@ abstract class SslBaseScript extends Script {
                      }]
                 }]
             },
-             states   : { List<String> listStates ->
+             givenMatrix   : { List<List<Double>> listStates ->
                  if (lawType != LawType.MarkovChain) {
                      throw new MethodCallException(lawType.toString() + " does not allow states declaration")
                  }
@@ -46,11 +46,20 @@ abstract class SslBaseScript extends Script {
                      throw new MethodCallException(lawType.toString() + " state list must not be empty")
                  }
 
-                 ((MarkovChainLaw) law).setCurrentState(listStates.get(0))
+                 ((MarkovChainLaw) law).setCurrentState("first")
+                 ((MarkovChainLaw) law).setCurrState(0)
+                 ((MarkovChainLaw) law).setTailleMatrice(listStates.size())
+                 Double[][] matrix = new Double[listStates.size()][listStates.size()]
+                 int i = 0;
+                 int j = 0
+                     for (List<Double> nestedList : listStates) {
+                         for(i = 0; i < listStates.size(); i++){
+                             matrix[j][i] = nestedList.get(i);
+                         }
+                         j++;
+                     }
+                 ((MarkovChainLaw) law).setMatrice(matrix)
 
-                 for (String state : listStates) {
-                     ((MarkovChainLaw) law).declareState(state)
-                 }
 
                  def closure
                  closure = { String originState ->
@@ -65,15 +74,11 @@ abstract class SslBaseScript extends Script {
              },
              itReturns: { String en ->
                  ((MathFunctionLaw) law).setDomain(MathFunctionLaw.DomainType.valueOf(en))
+                 [withExpression: { String value, String condition ->
+                     ((MathFunctionLaw) law).addFunction(value,condition)
+                 }]
 
 
-
-                 def closure2
-                 closure2 = { String expression ->
-                     ((MathFunctionLaw) law).addFunctionExpression(expression)
-                     [and: closure2]
-                 }
-                 [like: closure2]
              }]
         }]
 

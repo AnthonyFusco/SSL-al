@@ -20,7 +20,7 @@ public class MarkovChainLaw implements Law {
      */
 
     //Prend une matrice en input
-    private double [][] matrice;
+    private Double [][] matrice;
     //On set le current state a 0, soit la premiere ligne de la matrice
     private int currState = 0;
     // On set la taille de la matrice (qui doit etre carree).
@@ -37,7 +37,7 @@ public class MarkovChainLaw implements Law {
         currState = (Integer)p.val();
 
         long timestamp = System.currentTimeMillis();
-        return new Measurement<>(name, timestamp, currState);
+        return new Measurement<>(name, timestamp, currState+"");
     }
 
     @Override
@@ -74,11 +74,12 @@ public class MarkovChainLaw implements Law {
         this.currState = currState;
     }
 
-    public void setMatrice(double[][] matrice) {
+    public void setMatrice(Double[][] matrice) {
         this.matrice = matrice;
     }
 
     public void setTailleMatrice(int tailleMatrice) {
         this.tailleMatrice = tailleMatrice;
+        this.matrice = new Double[tailleMatrice][tailleMatrice];
     }
 }
