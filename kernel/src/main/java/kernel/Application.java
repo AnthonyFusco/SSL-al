@@ -10,7 +10,12 @@ import java.util.List;
 
 public class Application implements NamedElement, Visitable {
     private List<SensorsLot> sensorsLots = new ArrayList<>();
+    private List<Law> laws = new ArrayList<>();
     private String name;
+
+    public List<Law> getLaws() {
+        return laws;
+    }
 
     @Override
     public String getName() {

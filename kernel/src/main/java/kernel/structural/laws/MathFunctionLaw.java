@@ -15,9 +15,7 @@ public class MathFunctionLaw implements Law {
     private String name;
     private static final double DOOM_VALUE = -9999;
 
-    //Valeurs retournees
-    public enum DomainType {BOOL,STRING,INT};
-    public DomainType domain;
+    public MathFunctionReturnType domain;
 
     //Formules <valeur : condition>
     public Map<String,String> funcs;
@@ -26,7 +24,7 @@ public class MathFunctionLaw implements Law {
         funcs = new HashMap<>();
     }
 
-    public void setDomain(DomainType domain) {
+    public void setDomain(MathFunctionReturnType domain) {
         this.domain = domain;
     }
 
@@ -55,7 +53,6 @@ public class MathFunctionLaw implements Law {
 
             default:
                 for(Map.Entry<String,String> entry : funcs.entrySet()){
-                    //If eval = 1 alors on renvoi la string/bool sinon rien
                     Expression e2 = new Expression("if("+entry.getKey()+",1,0)",x);
                     double tmp = e2.calculate();
                     if(tmp == 1){

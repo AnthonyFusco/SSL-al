@@ -1,11 +1,12 @@
 package dsl;
 
+import builders.LawBuilder;
 import kernel.Application;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.Law;
 import kernel.visitor.SslVisitor;
 
-import java.util.List;
+import java.util.Optional;
 
 public class Runner {
     private SslModel model;
@@ -16,6 +17,13 @@ public class Runner {
 
     public void runSimulation() {
         final Application app = new Application();
+
+        model.getLawsBuilders().forEach(builder -> builder.validate(model));
+
+        model.getLawsBuilders().forEach(builder -> {
+            Law law = builder.build();
+            app.getLaws().add(law);
+        });
 
         model.getSensorsLotBuilders().forEach(builder -> builder.validate(model));
 
@@ -31,7 +39,14 @@ public class Runner {
     }
 
     private Law findLawByName(String lawName) {
-        //TODO validate law builder
-        return model.getLaws().stream().filter(law -> law.getName().equals(lawName)).findFirst().get();
+        Optional<LawBuilder> builderOpt =
+                model.getLawsBuilders().stream().filter(law -> law.getLawName().equals(lawName)).findFirst();
+        if (builderOpt.isPresent()) {
+            LawBuilder builder = builderOpt.get();
+            builder.validate(model);
+            return builder.build();
+        }
+
+        return null;
     }
 }

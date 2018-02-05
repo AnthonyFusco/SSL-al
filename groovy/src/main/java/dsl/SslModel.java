@@ -1,26 +1,26 @@
 package dsl;
 
+import builders.LawBuilder;
 import builders.SensorsLotBuilder;
 import groovy.lang.Binding;
-import kernel.structural.laws.*;
-import kernel.structural.laws.markov.MarkovChainLaw;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SslModel {
-    private List<Law> laws;
     private List<SensorsLotBuilder> sensorsLotBuilders;
+    private List<LawBuilder> lawsBuilders;
 
     private Binding binding;
 
     public SslModel(Binding binding) {
         this.binding = binding;
-        laws = new ArrayList<>();
         sensorsLotBuilders = new ArrayList<>();
+        lawsBuilders = new ArrayList<>();
+
     }
 
-    public Law createLaw(String name, LawType strategy) {
+    /*public Law createLaw(String name, LawType strategy) {
         Law law = null;
         switch (strategy) {
             case Random:
@@ -41,18 +41,22 @@ public class SslModel {
         this.laws.add(law);
         this.binding.setVariable(name, law);
         return law;
-    }
+    }*/
 
 
     public void addSensorsBuilder(SensorsLotBuilder builder) {
         sensorsLotBuilders.add(builder);
     }
 
+    public void addLawBuilder(LawBuilder builder) {
+        lawsBuilders.add(builder);
+    }
+
     public List<SensorsLotBuilder> getSensorsLotBuilders() {
         return sensorsLotBuilders;
     }
 
-    public List<Law> getLaws() {
-        return laws;
+    public List<LawBuilder> getLawsBuilders() {
+        return lawsBuilders;
     }
 }
