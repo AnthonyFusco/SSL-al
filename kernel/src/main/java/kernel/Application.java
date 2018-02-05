@@ -5,10 +5,11 @@ import kernel.structural.laws.Law;
 import kernel.visitor.Visitable;
 import kernel.visitor.Visitor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Application implements NamedElement, Visitable {
-    private List<SensorsLot> sensorsLots;
+    private List<SensorsLot> sensorsLots = new ArrayList<>();
     private String name;
 
     @Override

@@ -1,4 +1,4 @@
-contribute(currentType('groovy.lang.Script')) {
+/*contribute(currentType('groovy.lang.Script')) {
 
     method name: 'law', type: 'LawDeclaration', params: [name: 'java.lang.String']
     method name: 'sensorLot', type: 'SensorLotDeclaration', params: [name: 'java.lang.String']
@@ -11,7 +11,10 @@ contribute(currentType('groovy.lang.Script')) {
             law: 'java.lang.String',
             offset: 'java.lang.Integer'
     ]
+    method name: 'runSimulation', type: 'void', params: [name: 'java.lang.String']
+
 }
+
 
 
 contribute(currentType('LawDeclaration')){
@@ -23,7 +26,6 @@ contribute(currentType('LawDeclaration')){
 contribute(currentType('StatesDeclaration')){
     method name: 'transitions', type: 'TransitionDeclaration', params: [from: 'java.lang.String']
 }
-
 contribute(currentType('TransitionDeclaration')){
     method name: 'to', type: 'TransitionDeclaration', params: [to: 'java.lang.String']
     method name: 'with', type: 'TransitionDeclaration', params: [p: 'java.lang.Double']
@@ -35,4 +37,8 @@ contribute(currentType('SensorLotDeclaration')){
     method name: 'withLaw', type: 'SensorLotDeclaration', params: [law: 'java.lang.String']
     method name: 'withDuration', type: 'SensorLotDeclaration', params: [duration: 'java.lang.Integer']
 }
+
+*/
+
+
 

@@ -11,11 +11,10 @@ public class SensorsLot implements NamedElement {
     private int sensorsNumber;
     private String name;
     private int simulationDuration;
+    private String lawName;
 
-    public SensorsLot(String name, int sensorsNumber, Law law) {
-        this.name = name;
-        this.sensorsNumber = sensorsNumber;
-        this.sensors = generatesSensors(law);
+    public SensorsLot() {
+
     }
 
     @Override
@@ -32,19 +31,26 @@ public class SensorsLot implements NamedElement {
         return sensors;
     }
 
-    private List<Sensor> generatesSensors(Law law) {
-        List<Sensor> sensors = new ArrayList<>();
+    public void generatesSensors(Law law) {
+        sensors = new ArrayList<>();
         for (int i = 0; i < sensorsNumber; i++) {
             sensors.add(new Sensor(law));
         }
-        return sensors;
     }
 
-    public void setSimulationDuration(int simulationDuration) {
-        this.simulationDuration = simulationDuration;
+    public String getLawName() {
+        return lawName;
+    }
+
+    public void setLawName(String lawName) {
+        this.lawName = lawName;
     }
 
     public int getSimulationDuration() {
         return simulationDuration;
+    }
+
+    public void setSimulationDuration(int simulationDuration) {
+        this.simulationDuration = simulationDuration;
     }
 }

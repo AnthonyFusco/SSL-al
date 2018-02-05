@@ -1,5 +1,6 @@
 package dsl
 
+import builders.SensorsLotBuilder
 import exceptions.MethodCallException
 import kernel.behavioral.DataSourceType
 import kernel.structural.SensorsLot
@@ -93,18 +94,13 @@ abstract class SslBaseScript extends Script {
     }
 
     def sensorLot(String name) {
-        [sensorsNumber: { int n ->
-            [withLaw: { String law ->
-                SensorsLot lot = ((SslBinding) getBinding()).getModel().createSensorsLot(name, n, law)
-                [withDuration: { int t ->
-                    lot.setSimulationDuration(t)
-                }]
-            }]
-        }]
+        SensorsLotBuilder builder = new SensorsLotBuilder(name)
+        ((SslBinding) getBinding()).getModel().addSensorsBuilder(builder)
+        return builder
     }
 
     def runSimulation(String name) {
-        ((SslBinding) getBinding()).getModel().runSimulation(name)
+        new Runner(((SslBinding) getBinding()).getModel()).runSimulation()
     }
 
     int count = 0

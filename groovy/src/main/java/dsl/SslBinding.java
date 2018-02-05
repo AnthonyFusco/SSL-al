@@ -9,7 +9,7 @@ public class SslBinding extends Binding {
 	private Script script;
 	
 	private SslModel model;
-	
+
 	public SslBinding() {
 		super();
 	}
