@@ -11,6 +11,7 @@ addOffset  "file1", 10
 
 //sensorLot "parking" sensorsNumber 2 withLaw "random1" withDuration 10
 //sensorLot "csv" sensorsNumber 2 withLaw "file1" withDuration 10
-sensorLot "markov" sensorsNumber 2 withLaw "markov1" withDuration 10
+//sensorLot "markov" sensorsNumber 2 withLaw "markov1" withDuration 10
+sensorLot "random" sensorsNumber 2 withLaw "random1" withDuration 10
 
-runSimulation "fac"
+runSimulation "fac", "06/02/2018:14.56", "06/02/2018:14.58"

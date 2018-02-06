@@ -56,6 +56,8 @@ public class SslVisitor implements Visitor {
 
         for (Measurement measurement : measurements) {
 
+            System.out.println(measurement);
+
             Map<String, Object> map = new HashMap<>();
             map.put(measurement.getSensorName(), measurement.getValue());
 

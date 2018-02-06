@@ -53,4 +53,8 @@ public class SensorsLot implements NamedElement {
     public void setSimulationDuration(int simulationDuration) {
         this.simulationDuration = simulationDuration;
     }
+
+    public void setSensorsNumber(int sensorsNumber) {
+        this.sensorsNumber = sensorsNumber;
+    }
 }

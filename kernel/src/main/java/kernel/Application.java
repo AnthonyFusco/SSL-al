@@ -6,12 +6,15 @@ import kernel.visitor.Visitable;
 import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Application implements NamedElement, Visitable {
     private List<SensorsLot> sensorsLots = new ArrayList<>();
     private List<Law> laws = new ArrayList<>();
     private String name;
+    private Date endDate;
+    private Date startDate;
 
     public List<Law> getLaws() {
         return laws;
@@ -38,5 +41,13 @@ public class Application implements NamedElement, Visitable {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 }

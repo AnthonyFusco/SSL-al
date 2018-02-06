@@ -34,6 +34,7 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
         result.setName(name);
         result.setSimulationDuration(duration);
         result.setLawName(lawName);
+        result.setSensorsNumber(sensorsNumber);
         return result;
     }
 

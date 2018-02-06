@@ -6,6 +6,7 @@ import kernel.structural.SensorsLot;
 import kernel.structural.laws.Law;
 import kernel.visitor.SslVisitor;
 
+import java.util.Date;
 import java.util.Optional;
 
 public class Runner {
@@ -15,8 +16,10 @@ public class Runner {
         this.model = model;
     }
 
-    public void runSimulation() {
+    public void runSimulation(Date startDate, Date endDate) {
         final Application app = new Application();
+        app.setStartDate(startDate);
+        app.setEndDate(endDate);
 
         model.getLawsBuilders().forEach(builder -> builder.validate(model));
 
