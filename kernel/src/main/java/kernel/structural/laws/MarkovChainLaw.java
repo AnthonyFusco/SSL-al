@@ -20,7 +20,8 @@ public class MarkovChainLaw implements Law {
 
 
         for(int i = 0 ; i < matrix.size(); i++){
-            p.add(matrix.get(currState).get(i), i);
+            System.out.println(i);
+            p.add(getMatrix().get(currState).get(i), i);
         }
         currState = p.val();
 
@@ -31,6 +32,10 @@ public class MarkovChainLaw implements Law {
     @Override
     public String getName() {
         return name;
+    }
+
+    public List<List<Double>> getMatrix() {
+        return matrix;
     }
 
     @Override
