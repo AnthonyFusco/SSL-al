@@ -56,8 +56,6 @@ public class SslVisitor implements Visitor {
 
         for (Measurement measurement : measurements) {
 
-            System.out.println(measurement);
-
             Map<String, Object> map = new HashMap<>();
             map.put(measurement.getSensorName(), measurement.getValue());
 
@@ -68,6 +66,7 @@ public class SslVisitor implements Visitor {
             batchPoints.point(point);
         }
 
+        System.out.println(batchPoints);
         influxDB.write(batchPoints);
 //        Query query = new Query("SELECT * FROM " + measurements.get(0).getSensorName(), dbName);
 //        System.out.println(influxDB.query(query));

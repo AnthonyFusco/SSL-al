@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import static kernel.structural.laws.MathFunctionReturnType.INT;
+
 public class MathFunctionLaw implements Law {
 
     private String name;
@@ -37,31 +39,28 @@ public class MathFunctionLaw implements Law {
         Object value = DOOM_VALUE;
         Argument x = new Argument("x");
         x.setArgumentValue(t);
+        if(domain == INT) {
+            String toEvaluateCondition = "iff(";
+            for (Map.Entry<String, String> entry : funcs.entrySet()) {
+                toEvaluateCondition += entry.getValue() + "," + entry.getKey() + ";";
+            }
+            toEvaluateCondition = toEvaluateCondition.substring(0, toEvaluateCondition.length() - 1);
+            toEvaluateCondition += ")";
 
-        switch (domain){
-            case INT:
-                String toEvaluateCondition = "iff(";
-                for(Map.Entry<String,String> entry : funcs.entrySet()){
-                    toEvaluateCondition+= entry.getKey() +"," + entry.getValue();
+            Expression e = new Expression(toEvaluateCondition, x);
+            double res = e.calculate();
+            //if (Double.isNaN(res)) //throw NaN exception
+            value = res;
+        }else {
+            for (Map.Entry<String, String> entry : funcs.entrySet()) {
+                Expression e2 = new Expression("if(" + entry.getValue() + ",1,0)", x);
+                double tmp = e2.calculate();
+                if (tmp == 1) {
+                    value = entry.getValue();
                 }
-                toEvaluateCondition +=")";
-                Expression e = new Expression(toEvaluateCondition, x);
-                double res = e.calculate();
-
-                if(Double.isNaN(res)) //throw NaN exception
-                value = res;
-
-            default:
-                for(Map.Entry<String,String> entry : funcs.entrySet()){
-                    Expression e2 = new Expression("if("+entry.getKey()+",1,0)",x);
-                    double tmp = e2.calculate();
-                    if(tmp == 1){
-                        value = entry.getValue();
-                    }
-                }
-
+            }
         }
-        return new Measurement("name", System.currentTimeMillis(), value);
+        return new Measurement(name, System.currentTimeMillis(), value);
     }
 
     @Override

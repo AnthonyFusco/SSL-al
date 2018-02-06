@@ -13,6 +13,7 @@ public class MarkovChainLaw implements Law {
     private List<List<Double>> matrix;
     private int currState = 0;
 
+
     @Override
     public Measurement generateNextMeasurement(int t) {
         MockNeat mockNeat = MockNeat.threadLocal();
@@ -20,7 +21,6 @@ public class MarkovChainLaw implements Law {
 
 
         for(int i = 0 ; i < matrix.size(); i++){
-            System.out.println(i);
             p.add(getMatrix().get(currState).get(i), i);
         }
         currState = p.val();
