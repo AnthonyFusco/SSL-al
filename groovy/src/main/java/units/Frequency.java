@@ -11,4 +11,9 @@ public class Frequency {
         this.duration = duration;
         this.occurrences = occurrences;
     }
+
+
+    public double getValue() {
+        return (double)occurrences / duration.getValue();
+    }
 }

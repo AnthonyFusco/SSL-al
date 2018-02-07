@@ -16,7 +16,7 @@ public enum TimeUnit {
         return abbreviation;
     }
 
-    public double getSecondsNumber() {
-        return secondsNumber;
+    public double getMillisecondsNumber() {
+        return secondsNumber * 1000;
     }
 }

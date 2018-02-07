@@ -12,8 +12,12 @@ public class Duration implements Comparable<Duration> {
         this.unit = unit;
     }
 
+    public double getValue() {
+        return amount * unit.getMillisecondsNumber();
+    }
+
     @Override
     public int compareTo(Duration duration) {
-        return Double.compare(amount * unit.getSecondsNumber(), duration.amount * duration.unit.getSecondsNumber());
+        return Double.compare(amount * unit.getMillisecondsNumber(), duration.amount * duration.unit.getMillisecondsNumber());
     }
 }

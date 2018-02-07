@@ -23,7 +23,7 @@ public class SslVisitor implements Visitor {
     }
 
     private void visitSensorsLot(SensorsLot lot, Date startDate, Date endDate) {
-        double period = 1.0 / lot.getStepFrequency();
+        double period = 1.0 / lot.getFrequencyValue();
         for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
             List<Measurement> measurements = new ArrayList<>();
             for (Sensor sensor : lot.getSensors()) {

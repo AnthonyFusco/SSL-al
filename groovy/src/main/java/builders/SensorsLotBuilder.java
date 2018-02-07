@@ -7,7 +7,6 @@ import units.Frequency;
 public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
     private int sensorsNumber;
     private String lawName;
-    private int duration;
     private String name;
     private Frequency frequency;
 
@@ -25,11 +24,6 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
         return this;
     }
 
-    public SensorsLotBuilder withDuration(int duration) {
-        this.duration = duration;
-        return this;
-    }
-
     public SensorsLotBuilder withFrequency(Frequency frequency) {
         this.frequency = frequency;
         return this;
@@ -39,9 +33,9 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
     public SensorsLot build() {
         SensorsLot result = new SensorsLot();
         result.setName(name);
-        result.setSimulationDuration(duration);
         result.setLawName(lawName);
         result.setSensorsNumber(sensorsNumber);
+        result.setFrequencyValue(frequency.getValue());
         return result;
     }
 

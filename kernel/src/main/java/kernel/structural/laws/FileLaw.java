@@ -19,7 +19,7 @@ public class FileLaw implements Law {
 
     @Override
     public Measurement generateNextMeasurement(double t) {
-        if (dataSourceType.equals(DataSourceType.CSV)) { //CSVLaw maybe
+        /*if (dataSourceType.equals(DataSourceType.CSV)) { //CSVLaw maybe
             Integer tColumn = (Integer) columnsDescriptions.get("t");
             Integer sColumn = (Integer) columnsDescriptions.get("s");
             Integer vColumn = (Integer) columnsDescriptions.get("v");
@@ -42,7 +42,7 @@ public class FileLaw implements Law {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         return null;
     }
 

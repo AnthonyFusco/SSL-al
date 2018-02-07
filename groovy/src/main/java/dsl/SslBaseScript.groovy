@@ -22,6 +22,10 @@ abstract class SslBaseScript extends Script {
         }]
     }
 
+    def randomLaw(String name) {
+        law(name).ofType(LawType.RandomLaw.toString())
+    }
+
     static LawBuilder<? extends Law> lawFactory(String name, String typeKey) {
         LawType lawType = LawType.valueOf(typeKey)
         LawBuilder builder

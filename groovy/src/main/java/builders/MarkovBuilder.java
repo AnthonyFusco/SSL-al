@@ -27,6 +27,8 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw>{
         return this;
     }
 
+
+
     @Override
     public MarkovChainLaw build() {
         MarkovChainLaw law = new MarkovChainLaw();
