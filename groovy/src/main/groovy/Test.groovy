@@ -5,8 +5,13 @@ law "markov1" ofType MarkovLaw givenMatrix ([[0.3,0.2,0.5],[0.15,0.8,0.05],[0.25
 
 replay "file1" fromPath "/home/ringo/Bureau/SSL-al/groovy/src/main/resources/rawdata/data1.csv" format "CSV" withColumns ([t: 0, s: 1, v: 8])
 
-law "poly1" ofType FunctionLaw itReturns "INT" withExpressions (["0": "x>0.22","22" : "x<0.22"])
-law "poly2" ofType FunctionLaw itReturns "STRING" withExpressions (["Shiny": "x>0.22","Rainy" : "x<0.22"])
+koukou = {  x ->
+    return (x < 5) ?  2*(x**2) : 4
+}
+
+law "poly1" ofType FunctionLaw withExpressions koukou
+//law "poly2" ofType FunctionLaw itReturns "STRING" withExpressions (["Shiny": "x>0.22","Rainy" : "x<0.22"])
+
 
 addNoise "file1", -5, 5
 addOffset  "file1", 10

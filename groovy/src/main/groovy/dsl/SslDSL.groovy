@@ -35,7 +35,7 @@ class SslDSL {
 		def secure = new SecureASTCustomizer()
 		secure.with {
 			//disallow closure creation
-			closuresAllowed = false
+			closuresAllowed = true
 			//disallow method definitions
 			methodDefinitionAllowed = true
 			//empty white list => forbid imports
@@ -48,10 +48,32 @@ class SslDSL {
 			//language tokens disallowed
 //			tokensBlacklist= []
 			//language tokens allowed
-			tokensWhitelist= [Types.DIVIDE]
+			tokensWhitelist= [
+					Types.DIVIDE,
+					Types.MULTIPLY,
+					Types.POWER,
+					Types.EQUAL,
+					Types.MOD,
+					Types.COMPARE_EQUAL,
+					Types.COMPARE_NOT_EQUAL,
+					Types.COMPARE_LESS_THAN,
+					Types.COMPARE_LESS_THAN_EQUAL,
+					Types.COMPARE_GREATER_THAN,
+					Types.COMPARE_GREATER_THAN_EQUAL,
+					Types.ASSIGN
+			]
 			//types allowed to be used  (including primitive types)
 			constantTypesClassesWhiteList= [
-				int, Integer, Number, Integer.TYPE, String, Object, BigDecimal
+				int,
+				Integer,
+				Number,
+				Integer.TYPE,
+				double,
+				Double,
+				Double.TYPE,
+				String,
+				Object,
+				BigDecimal
 			]
 			//classes who are allowed to be receivers of method calls
 			receiversClassesWhiteList= [
