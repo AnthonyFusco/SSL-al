@@ -1,28 +1,26 @@
-/*contribute(currentType('groovy.lang.Script')) {
+contribute(currentType('groovy.lang.Script')) {
+    method name: 'law', type: 'builders.LawBuilder', params: [name: 'java.lang.String']
+    method name: 'sensorLot', type: 'builders.SensorsLotBuilder', params: [name: 'java.lang.String']
+}
 
-    method name: 'law', type: 'LawDeclaration', params: [name: 'java.lang.String']
-    method name: 'sensorLot', type: 'SensorLotDeclaration', params: [name: 'java.lang.String']
-    method name: 'addNoise', type: 'void', params: [
-            law: 'java.lang.String',
-            inf: 'java.lang.Integer',
-            sup: 'java.lang.Integer'
-    ]
-    method name: 'addOffset', type: 'void', params: [
-            law: 'java.lang.String',
-            offset: 'java.lang.Integer'
-    ]
-    method name: 'runSimulation', type: 'void', params: [name: 'java.lang.String']
-
+contribute(currentType('builders.SensorsLotBuilder')){
+    method name: 'sensorsNumber', type: 'builders.SensorsLotBuilder', params: [n: 'java.lang.Integer']
+    method name: 'withLaw', type: 'builders.SensorsLotBuilder', params: [law: 'java.lang.String']
+    method name: 'withDuration', type: 'builders.SensorsLotBuilder', params: [duration: 'java.lang.Integer']
 }
 
 
 
-contribute(currentType('LawDeclaration')){
-    method name: 'ofType', type: 'LawDeclaration', params: [type: 'java.lang.String']
-    method name: 'states', type: 'StatesDeclaration', params: [states: 'java.util.List']
+contribute(currentType('builders.LawBuilder')){
 
+    method name: 'ofType', type: 'builders.LawBuilder',
+            params: [args: [
+                    parameter(name: 'RandomLaw', type: 'java.lang.String'),
+                    parameter(name: 'MarkovLaw', type: 'java.lang.String'),
+                    parameter(name: 'FunctionLaw', type: 'java.lang.String')
+            ]]
 }
-
+/*
 contribute(currentType('StatesDeclaration')){
     method name: 'transitions', type: 'TransitionDeclaration', params: [from: 'java.lang.String']
 }
@@ -32,11 +30,7 @@ contribute(currentType('TransitionDeclaration')){
     method name: 'and', type: 'TransitionDeclaration', params: [from: 'java.lang.String']
 }
 
-contribute(currentType('SensorLotDeclaration')){
-    method name: 'sensorsNumber', type: 'SensorLotDeclaration', params: [n: 'java.lang.Integer']
-    method name: 'withLaw', type: 'SensorLotDeclaration', params: [law: 'java.lang.String']
-    method name: 'withDuration', type: 'SensorLotDeclaration', params: [duration: 'java.lang.Integer']
-}
+
 
 */
 

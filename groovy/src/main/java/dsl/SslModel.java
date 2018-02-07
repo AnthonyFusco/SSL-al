@@ -23,16 +23,16 @@ public class SslModel {
     /*public Law createLaw(String name, LawType strategy) {
         Law law = null;
         switch (strategy) {
-            case Random:
+            case RandomLaw:
                 law = new RandomLaw();
                 break;
-            case MarkovChain:
+            case MarkovLaw:
                 law = new MarkovChainLaw();
                 break;
             case File:
                 law = new FileLaw();
                 break;
-            case MathFunction:
+            case FunctionLaw:
                 law = new MathFunctionLaw();
                 break;
         }

@@ -2,12 +2,14 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.SensorsLot;
+import units.Frequency;
 
 public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
     private int sensorsNumber;
     private String lawName;
     private int duration;
     private String name;
+    private Frequency frequency;
 
     public SensorsLotBuilder(String name) {
         this.name = name;
@@ -25,6 +27,11 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
 
     public SensorsLotBuilder withDuration(int duration) {
         this.duration = duration;
+        return this;
+    }
+
+    public SensorsLotBuilder withFrequency(Frequency frequency) {
+        this.frequency = frequency;
         return this;
     }
 

@@ -26,13 +26,13 @@ abstract class SslBaseScript extends Script {
         LawType lawType = LawType.valueOf(typeKey)
         LawBuilder builder
         switch (lawType) {
-            case LawType.Random:
+            case LawType.RandomLaw:
                 builder = new RandomBuilder(name)
                 break
-            case LawType.MarkovChain:
+            case LawType.MarkovLaw:
                 builder = new MarkovBuilder(name)
                 break
-            case LawType.MathFunction:
+            case LawType.FunctionLaw:
                 builder = new MathFunctionBuilder(name)
                 break
         }

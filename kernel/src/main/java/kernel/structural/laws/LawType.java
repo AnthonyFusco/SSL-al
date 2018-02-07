@@ -1,5 +1,5 @@
 package kernel.structural.laws;
 
 public enum LawType {
-    Random, MarkovChain, MathFunction
+    RandomLaw, MarkovLaw, FunctionLaw
 }
