@@ -4,13 +4,11 @@ public class Measurement<T> {
     private String sensorName;
     private Long timeStamp;
     private T value;
-    private Class clazz;
 
     public Measurement(String sensorName, long timeStamp, T value) {
         this.sensorName = sensorName;
         this.timeStamp = timeStamp;
         this.value = value;
-        this.clazz = value.getClass();
     }
 
     public Long getTimeStamp() {
@@ -30,7 +28,7 @@ public class Measurement<T> {
         return "(" + timeStamp + ", " + sensorName + ", " + value + ")";
     }
 
-    public Class getClazz() {
-        return clazz;
+    public void setSensorName(String sensorName) {
+        this.sensorName = sensorName;
     }
 }

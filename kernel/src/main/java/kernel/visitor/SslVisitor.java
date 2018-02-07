@@ -32,18 +32,18 @@ public class SslVisitor implements Visitor {
                     continue; //todo no value in csv / handle the case ?
                 }
                 measurements.add(measurement);
-                try {
+                /*try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
-            sendToInfluxDB(measurements);
+            sendToInfluxDB(measurements, lot.getName(), lot.getLawName());
         }
     }
 
     //todo gerer les differents noms possible
-    private void sendToInfluxDB(List<Measurement> measurements) {
+    private void sendToInfluxDB(List<Measurement> measurements, String sensorLotName, String lawName) {
         InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root");
         String dbName = "influxdb";
         influxDB.createDatabase(dbName);
@@ -56,16 +56,18 @@ public class SslVisitor implements Visitor {
         for (Measurement measurement : measurements) {
 
             Map<String, Object> map = new HashMap<>();
-            map.put(measurement.getSensorName(), measurement.getValue());
+            map.put("value", measurement.getValue());
 
-            Point point = Point.measurement(measurement.getSensorName())
+            Point point = Point.measurement(sensorLotName)
                     .time(measurement.getTimeStamp(), TimeUnit.MILLISECONDS)
+                    .addField("sensorName", measurement.getSensorName())
+                    .addField("law", lawName)
                     .fields(map)
                     .build();
             batchPoints.point(point);
         }
 
-//        System.out.println(batchPoints);
+        System.out.println(batchPoints);
         influxDB.write(batchPoints);
 //        Query query = new Query("SELECT * FROM " + measurements.get(0).getSensorName(), dbName);
 //        System.out.println(influxDB.query(query));

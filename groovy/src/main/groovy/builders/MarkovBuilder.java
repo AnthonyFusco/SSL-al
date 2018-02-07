@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MarkovBuilder extends LawBuilder<MarkovChainLaw>{
+public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     private List<List<Double>> matrix;
     private Frequency frequency;
 
@@ -18,9 +18,9 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw>{
 
     public MarkovBuilder givenMatrix(List<List<BigDecimal>> matrix) {
         List<List<Double>> tmp = new ArrayList<>();
-        for (List<BigDecimal> lbd : matrix){
+        for (List<BigDecimal> lbd : matrix) {
             List<Double> ls = new ArrayList<>();
-            for (BigDecimal bd : lbd){
+            for (BigDecimal bd : lbd) {
                 ls.add(bd.doubleValue());
             }
             tmp.add(ls);
@@ -33,8 +33,6 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw>{
         this.frequency = frequency;
         return this;
     }
-
-
 
     @Override
     public MarkovChainLaw build() {

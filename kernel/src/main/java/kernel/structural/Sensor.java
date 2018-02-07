@@ -31,6 +31,7 @@ public class Sensor implements NamedElement {
         if (value == null) {
             return null;
         }
+        value.setSensorName(name);
         return value;
     }
 }
