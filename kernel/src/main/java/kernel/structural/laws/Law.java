@@ -4,5 +4,5 @@ import kernel.Measurement;
 import kernel.NamedElement;
 
 public interface Law extends NamedElement {
-    Measurement generateNextMeasurement(int t);
+    Measurement generateNextMeasurement(double t);
 }

@@ -4,10 +4,7 @@ import kernel.Measurement;
 import org.mariuszgromada.math.mxparser.Argument;
 import org.mariuszgromada.math.mxparser.Expression;
 
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import static kernel.structural.laws.MathFunctionReturnType.INT;
@@ -35,7 +32,7 @@ public class MathFunctionLaw implements Law {
     }
 
     @Override
-    public Measurement generateNextMeasurement(int t) {
+    public Measurement generateNextMeasurement(double t) {
         Object value = DOOM_VALUE;
         Argument x = new Argument("x");
         x.setArgumentValue(t);

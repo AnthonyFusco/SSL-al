@@ -62,7 +62,7 @@ abstract class SslBaseScript extends Script {
         Date startDate = format.parse(startDateString)
         Date endDate = format.parse(endDateString)
 
-//        println(startDate.toInstant().toEpochMilli())
+        println(startDate.toInstant().toEpochMilli())
 //        println(endDate.toInstant().toEpochMilli())
         return new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
     }

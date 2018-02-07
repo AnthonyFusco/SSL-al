@@ -10,7 +10,7 @@ public class SensorsLot implements NamedElement {
     private List<Sensor> sensors;
     private int sensorsNumber;
     private String name;
-    private int simulationDuration;
+    private double stepFrequency;
     private String lawName;
 
     public SensorsLot() {
@@ -46,15 +46,15 @@ public class SensorsLot implements NamedElement {
         this.lawName = lawName;
     }
 
-    public int getSimulationDuration() {
-        return simulationDuration;
-    }
-
-    public void setSimulationDuration(int simulationDuration) {
-        this.simulationDuration = simulationDuration;
-    }
-
     public void setSensorsNumber(int sensorsNumber) {
         this.sensorsNumber = sensorsNumber;
+    }
+
+    public double getStepFrequency() {
+        return stepFrequency;
+    }
+
+    public void setStepFrequency(double stepFrequency) {
+        this.stepFrequency = stepFrequency;
     }
 }

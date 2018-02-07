@@ -10,10 +10,7 @@ import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class SslVisitor implements Visitor {
@@ -21,17 +18,18 @@ public class SslVisitor implements Visitor {
     @Override
     public void visit(Application application) {
         for (SensorsLot sensorsLot : application.getSensorsLots()) {
-            visitSensorsLot(sensorsLot);
+            visitSensorsLot(sensorsLot, application.getStartDate(), application.getEndDate());
         }
     }
 
-    private void visitSensorsLot(SensorsLot lot) {
-        for (int t = 0; t < lot.getSimulationDuration(); t++) {
+    private void visitSensorsLot(SensorsLot lot, Date startDate, Date endDate) {
+        double period = 1.0 / lot.getStepFrequency();
+        for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
             List<Measurement> measurements = new ArrayList<>();
             for (Sensor sensor : lot.getSensors()) {
                 Measurement measurement = sensor.generateNextMeasurement(t);
                 if (measurement == null) {
-                    continue; //todo handle the case ?
+                    continue; //todo no value in csv / handle the case ?
                 }
                 measurements.add(measurement);
                 try {
@@ -44,6 +42,7 @@ public class SslVisitor implements Visitor {
         }
     }
 
+    //todo gerer les differents noms possible
     private void sendToInfluxDB(List<Measurement> measurements) {
         InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root");
         String dbName = "influxdb";
@@ -66,7 +65,7 @@ public class SslVisitor implements Visitor {
             batchPoints.point(point);
         }
 
-        System.out.println(batchPoints);
+//        System.out.println(batchPoints);
         influxDB.write(batchPoints);
 //        Query query = new Query("SELECT * FROM " + measurements.get(0).getSensorName(), dbName);
 //        System.out.println(influxDB.query(query));

@@ -1,11 +1,9 @@
 package kernel.structural.laws;
 
 import kernel.Measurement;
-import kernel.structural.laws.Law;
 import net.andreinc.mockneat.MockNeat;
 import net.andreinc.mockneat.unit.objects.Probabilities;
 
-import java.time.Instant;
 import java.util.*;
 
 public class MarkovChainLaw implements Law {
@@ -15,7 +13,7 @@ public class MarkovChainLaw implements Law {
 
 
     @Override
-    public Measurement generateNextMeasurement(int t) {
+    public Measurement generateNextMeasurement(double t) {
         MockNeat mockNeat = MockNeat.threadLocal();
         Probabilities<Integer> p = mockNeat.probabilites(Integer.class);
 

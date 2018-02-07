@@ -2,14 +2,13 @@ package kernel.structural.laws;
 
 import kernel.Measurement;
 
-import java.time.Instant;
 import java.util.Random;
 
 public class RandomLaw implements Law {
     private String name;
 
     @Override
-    public Measurement generateNextMeasurement(int t) {
+    public Measurement generateNextMeasurement(double t) {
         long timestamp = System.currentTimeMillis();
         return new Measurement<>(name, timestamp, new Random().nextInt() % 10);
     }

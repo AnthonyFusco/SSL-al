@@ -9,7 +9,6 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.time.Instant;
 import java.util.*;
 
 public class FileLaw implements Law {
@@ -19,7 +18,7 @@ public class FileLaw implements Law {
     private Map<String, Object> columnsDescriptions = new HashMap<>();
 
     @Override
-    public Measurement generateNextMeasurement(int t) {
+    public Measurement generateNextMeasurement(double t) {
         if (dataSourceType.equals(DataSourceType.CSV)) { //CSVLaw maybe
             Integer tColumn = (Integer) columnsDescriptions.get("t");
             Integer sColumn = (Integer) columnsDescriptions.get("s");

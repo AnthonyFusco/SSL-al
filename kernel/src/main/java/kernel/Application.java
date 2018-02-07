@@ -50,4 +50,12 @@ public class Application implements NamedElement, Visitable {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
 }
