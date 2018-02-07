@@ -18,10 +18,16 @@
         <repository>
             <id>jcenter</id>
             <url>https://jcenter.bintray.com/</url>
+
         </repository>
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.21</version>
+        </dependency>
         <dependency>
             <groupId>net.andreinc.mockneat</groupId>
             <artifactId>mockneat</artifactId>
@@ -39,6 +45,7 @@
             <artifactId>MathParser.org-mXparser</artifactId>
             <version>4.1.1</version>
         </dependency>
+
 
 
         <dependency>
