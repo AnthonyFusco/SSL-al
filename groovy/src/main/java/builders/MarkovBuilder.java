@@ -2,6 +2,7 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.laws.MarkovChainLaw;
+import units.Frequency;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public class MarkovBuilder extends LawBuilder<MarkovChainLaw>{
     private List<List<Double>> matrix;
+    private Frequency frequency;
 
     public MarkovBuilder(String lawName) {
         super(lawName);
@@ -27,6 +29,11 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw>{
         return this;
     }
 
+    public MarkovBuilder changeStateFrequency(Frequency frequency) {
+        this.frequency = frequency;
+        return this;
+    }
+
 
 
     @Override
@@ -34,6 +41,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw>{
         MarkovChainLaw law = new MarkovChainLaw();
         law.setName(getLawName());
         law.setMatrix(matrix);
+        law.setChangeStateFrequencyValue(frequency.getValue());
         return law;
     }
 
