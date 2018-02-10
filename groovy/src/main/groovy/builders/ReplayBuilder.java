@@ -3,15 +3,17 @@ package builders;
 import dsl.SslModel;
 import kernel.structural.replay.CSVReplay;
 import kernel.structural.replay.Replay;
+import units.Duration;
+import units.TimeUnit;
 
 import java.util.Map;
 
 public class ReplayBuilder implements EntityBuilder<Replay>{
-    private String replayName;
-    private String path;
+    private String replayName = "";
+    private String path = "";
 //    private DataSourceType format;
     private Map<String, Object> columnsDescriptions;
-    private long offset = 0;
+    private Duration offset = new Duration(0, TimeUnit.Second);
 
     public ReplayBuilder(String replayName) {
         this.replayName = replayName;
@@ -32,7 +34,7 @@ public class ReplayBuilder implements EntityBuilder<Replay>{
         return this;
     }
 
-    public ReplayBuilder withOffset(long offset) {
+    public ReplayBuilder withOffset(Duration offset) {
         this.offset = offset;
         return this;
     }
@@ -47,7 +49,7 @@ public class ReplayBuilder implements EntityBuilder<Replay>{
         replay.setName(replayName);
         replay.setPath(path);
         replay.setColumnsDescriptions(columnsDescriptions);
-        replay.setOffset(offset);
+        replay.setOffset((long) offset.getValue());
         return replay;
     }
 

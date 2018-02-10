@@ -13,14 +13,13 @@ koukou = { x ->
 }
 
 law "poly1" ofType FunctionLaw withExpressions koukou
-//law "poly2" ofType FunctionLaw itReturns "STRING" withExpressions (["Shiny": "x>0.22","Rainy" : "x<0.22"])
 
+//law "poly2" ofType FunctionLaw itReturns "STRING" withExpressions (["Shiny": "x>0.22","Rainy" : "x<0.22"])
 //sensorLot "markov" sensorsNumber 2 withLaw "markov1" withFrequency 5/s
 //sensorLot "polypoly1" sensorsNumber 2 withLaw "poly1" withDuration 10
 //sensorLot "random" sensorsNumber 2 withLaw "random1" withFrequency 1/s
 
-//sensorLot "csv" sensorsNumber 2 withLaw "file1"
-
-replay "file1" fromPath "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/data1.csv" withColumns([t: 0, s: 1, v: 8]) withOffset 0
+String path = "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/data1.csv"
+replay "file1" fromPath path withColumns([t: 0, s: 1, v: 8]) withOffset 10.s
 
 runSimulation "fac", "10/02/2018 09:25:00", "10/02/2018 09:30:00"
