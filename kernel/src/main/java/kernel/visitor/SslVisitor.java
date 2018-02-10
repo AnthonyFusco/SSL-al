@@ -4,11 +4,11 @@ import kernel.Application;
 import kernel.Measurement;
 import kernel.structural.Sensor;
 import kernel.structural.SensorsLot;
+import kernel.structural.replay.Replay;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
 import org.influxdb.dto.Point;
-import org.influxdb.dto.Query;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -20,6 +20,14 @@ public class SslVisitor implements Visitor {
         for (SensorsLot sensorsLot : application.getSensorsLots()) {
             visitSensorsLot(sensorsLot, application.getStartDate(), application.getEndDate());
         }
+
+        for (Replay replay : application.getReplays()) {
+            visitReplay(replay);
+        }
+    }
+
+    private void visitReplay(Replay replay) {
+        sendToInfluxDB(replay.getMeasurements(), replay.getName(), "Replay");
     }
 
     private void visitSensorsLot(SensorsLot lot, Date startDate, Date endDate) {
@@ -32,17 +40,11 @@ public class SslVisitor implements Visitor {
                     continue; //todo no value in csv / handle the case ?
                 }
                 measurements.add(measurement);
-                /*try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }*/
             }
             sendToInfluxDB(measurements, lot.getName(), lot.getLawName());
         }
     }
 
-    //todo gerer les differents noms possible
     private void sendToInfluxDB(List<Measurement> measurements, String sensorLotName, String lawName) {
         InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root");
         String dbName = "influxdb";
@@ -67,7 +69,7 @@ public class SslVisitor implements Visitor {
             batchPoints.point(point);
         }
 
-        System.out.println(batchPoints);
+//        System.out.println(batchPoints);
         influxDB.write(batchPoints);
 //        Query query = new Query("SELECT * FROM " + measurements.get(0).getSensorName(), dbName);
 //        System.out.println(influxDB.query(query));

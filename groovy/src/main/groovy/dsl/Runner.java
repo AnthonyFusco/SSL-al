@@ -1,9 +1,11 @@
 package dsl;
 
 import builders.LawBuilder;
+import builders.ReplayBuilder;
 import kernel.Application;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.Law;
+import kernel.structural.replay.Replay;
 import kernel.visitor.SslVisitor;
 
 import java.util.Date;
@@ -21,11 +23,20 @@ public class Runner {
         app.setStartDate(startDate);
         app.setEndDate(endDate);
 
+        //todo abstract that !!!
+
         model.getLawsBuilders().forEach(builder -> builder.validate(model));
 
         model.getLawsBuilders().forEach(builder -> {
             Law law = builder.build();
             app.getLaws().add(law);
+        });
+
+        model.getReplayBuilders().forEach(builder -> builder.validate(model));
+
+        model.getReplayBuilders().forEach(builder -> {
+            Replay replay = builder.build();
+            app.getReplays().add(replay);
         });
 
         model.getSensorsLotBuilders().forEach(builder -> builder.validate(model));

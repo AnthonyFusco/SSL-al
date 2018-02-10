@@ -44,7 +44,9 @@ abstract class SslBaseScript extends Script {
     }
 
     def replay(String name) {
-        return new ReplayBuilder(name)
+        ReplayBuilder replayBuilder = new ReplayBuilder(name)
+        ((SslBinding) getBinding()).getModel().addReplayBuilder(replayBuilder)
+        return replayBuilder
     }
 
     def addNoise(String lawTarget, int inf, int sup) {
@@ -62,12 +64,10 @@ abstract class SslBaseScript extends Script {
     }
 
     def runSimulation(String name, String startDateString, String endDateString) {
-        DateFormat format = new SimpleDateFormat("dd/mm/yyyy:hh.mm", Locale.ENGLISH)
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH)
         Date startDate = format.parse(startDateString)
         Date endDate = format.parse(endDateString)
 
-        println(startDate.toInstant().toEpochMilli())
-//        println(endDate.toInstant().toEpochMilli())
         return new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
     }
 

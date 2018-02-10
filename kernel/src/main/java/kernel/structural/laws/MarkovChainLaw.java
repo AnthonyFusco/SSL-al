@@ -27,7 +27,7 @@ public class MarkovChainLaw implements Law {
         Probabilities<Integer> p = mockNeat.probabilites(Integer.class);
 
 
-        for(int i = 0 ; i < matrix.size(); i++){
+        for (int i = 0; i < matrix.size(); i++) {
             p.add(getMatrix().get(currState).get(i), i);
         }
 
@@ -36,8 +36,7 @@ public class MarkovChainLaw implements Law {
             blockComputingNewState = true;
         }
 
-        long timestamp = System.currentTimeMillis();
-        return new Measurement<>(name, timestamp, currState+"");
+        return new Measurement<>(name, (long) t, currState + "");
     }
 
     @Override
@@ -45,7 +44,7 @@ public class MarkovChainLaw implements Law {
         return name;
     }
 
-    public List<List<Double>> getMatrix() {
+    private List<List<Double>> getMatrix() {
         return matrix;
     }
 

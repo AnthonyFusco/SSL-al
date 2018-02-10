@@ -1,16 +1,18 @@
 package builders;
 
 import dsl.SslModel;
-import kernel.behavioral.DataSourceType;
-import kernel.structural.laws.FileLaw;
+import kernel.structural.replay.CSVReplay;
+import kernel.structural.replay.Replay;
 
 import java.util.Map;
 
-public class ReplayBuilder implements EntityBuilder<FileLaw>{
+public class ReplayBuilder implements EntityBuilder<Replay>{
     private String replayName;
     private String path;
-    private DataSourceType format;
+//    private DataSourceType format;
     private Map<String, Object> columnsDescriptions;
+    private long offset = 0;
+
     public ReplayBuilder(String replayName) {
         this.replayName = replayName;
     }
@@ -20,24 +22,33 @@ public class ReplayBuilder implements EntityBuilder<FileLaw>{
         return this;
     }
 
-    public ReplayBuilder format(String format) {
+    /*public ReplayBuilder format(String format) {
         this.format = DataSourceType.valueOf(format);
         return this;
-    }
+    }*/
 
     public ReplayBuilder withColumns(Map<String, Object> columnsDescriptions) {
         this.columnsDescriptions = columnsDescriptions;
         return this;
     }
 
+    public ReplayBuilder withOffset(long offset) {
+        this.offset = offset;
+        return this;
+    }
+
+    public ReplayBuilder withNoise(String noise) {
+        return this; //todo todo :)
+    }
+
     @Override
-    public FileLaw build() {
-        FileLaw law = new FileLaw();
-        law.setName(replayName);
-        law.setDataSourceType(format);
-        law.setPath(path);
-        law.setColumnsDescriptions(columnsDescriptions);
-        return law;
+    public Replay build() {
+        CSVReplay replay = new CSVReplay(); //only csv for now
+        replay.setName(replayName);
+        replay.setPath(path);
+        replay.setColumnsDescriptions(columnsDescriptions);
+        replay.setOffset(offset);
+        return replay;
     }
 
     @Override

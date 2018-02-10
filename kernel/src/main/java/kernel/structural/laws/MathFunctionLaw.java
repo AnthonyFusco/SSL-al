@@ -22,7 +22,7 @@ public class MathFunctionLaw implements Law {
     public Measurement generateNextMeasurement(double t) {
         double value = (Double)expression.call(t);
 
-        return new Measurement<Double>(name, System.currentTimeMillis(), value);
+        return new Measurement<>(name, (long)t, value);
     }
 
     @Override

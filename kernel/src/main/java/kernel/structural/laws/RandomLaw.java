@@ -9,8 +9,7 @@ public class RandomLaw implements Law {
 
     @Override
     public Measurement generateNextMeasurement(double t) {
-        long timestamp = System.currentTimeMillis();
-        return new Measurement<>(name, timestamp, new Random().nextInt() % 10);
+        return new Measurement<>(name, (long)t, new Random().nextInt() % 10);
     }
 
     @Override
