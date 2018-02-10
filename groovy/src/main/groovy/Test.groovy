@@ -3,6 +3,8 @@
 //todo add a test for the demo
 //todo some validation
 
+resetDB()
+
 law "random1" ofType RandomLaw
 randomLaw "random2"
 

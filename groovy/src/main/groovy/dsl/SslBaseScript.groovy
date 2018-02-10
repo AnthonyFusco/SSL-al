@@ -8,11 +8,20 @@ import builders.ReplayBuilder
 import builders.SensorsLotBuilder
 import kernel.structural.laws.Law
 import kernel.structural.laws.LawType
+import org.influxdb.InfluxDB
+import org.influxdb.InfluxDBFactory
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
 abstract class SslBaseScript extends Script {
+
+    def resetDB() {
+        InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root")
+        String dbName = "influxdb"
+        influxDB.deleteDatabase(dbName)
+        influxDB.createDatabase(dbName)
+    }
 
     def law(String name) {
         [ofType: { String typeKey ->
