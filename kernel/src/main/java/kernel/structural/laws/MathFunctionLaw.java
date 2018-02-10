@@ -20,7 +20,8 @@ public class MathFunctionLaw implements Law {
 
     @Override
     public Measurement generateNextMeasurement(double t) {
-        double value = (Double)expression.call(t);
+        Integer result = (Integer) expression.call(t); //todo always an int ??
+        long value = new Long(result);
 
         return new Measurement<>(name, (long)t, value);
     }
