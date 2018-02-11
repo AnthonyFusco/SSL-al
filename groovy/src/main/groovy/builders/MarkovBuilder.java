@@ -59,6 +59,25 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
                     "Example: withMatrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])");
         }
 
+        int firstLineSize = matrix.get(0).size();
+        for (List<Double> line : matrix) {
+            if (line.size() != firstLineSize) {
+                throw new IllegalArgumentException("The matrix " + name + " isn't square");
+            }
+        }
+
+        boolean isNotSumOfOne = matrix
+                .stream()
+                .mapToDouble(doubles -> doubles
+                        .stream()
+                        .mapToDouble(aDouble -> aDouble)
+                        .sum())
+                .anyMatch(v -> Math.abs(1.0 - v) > Math.ulp(1.0));
+
+        if (isNotSumOfOne) {
+            throw new IllegalArgumentException("All lines of the matrix " + name + " must have a sum of 1");
+        }
+
         if (frequency == null) {
             System.out.println("WARNING: no frequency specified on markov chain " + name +
                     ", using default frequency of 1/s");
