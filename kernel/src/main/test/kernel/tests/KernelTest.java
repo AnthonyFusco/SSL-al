@@ -54,19 +54,7 @@ public class KernelTest {
 
     @Test
     public void randomLawTest() throws Exception {
-        RandomLaw randomLaw = new RandomLaw();
-        randomLaw.setName("randomLaw");
-
-        app.addLaw(randomLaw);
-
-        SensorsLot randomLot = new SensorsLot();
-        randomLot.setSensorsNumber(1);
-        randomLot.setLawName("randomLaw");
-        randomLot.setName("randomLot");
-        randomLot.setFrequencyValue(new Frequency(1, new Duration(1, TimeUnit.Second)).getValue());
-        randomLot.generatesSensors(randomLaw);
-
-        app.addSensorLot(randomLot);
+        addRandomLot();
 
         DatabaseHelper databaseHelper = mock(InfluxDbHelper.class);
 
@@ -89,6 +77,70 @@ public class KernelTest {
 
     @Test
     public void MarkovTest() throws Exception {
+        addMarkovLot();
+
+        DatabaseHelper databaseHelper = mock(InfluxDbHelper.class);
+
+        SslVisitor visitor = new SslVisitor(databaseHelper);
+        visitor.visit(app);
+
+        //300s = 5min
+        verify(databaseHelper, times(300))
+                .sendToDatabase(measurementsCaptor.capture(), sensorLotNameCaptor.capture(), lawNameCaptor.capture());
+
+        final List<List<Measurement>> measurementsArgument = measurementsCaptor.getAllValues();
+        final String lotArgument = sensorLotNameCaptor.getValue();
+        final String lawArgument = lawNameCaptor.getValue();
+
+        assertEquals("markovChainLaw", lawArgument);
+        assertEquals("markovLot", lotArgument);
+        assertEquals(300, measurementsArgument.size());
+        assertTrue(startDate.getTime() == measurementsArgument.get(0).get(0).getTimeStamp());
+    }
+
+    @Test
+    public void MarkovAndRandomTest() throws Exception {
+        addMarkovLot();
+        addRandomLot();
+
+        DatabaseHelper databaseHelper = mock(InfluxDbHelper.class);
+
+        SslVisitor visitor = new SslVisitor(databaseHelper);
+        visitor.visit(app);
+
+        //300s = 5min
+        verify(databaseHelper, times(600))
+                .sendToDatabase(measurementsCaptor.capture(), sensorLotNameCaptor.capture(), lawNameCaptor.capture());
+
+        final List<List<Measurement>> measurementsArgument = measurementsCaptor.getAllValues();
+
+        assertTrue(lawNameCaptor.getAllValues().contains("markovChainLaw"));
+        assertTrue(lawNameCaptor.getAllValues().contains("randomLaw"));
+
+        assertTrue(sensorLotNameCaptor.getAllValues().contains("markovLot"));
+        assertTrue(sensorLotNameCaptor.getAllValues().contains("randomLot"));
+
+        assertEquals(600, measurementsArgument.size());
+        assertTrue(startDate.getTime() == measurementsArgument.get(0).get(0).getTimeStamp());
+    }
+
+    private void addRandomLot() {
+        RandomLaw randomLaw = new RandomLaw();
+        randomLaw.setName("randomLaw");
+
+        app.addLaw(randomLaw);
+
+        SensorsLot randomLot = new SensorsLot();
+        randomLot.setSensorsNumber(1);
+        randomLot.setLawName("randomLaw");
+        randomLot.setName("randomLot");
+        randomLot.setFrequencyValue(new Frequency(1, new Duration(1, TimeUnit.Second)).getValue());
+        randomLot.generatesSensors(randomLaw);
+
+        app.addSensorLot(randomLot);
+    }
+
+    private void addMarkovLot() {
         MarkovChainLaw markovChainLaw = new MarkovChainLaw();
         markovChainLaw.setName("markovChainLaw");
         markovChainLaw.setChangeStateFrequencyValue(
@@ -111,23 +163,5 @@ public class KernelTest {
         markovLot.generatesSensors(markovChainLaw);
 
         app.addSensorLot(markovLot);
-
-        DatabaseHelper databaseHelper = mock(InfluxDbHelper.class);
-
-        SslVisitor visitor = new SslVisitor(databaseHelper);
-        visitor.visit(app);
-
-        //300s = 5min
-        verify(databaseHelper, times(300))
-                .sendToDatabase(measurementsCaptor.capture(), sensorLotNameCaptor.capture(), lawNameCaptor.capture());
-
-        final List<List<Measurement>> measurementsArgument = measurementsCaptor.getAllValues();
-        final String lotArgument = sensorLotNameCaptor.getValue();
-        final String lawArgument = lawNameCaptor.getValue();
-
-        assertEquals("markovChainLaw", lawArgument);
-        assertEquals("markovLot", lotArgument);
-        assertEquals(300, measurementsArgument.size());
-        assertTrue(startDate.getTime() == measurementsArgument.get(0).get(0).getTimeStamp());
     }
 }
