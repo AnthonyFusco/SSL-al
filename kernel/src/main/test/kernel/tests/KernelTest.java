@@ -20,7 +20,10 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -108,7 +111,7 @@ public class KernelTest {
         SslVisitor visitor = new SslVisitor(databaseHelper);
         visitor.visit(app);
 
-        //300s = 5min
+        //600s = 5min * 2sensors
         verify(databaseHelper, times(600))
                 .sendToDatabase(measurementsCaptor.capture(), sensorLotNameCaptor.capture(), lawNameCaptor.capture());
 
