@@ -22,7 +22,7 @@ public class MathFunctionLaw implements Law {
     public Measurement generateNextMeasurement(double t) {
         Integer result = (Integer) expression.call(t); //todo always an int ??
 
-        return new Measurement<>(name, (long)t, result);
+        return new Measurement<>(name, (long) t, result);
     }
 
     @Override
@@ -32,9 +32,8 @@ public class MathFunctionLaw implements Law {
 
     @Override
     public void setName(String name) {
-        this.name=name;
+        this.name = name;
     }
-
 
     public void setExpression(Closure expression) {
         this.expression = expression;

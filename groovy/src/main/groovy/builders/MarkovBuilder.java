@@ -2,11 +2,16 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.laws.MarkovChainLaw;
+import units.Duration;
 import units.Frequency;
+import units.TimeUnit;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 
 public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     private List<List<Double>> matrix;
@@ -17,15 +22,12 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     }
 
     public MarkovBuilder withMatrix(List<List<BigDecimal>> matrix) {
-        List<List<Double>> tmp = new ArrayList<>();
-        for (List<BigDecimal> lbd : matrix) {
-            List<Double> ls = new ArrayList<>();
-            for (BigDecimal bd : lbd) {
-                ls.add(bd.doubleValue());
-            }
-            tmp.add(ls);
-        }
-        this.matrix = tmp;
+        this.matrix = matrix
+                .stream()
+                .map(bigDecimals -> bigDecimals.stream()
+                        .map(BigDecimal::doubleValue)
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toList());
         return this;
     }
 
@@ -45,6 +47,29 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
 
     @Override
     public void validate(SslModel model) {
+        String name = getLawName();
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("The name of a Markov Chain must not be empty");
+        }
 
+        if (matrix == null) {
+            throw new IllegalArgumentException("Missing a matrix for the markov chain " + name +
+                    ", use the method withMatrix.");
+        }
+
+        if (matrix.isEmpty()) {
+            throw new IllegalArgumentException("The matrix of a markov chain cannot be empty.\n" +
+                    "Example: withMatrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])");
+        }
+
+        if (frequency == null) {
+            System.out.println("WARNING: no frequency specified on markov chain " + name +
+                    ", using default frequency of 1/s");
+            frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
+        }
+
+        if (frequency.getValue() <= 0 || frequency.getDuration().getValue() <= 0 || frequency.getOccurrences() <= 0) {
+            throw new IllegalArgumentException("Frequency of the markov chain " + name + " cannot be <= 0");
+        }
     }
 }
