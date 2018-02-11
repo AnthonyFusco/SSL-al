@@ -13,6 +13,7 @@ public class SslModel {
     private List<SensorsLotBuilder> sensorsLotBuilders;
     private List<LawBuilder> lawsBuilders;
     private List<ReplayBuilder> replayBuilders;
+    private List<String> lawNames;
 
     private Binding binding;
 
@@ -21,6 +22,7 @@ public class SslModel {
         sensorsLotBuilders = new ArrayList<>();
         lawsBuilders = new ArrayList<>();
         replayBuilders = new ArrayList<>();
+        lawNames = new ArrayList<>();
     }
 
     public void addSensorsBuilder(SensorsLotBuilder builder) {
@@ -28,6 +30,13 @@ public class SslModel {
     }
 
     public void addLawBuilder(LawBuilder builder) {
+        if (builder.getLawName() == null || builder.getLawName().isEmpty()) {
+            throw new IllegalArgumentException("A law name cannot be null or empty");
+        }
+        if (lawNames.contains(builder.getLawName())) {
+            throw new IllegalArgumentException("The name " + builder.getLawName() + " is already taken");
+        }
+        lawNames.add(builder.getLawName());
         lawsBuilders.add(builder);
     }
 
@@ -45,5 +54,9 @@ public class SslModel {
 
     public List<ReplayBuilder> getReplayBuilders() {
         return replayBuilders;
+    }
+
+    public List<String> getLawNames() {
+        return lawNames;
     }
 }

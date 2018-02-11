@@ -54,7 +54,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
 
         if (matrix == null) {
             throw new IllegalArgumentException("Missing a matrix for the markov chain " + name +
-                    ", use the method withMatrix.");
+                    ", use the method withMatrix");
         }
 
         if (matrix.isEmpty()) {
