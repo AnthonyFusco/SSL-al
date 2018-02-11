@@ -2,7 +2,7 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.SensorsLot;
-import units.Frequency;
+import kernel.units.Frequency;
 
 public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
     private int sensorsNumber;

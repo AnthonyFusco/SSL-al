@@ -4,9 +4,9 @@ import kernel.structural.laws.LawType
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 import org.codehaus.groovy.syntax.Types
-import units.Duration
-import units.Frequency
-import units.TimeUnit
+import kernel.units.Duration
+import kernel.units.Frequency
+import kernel.units.TimeUnit
 
 class SslDSL {
 	private GroovyShell shell

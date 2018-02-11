@@ -3,8 +3,8 @@ package builders;
 import dsl.SslModel;
 import kernel.structural.replay.CSVReplay;
 import kernel.structural.replay.Replay;
-import units.Duration;
-import units.TimeUnit;
+import kernel.units.Duration;
+import kernel.units.TimeUnit;
 
 import java.util.Map;
 

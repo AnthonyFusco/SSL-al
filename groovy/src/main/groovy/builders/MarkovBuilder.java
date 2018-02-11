@@ -2,16 +2,13 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.laws.MarkovChainLaw;
-import units.Duration;
-import units.Frequency;
-import units.TimeUnit;
+import kernel.units.Duration;
+import kernel.units.Frequency;
+import kernel.units.TimeUnit;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.DoubleStream;
 
 public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     private List<List<Double>> matrix;

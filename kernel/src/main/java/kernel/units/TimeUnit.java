@@ -1,4 +1,4 @@
-package units;
+package kernel.units;
 
 public enum TimeUnit {
     Second("s", 1.0), Minute("min", 60.0), Hour("h", 3600.0), Day("d", 86400.0);

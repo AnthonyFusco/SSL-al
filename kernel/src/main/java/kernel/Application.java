@@ -61,4 +61,16 @@ public class Application implements NamedElement, Visitable {
     public Date getStartDate() {
         return startDate;
     }
+
+    public void addReplay(Replay replay) {
+        this.replays.add(replay);
+    }
+
+    public void addLaw(Law law) {
+        this.laws.add(law);
+    }
+
+    public void addSensorLot(SensorsLot sensorsLot) {
+        this.sensorsLots.add(sensorsLot);
+    }
 }
