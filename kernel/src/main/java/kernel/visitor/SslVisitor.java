@@ -27,12 +27,12 @@ public class SslVisitor implements Visitor {
             visitSensorsLot(sensorsLot, application.getStartDate(), application.getEndDate());
         }
         for (Replay replay : application.getReplays()) {
-            visitReplay(replay);
+            visitReplay(replay, application.getStartDate());
         }
     }
 
-    private void visitReplay(Replay replay) {
-        databaseHelper.sendToDatabase(replay.getMeasurements(), replay.getName(), "Replay");
+    private void visitReplay(Replay replay, Date startDate) {
+        databaseHelper.sendToDatabase(replay.getMeasurements(startDate), replay.getName(), "Replay");
     }
 
     private void visitSensorsLot(SensorsLot lot, Date startDate, Date endDate) {

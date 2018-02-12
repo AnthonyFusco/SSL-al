@@ -8,10 +8,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CSVReplay implements Replay {
     private String name;
@@ -20,7 +17,7 @@ public class CSVReplay implements Replay {
     private long offset;
 
     @Override
-    public List<Measurement> getMeasurements() {
+    public List<Measurement> getMeasurements(Date startDate) {
         Integer tColumn = (Integer) columnsDescriptions.get("t");
         Integer sColumn = (Integer) columnsDescriptions.get("s");
         Integer vColumn = (Integer) columnsDescriptions.get("v");
@@ -36,7 +33,7 @@ public class CSVReplay implements Replay {
             List<Measurement> measurementList = new ArrayList<>();
             for (CSVRecord record : records) {
                 String s = record.get(sColumn).trim();
-                Long t = Long.parseLong(record.get(tColumn).trim()) + offset;
+                Long t = Long.parseLong(record.get(tColumn).trim()) + startDate.getTime() +  offset;
                 Object v = record.get(vColumn).trim();
                 measurementList.add(new Measurement<>(s, t, v));
             }
