@@ -18,6 +18,9 @@ public class RandomBuilder extends LawBuilder<RandomLaw> {
 
     @Override
     public void validate(SslModel model) {
-
+        String name = getLawName();
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("The name of a Random law must not be empty");
+        }
     }
 }

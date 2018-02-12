@@ -20,9 +20,9 @@ public class MathFunctionLaw implements Law {
 
     @Override
     public Measurement generateNextMeasurement(double t) {
-        Integer result = (Integer) expression.call(t); //todo always an int ??
+        Object value = expression.call(t);
 
-        return new Measurement<>(name, (long) t, result);
+        return new Measurement<Object>(name, System.currentTimeMillis(), value);
     }
 
     @Override
@@ -32,8 +32,9 @@ public class MathFunctionLaw implements Law {
 
     @Override
     public void setName(String name) {
-        this.name = name;
+        this.name=name;
     }
+
 
     public void setExpression(Closure expression) {
         this.expression = expression;

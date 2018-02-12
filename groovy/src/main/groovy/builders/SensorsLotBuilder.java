@@ -2,7 +2,9 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.SensorsLot;
+import kernel.units.Duration;
 import kernel.units.Frequency;
+import kernel.units.TimeUnit;
 
 public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
     private int sensorsNumber;
@@ -41,6 +43,21 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
 
     @Override
     public void validate(SslModel model) {
+        String name = this.name;
+        if(name == null || name.isEmpty()){
+            throw new IllegalArgumentException("The name of a Sensorlot must not be empty");
+        }
+
+        if (sensorsNumber < 1){
+            throw new IllegalArgumentException("The sensorLot" + name + "must contains at least 1 sensor");
+        }
+
+        if (frequency == null) {
+            System.out.println("WARNING: no frequency specified on SensorLot " + name +
+                    ", using default frequency of 1/s");
+            frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
+        }
+
 
     }
 }
