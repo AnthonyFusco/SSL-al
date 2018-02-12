@@ -3,9 +3,7 @@ package builders;
 import dsl.SslModel;
 import groovy.lang.Closure;
 import kernel.structural.laws.MathFunctionLaw;
-import kernel.structural.laws.MathFunctionReturnType;
 
-import java.util.Map;
 
 public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
 
