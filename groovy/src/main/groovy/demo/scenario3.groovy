@@ -31,8 +31,8 @@ law "temperatureInterieure" ofType FunctionLaw withExpressions intfunc
 
 sensorLot "SensorLumiereExt" withLaw "luminosite" withFrequency 2 / h sensorsNumber 2
 
-sensorLot "SensorTempExt" sensorsNumber 4 withLaw "temperatureExerieure"
+sensorLot "SensorTempExt" sensorsNumber 4 withLaw "temperatureExerieure" withFrequency 1/h
 
-sensorLot "SensorTempInt" sensorsNumber 4 withLaw "temperatureInterieure"
+sensorLot "SensorTempInt" sensorsNumber 4 withLaw "temperatureInterieure" withFrequency 1/h
 
 runSimulation "VoletAutomatique", "10/02/2018 07:25:00", "10/02/2018 18:30:00"
