@@ -68,7 +68,7 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
         }
 
         if (columnsDescriptions.size() < 3) {
-            System.out.println("WARNING : Columns descriptions of " + name + " is empty or not complete\n" +
+            System.out.println("\u001B[33mWARNING : Columns descriptions of " + name + " is empty or not complete\n" +
                     "Using default description : withColumns([t: 0, s: 1, v: 2])");
             Map<String, Object> defaultDescription = new HashMap<>();
             defaultDescription.put("t", 0);

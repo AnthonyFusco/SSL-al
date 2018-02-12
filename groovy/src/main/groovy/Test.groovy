@@ -19,7 +19,7 @@ law "polynomialLaw" ofType FunctionLaw withExpressions simpleExpression
 //sensorLot "polynomialLot" sensorsNumber 2 withLaw "polynomialLaw" withFrequency 1 / s
 //sensorLot "randomLot" sensorsNumber 2 withLaw "randomLaw" withFrequency 1 / s
 
-String path = "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/notATime.csv"
+String path = "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/inconsistent.csv"
 replay "file1" fromPath path withColumns([t: 0, s: 1, v: 8]) withOffset 10.s
 
 runSimulation "fac", "10/02/2018 09:25:00", "10/02/2018 09:30:00"

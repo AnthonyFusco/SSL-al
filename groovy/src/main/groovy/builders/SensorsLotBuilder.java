@@ -43,21 +43,28 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
 
     @Override
     public void validate(SslModel model) {
-        String name = this.name;
-        if(name == null || name.isEmpty()){
-            throw new IllegalArgumentException("The name of a Sensorlot must not be empty");
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("The name of a SensorLot must not be empty");
         }
 
-        if (sensorsNumber < 1){
-            throw new IllegalArgumentException("The sensorLot" + name + "must contains at least 1 sensor");
+        if (sensorsNumber <= 0) {
+            System.out.println("\u001B[33mWARNING: no sensor number specified on sensor lot " + name +
+                    ", using default number of 1");
+            sensorsNumber = 1;
         }
 
         if (frequency == null) {
-            System.out.println("WARNING: no frequency specified on SensorLot " + name +
+            System.out.println("\u001B[33mWARNING: no frequency specified on markov chain " + name +
                     ", using default frequency of 1/s");
             frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
         }
 
+        if (lawName == null || lawName.isEmpty()) {
+            throw new IllegalArgumentException("The SensorLot " + name + " must have a non empty law name");
+        }
 
+        if (!model.getLawNames().contains(lawName)) {
+            throw new IllegalArgumentException("The law of the sensorLot " + name + " does not exist");
+        }
     }
 }
