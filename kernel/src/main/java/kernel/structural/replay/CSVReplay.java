@@ -35,13 +35,10 @@ public class CSVReplay implements Replay {
 
             List<Measurement> measurementList = new ArrayList<>();
             for (CSVRecord record : records) {
-                Measurement measurement = new Measurement<>(
-                        record.get(sColumn).trim(),
-                        Long.parseLong(record.get(tColumn).trim()) + offset,
-                        record.get(vColumn).trim()
-                );
-
-                measurementList.add(measurement);
+                String s = record.get(sColumn).trim();
+                Long t = Long.parseLong(record.get(tColumn).trim()) + offset;
+                Object v = record.get(vColumn).trim();
+                measurementList.add(new Measurement<>(s, t, v));
             }
 
             return measurementList;
