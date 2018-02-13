@@ -29,9 +29,9 @@ public class InfluxDbHelper implements DatabaseHelper {
             Map<String, Object> map = new HashMap<>();
             map.put("value", measurement.getValue());
 
-            Point point = Point.measurement(sensorLotName)
+            Point point = Point.measurement(sensorLotName + measurement.getSensorName())
                     .time(measurement.getTimeStamp(), TimeUnit.MILLISECONDS)
-                    .addField("sensorName", measurement.getSensorName())
+                    .addField("sensorLot", sensorLotName)
                     .addField("law", lawName)
                     .fields(map)
                     .build();

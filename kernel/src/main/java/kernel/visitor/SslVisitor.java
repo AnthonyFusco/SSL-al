@@ -35,7 +35,7 @@ public class SslVisitor implements Visitor {
         List<Measurement> measurements = replay.getMeasurements(startDate);
         System.out.println("Starting the replay " + replay.getName() + " (" + measurements.size() + " values)");
         databaseHelper.sendToDatabase(measurements, replay.getName(), "Replay");
-        System.out.println(replay.getName() + " done");
+        System.out.println(replay.getName() + " done\n");
     }
 
     private void visitSensorsLot(SensorsLot lot, Date startDate, Date endDate) {
@@ -57,6 +57,6 @@ public class SslVisitor implements Visitor {
             databaseHelper.sendToDatabase(measurements, lot.getName(), lot.getLawName());
         }
 
-        System.out.println(lot.getName() + " done");
+        System.out.println(lot.getName() + " done\n");
     }
 }

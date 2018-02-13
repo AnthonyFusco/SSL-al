@@ -8,6 +8,9 @@ import builders.ReplayBuilder
 import builders.SensorsLotBuilder
 import kernel.structural.laws.Law
 import kernel.structural.laws.LawType
+import kernel.units.Duration
+import kernel.units.Frequency
+import kernel.units.TimeUnit
 import org.influxdb.InfluxDB
 import org.influxdb.InfluxDBFactory
 
@@ -33,6 +36,13 @@ abstract class SslBaseScript extends Script {
 
     def randomLaw(String name) {
         law(name).ofType(LawType.RandomLaw.toString())
+    }
+
+    def parkingLaw(String name) {
+        MarkovBuilder builder = (MarkovBuilder)law(name).ofType(LawType.MarkovLaw.toString())
+        builder.changeStateFrequency(new Frequency(2, new Duration(1, TimeUnit.Hour)))
+        builder.withMatrix([[0.7, 0.3], [0.8, 0.2]])
+        return builder
     }
 
     static LawBuilder<? extends Law> lawFactory(String name, String typeKey) {
