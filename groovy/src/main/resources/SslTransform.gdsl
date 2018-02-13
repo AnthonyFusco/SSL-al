@@ -1,25 +1,44 @@
 contribute(currentType('groovy.lang.Script')) {
     method name: 'law', type: 'builders.LawBuilder', params: [name: 'java.lang.String']
     method name: 'sensorLot', type: 'builders.SensorsLotBuilder', params: [name: 'java.lang.String']
+
+    method name: 'replay', type: 'builders.ReplayBuilder', params: [name: 'java.lang.String']
+    method name: 'runSimulation', type: 'void', params: [
+            name: 'java.lang.String',
+            begin:'java.lang.String',
+            end:'java.lang.String'
+    ]
+    method name: 'parkingLaw', type: 'builders.MarkovBuilder', params: [name: 'java.lang.String']
+    method name: 'randomLaw', type: 'void', params: [name: 'java.lang.String']
+    method name: 'parkingComposite', type: 'builders.CompositeBuilder', params: [name: 'java.lang.String']
+    method name: 'composite', type: 'builders.CompositeBuilder', params: [name: 'java.lang.String']
+    method name: 'resetDB', type: 'void'
 }
+
 
 contribute(currentType('builders.SensorsLotBuilder')){
     method name: 'sensorsNumber', type: 'builders.SensorsLotBuilder', params: [n: 'java.lang.Integer']
     method name: 'withLaw', type: 'builders.SensorsLotBuilder', params: [law: 'java.lang.String']
-    method name: 'withDuration', type: 'builders.SensorsLotBuilder', params: [duration: 'java.lang.Integer']
+    method name: 'withFrequency', type: 'builders.SensorsLotBuilder', params: [freq: 'kernel.units.Frequency']
 }
+
 
 
 
 contribute(currentType('builders.LawBuilder')){
 
     method name: 'ofType', type: 'builders.LawBuilder',
-            params: [args: [
-                    parameter(name: 'RandomLaw', type: 'java.lang.String'),
-                    parameter(name: 'MarkovLaw', type: 'java.lang.String'),
-                    parameter(name: 'FunctionLaw', type: 'java.lang.String')
-            ]]
+            params: [type: 'java.lang.String']
 }
+
+/*contribute(currentType('typeLaw')){
+
+
+      property(name: 'RandomLaw', type: 'java.lang.String')
+      property(name: 'MarkovLaw', type: 'java.lang.String')
+      property(name: 'FunctionLaw', type: 'java.lang.String')
+
+}*/
 /*
 contribute(currentType('StatesDeclaration')){
     method name: 'transitions', type: 'TransitionDeclaration', params: [from: 'java.lang.String']
@@ -33,6 +52,3 @@ contribute(currentType('TransitionDeclaration')){
 
 
 */
-
-
-
