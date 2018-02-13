@@ -50,6 +50,7 @@ class SslDSL {
 			//language tokens allowed
 			tokensWhitelist= [
 					Types.DIVIDE,
+					Types.PLUS,
 					Types.MULTIPLY,
 					Types.POWER,
 					Types.EQUAL,

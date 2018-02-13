@@ -4,11 +4,13 @@ import kernel.Application;
 import kernel.Measurement;
 import kernel.structural.Sensor;
 import kernel.structural.SensorsLot;
+import kernel.structural.composite.Composite;
 import kernel.structural.replay.Replay;
+import kernel.units.Duration;
+import kernel.units.Frequency;
+import kernel.units.TimeUnit;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class SslVisitor implements Visitor {
 
@@ -29,6 +31,27 @@ public class SslVisitor implements Visitor {
         for (Replay replay : application.getReplays()) {
             visitReplay(replay, application.getStartDate());
         }
+        for (Composite composite : application.getComposites()) {
+            visitComposite(composite, application.getStartDate(), application.getEndDate());
+        }
+    }
+
+    private void visitComposite(Composite composite, Date startDate, Date endDate) {
+        double startTime = startDate.getTime();
+        double endTime = endDate.getTime();
+        double period = 1.0 / composite.getFrequency().getValue();
+        int numberIterations = (int) ((endTime - startTime) / period);
+        System.out.println("Starting the composite " + composite.getName() + " (" + numberIterations + " points)");
+
+        for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
+            Measurement measurement = composite.generateNextMeasurement(t);
+            databaseHelper.sendToDatabase(
+                    Collections.singletonList(measurement),
+                    "composite_",
+                    "composite"); //composite lot law
+        }
+
+        System.out.println(composite.getName() + " done\n");
     }
 
     private void visitReplay(Replay replay, Date startDate) {

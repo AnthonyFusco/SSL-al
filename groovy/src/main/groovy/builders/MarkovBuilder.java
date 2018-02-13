@@ -80,12 +80,12 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
 
         if (frequency == null) {
             System.out.println("\u001B[33mWARNING: no frequency specified on markov chain " + name +
-                    ", using default frequency of 1/s");
+                    ", using default frequency of 1/s\u001B[37m");
             frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
         }
 
         if (frequency.getValue() <= 0 || frequency.getDuration().getValue() <= 0 || frequency.getOccurrences() <= 0) {
-            throw new IllegalArgumentException("Frequency of the markov chain " + name + " cannot be <= 0");
+            throw new IllegalArgumentException("Frequency of the markov chain " + name + " cannot be <= 0\u001B[37m");
         }
     }
 }

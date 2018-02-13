@@ -1,5 +1,6 @@
 package dsl;
 
+import builders.CompositeBuilder;
 import builders.LawBuilder;
 import builders.ReplayBuilder;
 import builders.SensorsLotBuilder;
@@ -14,6 +15,7 @@ public class SslModel {
     private List<LawBuilder> lawsBuilders;
     private List<ReplayBuilder> replayBuilders;
     private List<String> lawNames;
+    private List<CompositeBuilder> compositesBuilders;
 
     private Binding binding;
 
@@ -23,6 +25,7 @@ public class SslModel {
         lawsBuilders = new ArrayList<>();
         replayBuilders = new ArrayList<>();
         lawNames = new ArrayList<>();
+        compositesBuilders = new ArrayList<>();
     }
 
     public void addSensorsBuilder(SensorsLotBuilder builder) {
@@ -38,6 +41,10 @@ public class SslModel {
         }
         lawNames.add(builder.getLawName());
         lawsBuilders.add(builder);
+    }
+
+    public void addCompositeBuilder(CompositeBuilder compositeBuilder) {
+        compositesBuilders.add(compositeBuilder);
     }
 
     public void addReplayBuilder(ReplayBuilder replayBuilder) {
@@ -58,5 +65,9 @@ public class SslModel {
 
     public List<String> getLawNames() {
         return lawNames;
+    }
+
+    public List<CompositeBuilder> getCompositesBuilders() {
+        return compositesBuilders;
     }
 }

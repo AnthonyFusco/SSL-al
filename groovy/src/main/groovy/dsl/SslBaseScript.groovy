@@ -1,5 +1,6 @@
 package dsl
 
+import builders.CompositeBuilder
 import builders.LawBuilder
 import builders.MarkovBuilder
 import builders.MathFunctionBuilder
@@ -34,6 +35,19 @@ abstract class SslBaseScript extends Script {
         }]
     }
 
+    def composite(String name) {
+        CompositeBuilder builder = new CompositeBuilder<>(name)
+        ((SslBinding) getBinding()).getModel().addCompositeBuilder(builder)
+        return builder
+    }
+
+    //composite "eurecom" withLots (["top", "bot"]) filter({x -> x == x}) map({x -> x}) reduce({res, sensor -> res + sensor}) withFrequency 2 / h
+    def parkingComposite(String name) {
+        CompositeBuilder builder = composite(name)
+        builder.filter({x -> x == x}).map({x -> x}).reduce({res, sensor -> res + sensor}).withFrequency(2 / h)
+        return builder
+    }
+
     def randomLaw(String name) {
         law(name).ofType(LawType.RandomLaw.toString())
     }
@@ -66,14 +80,6 @@ abstract class SslBaseScript extends Script {
         ReplayBuilder replayBuilder = new ReplayBuilder(name)
         ((SslBinding) getBinding()).getModel().addReplayBuilder(replayBuilder)
         return replayBuilder
-    }
-
-    def addNoise(String lawTarget, int inf, int sup) {
-        //TODO apply noise to law
-    }
-
-    def addOffset(String lawTarget, int offset) {
-        //TODO apply offset to law
     }
 
     def sensorLot(String name) {

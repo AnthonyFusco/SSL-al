@@ -2,14 +2,19 @@ package dsl;
 
 import builders.LawBuilder;
 import builders.ReplayBuilder;
+import builders.SensorsLotBuilder;
 import kernel.Application;
 import kernel.structural.SensorsLot;
+import kernel.structural.composite.Composite;
 import kernel.structural.laws.Law;
 import kernel.structural.replay.Replay;
 import kernel.visitor.SslVisitor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Runner {
     private SslModel model;
@@ -22,8 +27,6 @@ public class Runner {
         final Application app = new Application();
         app.setStartDate(startDate);
         app.setEndDate(endDate);
-
-        //todo abstract that !!!
 
         model.getLawsBuilders().forEach(builder -> builder.validate(model));
 
@@ -48,6 +51,16 @@ public class Runner {
             app.getSensorsLots().add(lot);
         });
 
+        model.getCompositesBuilders().forEach(builder -> builder.validate(model));
+
+        model.getCompositesBuilders().forEach(builder -> {
+            Composite composite = builder.build();
+            List<SensorsLot> lots = composite.getSensorsLotsNames().stream()
+                    .map(lotName -> findSensorLotByName(app, lotName)).collect(Collectors.toList());
+            composite.setSensorsLots(lots);
+            app.addComposite(composite);
+        });
+
         SslVisitor visitor = new SslVisitor();
         visitor.visit(app);
     }
@@ -60,7 +73,12 @@ public class Runner {
             builder.validate(model);
             return builder.build();
         }
-
         return null;
+    }
+
+    private SensorsLot findSensorLotByName(Application app, String lotName) {
+        Optional<SensorsLot> lotOpt =
+                app.getSensorsLots().stream().filter(sensorsLot -> sensorsLot.getName().equals(lotName)).findFirst();
+        return lotOpt.orElse(null);
     }
 }

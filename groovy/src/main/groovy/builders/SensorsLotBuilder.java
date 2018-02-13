@@ -31,6 +31,10 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
         return this;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public SensorsLot build() {
         SensorsLot result = new SensorsLot();
@@ -49,13 +53,13 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
 
         if (sensorsNumber <= 0) {
             System.out.println("\u001B[33mWARNING: no sensor number specified on sensor lot " + name +
-                    ", using default number of 1");
+                    ", using default number of 1\u001B[37m");
             sensorsNumber = 1;
         }
 
         if (frequency == null) {
             System.out.println("\u001B[33mWARNING: no frequency specified on sensor lot " + name +
-                    ", using default frequency of 1/s");
+                    ", using default frequency of 1/s\u001B[37m");
             frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
         }
 
