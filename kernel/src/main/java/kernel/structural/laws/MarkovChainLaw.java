@@ -15,7 +15,6 @@ public class MarkovChainLaw implements Law {
 
     private boolean blockComputingNewState = false;
     private double lastTimeCompute = 0;
-    Random r = new Random();
 
 
 
@@ -27,26 +26,20 @@ public class MarkovChainLaw implements Law {
             blockComputingNewState = false;
         }
 
-        int valeur = -9999;
-        List<Double> tmp = getMatrix().get(currState);
-        double piece = r.nextDouble();
-        for(int i = 0; i < tmp.size(); i++){
-            piece = r.nextDouble();
-            if(i == tmp.size() -1){
-                valeur = i;
-            }else{
-                if(piece < tmp.get(i)){
-                    valeur = i;
-                    break;
-                }
-            }
+        MockNeat mockNeat = MockNeat.threadLocal();
+        Probabilities<Integer> p = mockNeat.probabilites(Integer.class);
+
+
+        for(int i = 0 ; i < matrix.size(); i++){
+            System.out.println(i);
+            p.add(getMatrix().get(currState).get(i), i);
         }
 
+        currState = p.val();
         /*if (!blockComputingNewState) {
-            currState = valeur;
+            currState = p.val();
             blockComputingNewState = true;
         }*/
-        currState = valeur;
         return new Measurement<>(name, (long) t, currState + "");
     }
 
