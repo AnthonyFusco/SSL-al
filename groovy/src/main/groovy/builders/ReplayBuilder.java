@@ -12,6 +12,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
     //private DataSourceType format;
     private Map<String, Object> columnsDescriptions;
     private Duration offset = new Duration(0, TimeUnit.Second);
+    private List<Integer> noise;
 
     public ReplayBuilder(String name) {
         this.name = name;
@@ -47,7 +49,8 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
         return this;
     }
 
-    public ReplayBuilder withNoise(String noise) {
+    public ReplayBuilder withNoise(List<Integer> noise) {
+        this.noise = noise;
         return this; //todo todo :)
     }
 
@@ -58,6 +61,7 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
         replay.setPath(path);
         replay.setColumnsDescriptions(columnsDescriptions);
         replay.setOffset((long) offset.getValue());
+        replay.setNoise(this.noise);
         return replay;
     }
 
@@ -129,6 +133,12 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
         } catch (IOException e) {
             System.out.println("Error while parsing the CSV file for replay " + name);
             e.printStackTrace();
+        }
+
+        if(noise != null){
+            if (noise.size() != 2){
+                throw new IllegalArgumentException("You must specify a valid noise interval");
+            }
         }
     }
 }
