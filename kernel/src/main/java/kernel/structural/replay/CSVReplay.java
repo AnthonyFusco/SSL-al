@@ -15,12 +15,16 @@ public class CSVReplay implements Replay {
     private String path;
     private Map<String, Object> columnsDescriptions = new HashMap<>();
     private long offset;
+    private List<Integer> noise;
 
     @Override
     public List<Measurement> getMeasurements(Date startDate) {
         Integer tColumn = (Integer) columnsDescriptions.get("t");
         Integer sColumn = (Integer) columnsDescriptions.get("s");
         Integer vColumn = (Integer) columnsDescriptions.get("v");
+
+        int noiseValue = 0;
+
         try {
             File csvData = new File(path);
             CSVParser parser = CSVParser.parse(csvData, Charset.defaultCharset(), CSVFormat.DEFAULT);
@@ -35,6 +39,13 @@ public class CSVReplay implements Replay {
                 String s = record.get(sColumn).trim();
                 Long t = Long.parseLong(record.get(tColumn).trim()) + startDate.getTime() +  offset;
                 Object v = record.get(vColumn).trim();
+                if(noise != null){
+                    int inf = noise.get(0);
+                    int sup = noise.get(1);
+                    noiseValue = new Random()
+                            .nextInt(sup + 1 - inf) + inf;
+                    v = Double.parseDouble((String) v) + noiseValue;
+                }
                 measurementList.add(new Measurement<>(s, t, v));
             }
 
@@ -65,5 +76,9 @@ public class CSVReplay implements Replay {
 
     public void setOffset(long offset) {
         this.offset = offset;
+    }
+
+    public void setNoise(List<Integer> noise) {
+        this.noise = noise;
     }
 }

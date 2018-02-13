@@ -49,7 +49,8 @@ abstract class SslBaseScript extends Script {
     }
 
     def randomLaw(String name) {
-        law(name).ofType(LawType.RandomLaw.toString())
+        RandomBuilder builder = law(name).ofType(LawType.RandomLaw.toString())
+        builder.withinRange(([0,10]))
     }
 
     def parkingLaw(String name) {

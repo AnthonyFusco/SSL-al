@@ -2,7 +2,7 @@ package demo
 
 resetDB()
 
-law "Alpha" ofType RandomLaw
+law "Alpha" ofType RandomLaw withinRange ([0,10])
 
 randomLaw "Beta"
 
