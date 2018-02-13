@@ -2,6 +2,7 @@ package kernel.structural.laws;
 
 import kernel.Measurement;
 import net.andreinc.mockneat.MockNeat;
+import net.andreinc.mockneat.types.enums.RandomType;
 import net.andreinc.mockneat.unit.objects.Probabilities;
 
 import java.util.*;
@@ -14,6 +15,9 @@ public class MarkovChainLaw implements Law {
 
     private boolean blockComputingNewState = false;
     private double lastTimeCompute = 0;
+    Random r = new Random();
+
+
 
     @Override
     public Measurement generateNextMeasurement(double t) {
@@ -23,19 +27,26 @@ public class MarkovChainLaw implements Law {
             blockComputingNewState = false;
         }
 
-        MockNeat mockNeat = MockNeat.threadLocal();
-        Probabilities<Integer> p = mockNeat.probabilites(Integer.class);
-
-
-        for (int i = 0; i < matrix.size(); i++) {
-            p.add(getMatrix().get(currState).get(i), i);
+        int valeur = -9999;
+        List<Double> tmp = getMatrix().get(currState);
+        double piece = r.nextDouble();
+        for(int i = 0; i < tmp.size(); i++){
+            piece = r.nextDouble();
+            if(i == tmp.size() -1){
+                valeur = i;
+            }else{
+                if(piece < tmp.get(i)){
+                    valeur = i;
+                    break;
+                }
+            }
         }
 
-        if (!blockComputingNewState) {
-            currState = p.val();
+        /*if (!blockComputingNewState) {
+            currState = valeur;
             blockComputingNewState = true;
-        }
-
+        }*/
+        currState = valeur;
         return new Measurement<>(name, (long) t, currState + "");
     }
 
