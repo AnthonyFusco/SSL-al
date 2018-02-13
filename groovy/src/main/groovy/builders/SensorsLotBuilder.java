@@ -54,7 +54,7 @@ public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
         }
 
         if (frequency == null) {
-            System.out.println("\u001B[33mWARNING: no frequency specified on markov chain " + name +
+            System.out.println("\u001B[33mWARNING: no frequency specified on sensor lot " + name +
                     ", using default frequency of 1/s");
             frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
         }
