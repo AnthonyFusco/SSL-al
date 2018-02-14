@@ -46,23 +46,24 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     public void validate(SslModel model) {
         String name = getLawName();
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("The name of a Markov Chain must not be empty");
+            addError(new IllegalArgumentException("The name of a Markov Chain must not be empty"));
         }
 
         if (matrix == null) {
-            throw new IllegalArgumentException("Missing a matrix for the markov chain " + name +
-                    ", use the method withMatrix");
+            addError(new IllegalArgumentException("Missing a matrix for the markov chain " + name +
+                    ", use the method withMatrix"));
         }
 
         if (matrix.isEmpty()) {
-            throw new IllegalArgumentException("The matrix of a markov chain cannot be empty.\n" +
-                    "Example: withMatrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])");
+            addError(new IllegalArgumentException("The matrix of a markov chain cannot be empty.\n" +
+                    "Example: withMatrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])"));
         }
 
         int firstLineSize = matrix.get(0).size();
         for (List<Double> line : matrix) {
             if (line.size() != firstLineSize) {
-                throw new IllegalArgumentException("The matrix " + name + " isn't square");
+                addError(new IllegalArgumentException("The matrix " + name + " isn't square"));
+                break;
             }
         }
 
@@ -75,7 +76,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
                 .anyMatch(v -> Math.abs(1.0 - v) > Math.ulp(1.0));
 
         if (isNotSumOfOne) {
-            throw new IllegalArgumentException("All lines of the matrix " + name + " must have a sum of 1");
+            addError(new IllegalArgumentException("All lines of the matrix " + name + " must have a sum of 1"));
         }
 
         if (frequency == null) {
@@ -85,7 +86,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
         }
 
         if (frequency.getValue() <= 0 || frequency.getDuration().getValue() <= 0 || frequency.getOccurrences() <= 0) {
-            throw new IllegalArgumentException("Frequency of the markov chain " + name + " cannot be <= 0\u001B[37m");
+            addError(new IllegalArgumentException("Frequency of the markov chain " + name + " cannot be <= 0\u001B[37m"));
         }
     }
 }

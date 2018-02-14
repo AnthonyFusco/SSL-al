@@ -1,6 +1,7 @@
 package builders;
 
 import dsl.SslModel;
+import kernel.structural.composite.Composite;
 import kernel.structural.replay.CSVReplay;
 import kernel.structural.replay.Replay;
 import kernel.units.Duration;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReplayBuilder implements EntityBuilder<Replay> {
+public class ReplayBuilder extends AbstractEntityBuilder<Replay> {
     private String name;
     private String path;
     //private DataSourceType format;
@@ -68,7 +69,7 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
     @Override
     public void validate(SslModel model) {
         if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("The name of a Replay must not be empty");
+            addError(new IllegalArgumentException("The name of a Replay must not be empty"));
         }
 
         if (columnsDescriptions.size() < 3) {
@@ -82,19 +83,19 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
         }
 
         if (path == null || path.isEmpty()) {
-            throw new IllegalArgumentException("The path of " + name + " must not be empty");
+            addError(new IllegalArgumentException("The path of " + name + " must not be empty"));
         }
 
         File file = new File(path);
         if (!file.exists() || !file.canRead() || !file.isFile()) {
-            throw new IllegalArgumentException("The path of " + name + " must be a valid file");
+            addError(new IllegalArgumentException("The path of " + name + " must be a valid file"));
         }
 
         try {
             CSVParser parser = CSVParser.parse(file, Charset.defaultCharset(), CSVFormat.DEFAULT);
             List<CSVRecord> records = parser.getRecords();
             if (records.isEmpty()) {
-                throw new IllegalArgumentException("The csv file of " + name + " must not be empty");
+                addError(new IllegalArgumentException("The csv file of " + name + " must not be empty"));
             }
 
             int isAllConsistent = (int) records.stream()
@@ -102,8 +103,8 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
                     .distinct()
                     .count();
             if (isAllConsistent > 1) {
-                throw new IllegalArgumentException("The csv file of " + name +
-                        " is inconsistent (all lines must have the same number of columns)");
+                addError(new IllegalArgumentException("The csv file of " + name +
+                        " is inconsistent (all lines must have the same number of columns)"));
             }
 
             Integer tColumn = (Integer) columnsDescriptions.get("t");
@@ -115,20 +116,20 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
             //parsing the whole file might be long...
             String s = records.get(0).get(sColumn);
             if (s == null) {
-                throw new IllegalArgumentException("The s column of CSV " + name + " is not correct");
+                addError(new IllegalArgumentException("The s column of CSV " + name + " is not correct"));
             }
             Object v = records.get(0).get(vColumn);
             if (v == null) {
-                throw new IllegalArgumentException("The v column of CSV " + name + " is not correct");
+                addError(new IllegalArgumentException("The v column of CSV " + name + " is not correct"));
             }
             Object t = records.get(0).get(tColumn);
             if (t == null) {
-                throw new IllegalArgumentException("The t column of CSV " + name + " is not correct");
+                addError(new IllegalArgumentException("The t column of CSV " + name + " is not correct"));
             }
             try {
                 long l = Long.parseLong(t.toString());
             } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("The t column of CSV " + name + " is not a time");
+                addError(new IllegalArgumentException("The t column of CSV " + name + " is not a time"));
             }
         } catch (IOException e) {
             System.out.println("Error while parsing the CSV file for replay " + name);
@@ -137,7 +138,7 @@ public class ReplayBuilder implements EntityBuilder<Replay> {
 
         if(noise != null){
             if (noise.size() != 2){
-                throw new IllegalArgumentException("You must specify a valid noise interval");
+                addError(new IllegalArgumentException("You must specify a valid noise interval"));
             }
         }
     }

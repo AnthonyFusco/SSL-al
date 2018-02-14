@@ -31,16 +31,16 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
     public void validate(SslModel model) {
         String name = getLawName();
         if(name == null || name.isEmpty()){
-            throw new IllegalArgumentException("The name of a MathFunction must not be empty");
+            addError(new IllegalArgumentException("The name of a MathFunction must not be empty"));
         }
 
         if (mapExpressionsConditions == null) {
-            throw new IllegalArgumentException("Missing a body for" + name +
-                    ", please define a lambda. Example lam = { x -> x+1}");
+            addError(new IllegalArgumentException("Missing a body for" + name +
+                    ", please define a lambda. Example lam = { x -> x+1}"));
         }
 
         if (mapExpressionsConditions.getMaximumNumberOfParameters() != 1){
-            throw new IllegalArgumentException("Math laws are function of time, they should take only one parameter.");
+            addError(new IllegalArgumentException("Math laws are function of time, they should take only one parameter."));
         }
     }
 }

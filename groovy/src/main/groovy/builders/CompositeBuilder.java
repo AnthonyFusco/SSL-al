@@ -9,7 +9,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class CompositeBuilder implements EntityBuilder<Composite> {
+public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
     private String compositeName;
     private List<String> lots;
     private Predicate<? super Double> filterPredicate;

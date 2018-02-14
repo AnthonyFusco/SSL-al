@@ -1,5 +1,6 @@
 package dsl;
 
+import builders.CompositeBuilder;
 import builders.LawBuilder;
 import builders.ReplayBuilder;
 import builders.SensorsLotBuilder;
@@ -28,21 +29,48 @@ public class Runner {
         app.setStartDate(startDate);
         app.setEndDate(endDate);
 
-        model.getLawsBuilders().forEach(builder -> builder.validate(model));
+        model.getLawsBuilders().forEach(builder -> {
+            builder.validate(model);
+            builder.printErrors();
+        });
+
+        for (LawBuilder lawBuilder : model.getLawsBuilders()) {
+            if (lawBuilder.isInErrorState()) {
+                return;
+            }
+        }
 
         model.getLawsBuilders().forEach(builder -> {
             Law law = builder.build();
             app.getLaws().add(law);
         });
 
-        model.getReplayBuilders().forEach(builder -> builder.validate(model));
+        model.getReplayBuilders().forEach(builder -> {
+            builder.validate(model);
+            builder.printErrors();
+        });
+
+        for (ReplayBuilder replayBuilder : model.getReplayBuilders()) {
+            if (replayBuilder.isInErrorState()) {
+                return;
+            }
+        }
 
         model.getReplayBuilders().forEach(builder -> {
             Replay replay = builder.build();
             app.getReplays().add(replay);
         });
 
-        model.getSensorsLotBuilders().forEach(builder -> builder.validate(model));
+        model.getSensorsLotBuilders().forEach(builder -> {
+            builder.validate(model);
+            builder.printErrors();
+        });
+
+        for (SensorsLotBuilder lotBuilder : model.getSensorsLotBuilders()) {
+            if (lotBuilder.isInErrorState()) {
+                return;
+            }
+        }
 
         model.getSensorsLotBuilders().forEach(builder -> {
             SensorsLot lot = builder.build();
@@ -51,7 +79,16 @@ public class Runner {
             app.getSensorsLots().add(lot);
         });
 
-        model.getCompositesBuilders().forEach(builder -> builder.validate(model));
+        model.getCompositesBuilders().forEach(builder -> {
+            builder.validate(model);
+            builder.printErrors();
+        });
+
+        for (CompositeBuilder compositeBuilder : model.getCompositesBuilders()) {
+            if (compositeBuilder.isInErrorState()) {
+                return;
+            }
+        }
 
         model.getCompositesBuilders().forEach(builder -> {
             Composite composite = builder.build();
@@ -70,7 +107,7 @@ public class Runner {
                 model.getLawsBuilders().stream().filter(law -> law.getLawName().equals(lawName)).findFirst();
         if (builderOpt.isPresent()) {
             LawBuilder builder = builderOpt.get();
-            builder.validate(model);
+            //builder.validate(model);
             return builder.build();
         }
         return null;

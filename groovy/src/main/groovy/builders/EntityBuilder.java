@@ -6,4 +6,5 @@ public interface EntityBuilder<T> {
     T build();
 
     void validate(SslModel model);
+
 }

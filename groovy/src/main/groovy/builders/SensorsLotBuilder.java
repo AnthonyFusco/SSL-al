@@ -2,11 +2,12 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.SensorsLot;
+import kernel.structural.composite.Composite;
 import kernel.units.Duration;
 import kernel.units.Frequency;
 import kernel.units.TimeUnit;
 
-public class SensorsLotBuilder implements EntityBuilder<SensorsLot> {
+public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
     private int sensorsNumber;
     private String lawName;
     private String name;
