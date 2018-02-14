@@ -56,7 +56,7 @@ abstract class SslBaseScript extends Script {
     def parkingLaw(String name) {
         MarkovBuilder builder = (MarkovBuilder)law(name).ofType(LawType.MarkovLaw.toString())
         builder.changeStateFrequency(new Frequency(2, new Duration(1, TimeUnit.Hour)))
-        builder.withMatrix([[0.7, 0.3], [0.8, 0.2]])
+        builder.withMatrix([[0.3, 0.7], [0.2, 0.8]])
         return builder
     }
 

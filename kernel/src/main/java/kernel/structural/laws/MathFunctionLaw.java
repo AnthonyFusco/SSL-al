@@ -17,12 +17,18 @@ public class MathFunctionLaw implements Law {
 
     private String name;
     private Closure expression;
+    private int counter;
+
+    public MathFunctionLaw() {
+        counter = 0;
+    }
 
     @Override
     public Measurement generateNextMeasurement(double t) {
-        Object value = expression.call(t);
-
-        return new Measurement<>(name, System.currentTimeMillis(), value);
+        System.out.println(counter);
+        Object value = expression.call(counter);
+        counter++;
+        return new Measurement<>(name, (long) t, value);
     }
 
     @Override

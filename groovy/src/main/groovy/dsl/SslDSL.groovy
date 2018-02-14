@@ -61,7 +61,8 @@ class SslDSL {
 					Types.COMPARE_LESS_THAN_EQUAL,
 					Types.COMPARE_GREATER_THAN,
 					Types.COMPARE_GREATER_THAN_EQUAL,
-					Types.ASSIGN
+					Types.ASSIGN,
+					Types.POWER
 			]
 			//types allowed to be used  (including primitive types)
 			constantTypesClassesWhiteList= [
