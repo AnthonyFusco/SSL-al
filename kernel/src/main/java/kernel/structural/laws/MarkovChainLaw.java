@@ -31,7 +31,6 @@ public class MarkovChainLaw implements Law {
 
 
         for(int i = 0 ; i < matrix.size(); i++){
-            System.out.println(i);
             p.add(getMatrix().get(currState).get(i), i);
         }
 
