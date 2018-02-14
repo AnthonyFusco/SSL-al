@@ -25,10 +25,7 @@ public class RandomBuilder extends LawBuilder<RandomLaw> {
     }
 
     public RandomBuilder withinRange(List<Integer> range){
-        System.out.println("RANGE -> " + range);
         this.bornes = range;
-        System.out.println("BORNE -> " + this.bornes);
-
         return this;
     }
 
