@@ -44,6 +44,7 @@ class SslDSL {
 			staticStarImportsWhitelist= []
 //			tokensBlacklist= []
 			tokensWhitelist= [
+					Types.PLUS_PLUS,
 					Types.DIVIDE,
 					Types.PLUS,
 					Types.MULTIPLY,
