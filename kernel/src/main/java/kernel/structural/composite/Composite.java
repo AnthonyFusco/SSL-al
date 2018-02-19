@@ -1,10 +1,11 @@
 package kernel.structural.composite;
 
 import kernel.Measurement;
-import kernel.structural.Sensor;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.DataSource;
 import kernel.units.Frequency;
+import kernel.visitor.Visitable;
+import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Composite implements DataSource {
+public class Composite implements DataSource, Visitable {
     private String name;
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
@@ -25,6 +26,7 @@ public class Composite implements DataSource {
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
+
         List<Double> values = new ArrayList<>();
         for (SensorsLot sensorsLot : sensorsLots) {
             List<Measurement> measurements = sensorsLot.generateNextMeasurement(t);
@@ -69,19 +71,24 @@ public class Composite implements DataSource {
         this.sensorsLots = sensorsLots;
     }
 
+    public List<String> getSensorsLotsNames() {
+        return sensorsLotsNames;
+    }
+
     public void setSensorsLotsNames(List<String> sensorsLotsNames) {
         this.sensorsLotsNames = sensorsLotsNames;
     }
 
-    public List<String> getSensorsLotsNames() {
-        return sensorsLotsNames;
+    public Frequency getFrequency() {
+        return frequency;
     }
 
     public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
     }
 
-    public Frequency getFrequency() {
-        return frequency;
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

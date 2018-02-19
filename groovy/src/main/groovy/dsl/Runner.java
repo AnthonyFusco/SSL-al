@@ -29,6 +29,8 @@ public class Runner {
 
         if (anyError()) return;
 
+        app.setToPlay(model.getToPlay());
+
         dispatchDataSourcesByType(app);
 
         addLawToSensorLot(app);
@@ -36,7 +38,7 @@ public class Runner {
         addSensorLotToComposite(app);
 
         SslVisitor visitor = new SslVisitor();
-        visitor.visit(app);
+        app.accept(visitor);
     }
 
     private void validateDataSources() {

@@ -2,6 +2,7 @@ package kernel.structural.replay;
 
 import kernel.Measurement;
 import kernel.structural.laws.DataSource;
+import kernel.visitor.Visitor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -81,5 +82,10 @@ public class CSVReplay implements Replay {
 
     public void setNoise(List<Integer> noise) {
         this.noise = noise;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

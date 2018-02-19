@@ -19,6 +19,7 @@ public class Application implements NamedElement, Visitable {
     private String name;
     private Date endDate;
     private Date startDate;
+    private List<String> toPlay = new ArrayList<>();
 
     public List<DataSource> getDataSources() {
         return dataSources;
@@ -51,20 +52,20 @@ public class Application implements NamedElement, Visitable {
         visitor.visit(this);
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
     public Date getEndDate() {
         return endDate;
     }
 
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     public Date getStartDate() {
         return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
     public void addReplay(Replay replay) {
@@ -77,5 +78,13 @@ public class Application implements NamedElement, Visitable {
 
     public void addComposite(Composite composite) {
         this.composites.add(composite);
+    }
+
+    public void setToPlay(List<String> toPlay) {
+        this.toPlay = toPlay;
+    }
+
+    public List<String> getToPlay() {
+        return toPlay;
     }
 }

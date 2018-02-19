@@ -11,4 +11,6 @@ sensorLot "AlphaLot" withLaw "Alpha" sensorsNumber 1 withFrequency 1 / s
 
 //sensorLot "BetaLot" sensorsNumber 20 withLaw "Toto"
 
-runSimulation "Athene", "10/02/2018 09:25:00", "10/02/2018 09:30:00"
+play "AlphaLot"
+
+runSimulation "10/02/2018 09:25:00", "10/02/2018 09:30:00"

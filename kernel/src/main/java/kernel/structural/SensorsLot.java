@@ -2,11 +2,14 @@ package kernel.structural;
 
 import kernel.Measurement;
 import kernel.structural.laws.DataSource;
+import kernel.visitor.Visitable;
+import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
-public class SensorsLot implements DataSource {
+public class SensorsLot implements DataSource, Visitable {
     private List<Sensor> sensors;
     private int sensorsNumber;
     private String name;
@@ -66,5 +69,10 @@ public class SensorsLot implements DataSource {
 
     public void setFrequencyValue(double frequencyValue) {
         this.frequencyValue = frequencyValue;
+    }
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
     }
 }

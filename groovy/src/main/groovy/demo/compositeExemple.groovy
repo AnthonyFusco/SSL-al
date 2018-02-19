@@ -13,4 +13,6 @@ parkingComposite "test" withLots (["top", "bot"])
 //sensorLot "rando" sensorsNumber 2 withLaw "rand" withFrequency 1 / d
 //composite "randrand" withLots (["randy", "rando"]) filter({x -> x != 0}) map({x -> 2 / x}) reduce({res, sensor -> res + sensor}) withFrequency 1 / min
 
-runSimulation "compo", "10/02/2018 08:00:00", "10/02/2018 19:00:00"
+play "test"
+
+runSimulation "10/02/2018 08:00:00", "10/02/2018 19:00:00"

@@ -1,6 +1,6 @@
 package dsl;
 
-import builders.*;
+import builders.EntityBuilder;
 import groovy.lang.Binding;
 import kernel.structural.laws.DataSource;
 
@@ -10,12 +10,14 @@ import java.util.stream.Collectors;
 
 public class SslModel {
     private List<EntityBuilder<DataSource>> dataSourcesBuilders;
+    private List<String> toPlay;
 
     private Binding binding;
 
     public SslModel(Binding binding) {
         this.binding = binding;
-        dataSourcesBuilders = new ArrayList<>();
+        this.dataSourcesBuilders = new ArrayList<>();
+        this.toPlay = new ArrayList<>();
     }
 
     public void addDataSourcesBuilder(EntityBuilder<DataSource> builder) {
@@ -36,4 +38,11 @@ public class SslModel {
         return dataSourcesBuilders.stream().map(EntityBuilder::getName).collect(Collectors.toList());
     }
 
+    public List<String> getToPlay() {
+        return toPlay;
+    }
+
+    public void addToPlay(String name) {
+        toPlay.add(name);
+    }
 }

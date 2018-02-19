@@ -39,4 +39,6 @@ sensorLot "SensorTempExt" sensorsNumber 1 withLaw "temperatureExerieure" withFre
 
 //sensorLot "SensorAtmoshpereInt" sensorsNumber 4 withLaw "AtmoshpereInt" withFrequency 1/h
 
-runSimulation "VoletAutomatique", "10/02/2018 07:25:00", "10/02/2018 18:30:00"
+play "SensorTempExt"
+
+runSimulation "10/02/2018 07:25:00", "10/02/2018 18:30:00"

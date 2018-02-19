@@ -27,6 +27,12 @@ abstract class SslBaseScript extends Script {
         influxDB.createDatabase(dbName)
     }
 
+    def play(String... names) {
+        for (String name : names) {
+            ((SslBinding) getBinding()).getModel().addToPlay(name)
+        }
+    }
+
     def law(String name) {
         [ofType: { String typeKey ->
             LawBuilder builder = lawFactory(name, typeKey)
@@ -88,7 +94,7 @@ abstract class SslBaseScript extends Script {
         return builder
     }
 
-    def runSimulation(String name, String startDateString, String endDateString) {
+    def runSimulation(String startDateString, String endDateString) {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH)
         Date startDate = format.parse(startDateString)
         Date endDate = format.parse(endDateString)
