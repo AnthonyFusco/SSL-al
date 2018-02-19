@@ -26,6 +26,11 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
         return this;
     }
 
+    public SensorsLotBuilder law(LawBuilder lawBuilder) {
+        this.lawName = lawBuilder.getName();
+        return this;
+    }
+
     public SensorsLotBuilder frequency(Frequency frequency) {
         this.frequency = frequency;
         return this;

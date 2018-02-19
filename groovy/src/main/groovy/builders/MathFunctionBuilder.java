@@ -2,6 +2,7 @@ package builders;
 
 import dsl.SslModel;
 import groovy.lang.Closure;
+import groovy.lang.MissingMethodException;
 import kernel.structural.laws.MathFunctionLaw;
 
 public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
@@ -39,7 +40,17 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
         }
 
         if (mapExpressionsConditions.getMaximumNumberOfParameters() != 1) {
-            addError(new IllegalArgumentException("Math laws are function of time, they should take only one parameter."));
+            addError(new IllegalArgumentException("Math laws are in function of time, " +
+                    "they should take only one parameter."));
+        }
+
+        mapExpressionsConditions.setResolveStrategy(Closure.DELEGATE_ONLY);
+        mapExpressionsConditions.setDelegate(this); //just so the namespace is different and it crashes on recursions
+
+        try {
+            mapExpressionsConditions.call(1);
+        } catch (MissingMethodException e) {
+            addError(new IllegalArgumentException("In " + name + ", No Recursions allowed, sorry bro."));
         }
     }
 

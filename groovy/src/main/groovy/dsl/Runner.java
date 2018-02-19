@@ -49,12 +49,7 @@ public class Runner {
     }
 
     private boolean anyError() {
-        for (EntityBuilder<DataSource> dataSourceEntityBuilder : model.getDataSourcesBuilders()) {
-            if (dataSourceEntityBuilder.isInErrorState()) {
-                return true;
-            }
-        }
-        return false;
+        return model.getDataSourcesBuilders().stream().anyMatch(EntityBuilder::isInErrorState);
     }
 
     private void addSensorLotToComposite(Application app) {

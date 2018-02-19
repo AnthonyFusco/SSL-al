@@ -34,21 +34,15 @@ class SslDSL {
 	private static CompilerConfiguration getDSLConfiguration() {
 		def secure = new SecureASTCustomizer()
 		secure.with {
-			//disallow closure creation
 			closuresAllowed = true
-			//disallow method definitions
 			methodDefinitionAllowed = true
-			//empty white list => forbid imports
 			importsWhitelist = [
 
 			]
 
-
 			staticImportsWhitelist = []
 			staticStarImportsWhitelist= []
-			//language tokens disallowed
 //			tokensBlacklist= []
-			//language tokens allowed
 			tokensWhitelist= [
 					Types.DIVIDE,
 					Types.PLUS,
