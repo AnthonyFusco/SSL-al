@@ -105,8 +105,12 @@ class SslDSL {
 	}
 	
 	void eval(File scriptFile) {
+//		String scriptString = scriptFile.readLines().join("\n")
+//		String evaluate = scriptString.replaceAll("=>", ",")
+//		println evaluate
+//		Script script = shell.parse(evaluate)
+
 		Script script = shell.parse(scriptFile)
-		
 		binding.setScript(script)
 		script.setBinding(binding)
 		

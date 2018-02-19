@@ -8,7 +8,7 @@ resetDB()
 
 parkingLaw "parkingLaw"
 
-sensorLot "eurecom" sensorsNumber 2 withLaw "parkingLaw" withFrequency 2 / h
+sensorLot "eurecom" sensorsNumber 2 law "parkingLaw" frequency 2 / h
 
 String path = "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/data1.csv"
 //data1.csv

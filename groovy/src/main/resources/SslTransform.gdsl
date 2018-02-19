@@ -18,8 +18,8 @@ contribute(currentType('groovy.lang.Script')) {
 
 contribute(currentType('builders.SensorsLotBuilder')){
     method name: 'sensorsNumber', type: 'builders.SensorsLotBuilder', params: [n: 'java.lang.Integer']
-    method name: 'withLaw', type: 'builders.SensorsLotBuilder', params: [law: 'java.lang.String']
-    method name: 'withFrequency', type: 'builders.SensorsLotBuilder', params: [freq: 'kernel.units.Frequency']
+    method name: 'law', type: 'builders.SensorsLotBuilder', params: [law: 'java.lang.String']
+    method name: 'frequency', type: 'builders.SensorsLotBuilder', params: [freq: 'kernel.units.Frequency']
 }
 
 

@@ -7,9 +7,9 @@ law "Alpha" ofType RandomLaw withinRange([10,20])
 
 //randomLaw "Beta"
 
-sensorLot "AlphaLot" withLaw "Alpha" sensorsNumber 1 withFrequency 1 / s
+sensorLot "AlphaLot" law "Alpha" sensorsNumber 1 frequency 1 / s
 
-//sensorLot "BetaLot" sensorsNumber 20 withLaw "Toto"
+//sensorLot "BetaLot" sensorsNumber 20 law "Toto"
 
 play "AlphaLot"
 

@@ -94,6 +94,14 @@ abstract class SslBaseScript extends Script {
         return builder
     }
 
+    def sensorLot(String name, Closure closure) {
+        def builder = new SensorsLotBuilder(name)
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
+        def code = closure.rehydrate(builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+    }
+
     def runSimulation(String startDateString, String endDateString) {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH)
         Date startDate = format.parse(startDateString)

@@ -21,12 +21,12 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
         return this;
     }
 
-    public SensorsLotBuilder withLaw(String lawName) {
+    public SensorsLotBuilder law(String lawName) {
         this.lawName = lawName;
         return this;
     }
 
-    public SensorsLotBuilder withFrequency(Frequency frequency) {
+    public SensorsLotBuilder frequency(Frequency frequency) {
         this.frequency = frequency;
         return this;
     }
