@@ -33,12 +33,6 @@ public class SslBinding extends Binding {
 	}
 
 	public Object getVariable(String name) {
-		// Easter egg (to show you this trick: seb is now a keyword!)
-		/*if ("runSimulation".equals(name)) {
-			// could do something else like: ((App) this.getVariable("app")).action();
-			getModel().runSimulation();
-			return script;
-		}*/
 		return super.getVariable(name);
 	}
 	

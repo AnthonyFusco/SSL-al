@@ -5,7 +5,7 @@ import java.util.Stack;
 public abstract class AbstractEntityBuilder<T> implements EntityBuilder<T> {
     private Stack<Exception> exceptions = new Stack<>();
 
-    public void addError(Exception e) {
+    void addError(Exception e) {
         exceptions.push(e);
     }
 

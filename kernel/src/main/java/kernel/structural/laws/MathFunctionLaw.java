@@ -1,7 +1,8 @@
 package kernel.structural.laws;
 
-import kernel.Measurement;
 import groovy.lang.Closure;
+import groovy.lang.MissingMethodException;
+import kernel.Measurement;
 
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +19,15 @@ public class MathFunctionLaw implements DataSource {
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
-        Object value = expression.call(counter);
+        expression.setResolveStrategy(Closure.DELEGATE_ONLY);
+        expression.setDelegate(this); //just so the namespace is different and it crashes on recursions
+
+        Object value;
+        try {
+            value = expression.call(counter);
+        } catch (MissingMethodException e) {
+            throw new IllegalArgumentException("No Recursions allowed, sorry bro.");
+        }
         counter++;
         return Collections.singletonList(new Measurement<>(name, (long) t, value));
     }
@@ -30,7 +39,7 @@ public class MathFunctionLaw implements DataSource {
 
     @Override
     public void setName(String name) {
-        this.name=name;
+        this.name = name;
     }
 
 
