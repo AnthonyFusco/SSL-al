@@ -88,6 +88,14 @@ abstract class SslBaseScript extends Script {
         return replayBuilder
     }
 
+    def replay(String name, Closure closure) {
+        def builder = new ReplayBuilder(name)
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
+        def code = closure.rehydrate(builder, this, this)
+        code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+    }
+
     def sensorLot(String name) {
         SensorsLotBuilder builder = new SensorsLotBuilder(name)
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)

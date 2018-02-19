@@ -31,7 +31,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
         this.name = name;
     }
 
-    public ReplayBuilder fromPath(String path) {
+    public ReplayBuilder path(String path) {
         this.path = path;
         return this;
     }
@@ -41,17 +41,17 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
         return name;
     }
 
-    public ReplayBuilder withColumns(Map<String, Object> columnsDescriptions) {
+    public ReplayBuilder columns(Map<String, Object> columnsDescriptions) {
         this.columnsDescriptions = columnsDescriptions;
         return this;
     }
 
-    public ReplayBuilder withOffset(Duration offset) {
+    public ReplayBuilder offset(Duration offset) {
         this.offset = offset;
         return this;
     }
 
-    public ReplayBuilder withNoise(List<Integer> noise) {
+    public ReplayBuilder noise(List<Integer> noise) {
         this.noise = noise;
         return this; //todo todo :)
     }
@@ -75,7 +75,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
 
         if (columnsDescriptions.size() < 3) {
             System.out.println("\u001B[33mWARNING : Columns descriptions of " + name + " is empty or not complete\n" +
-                    "Using default description : withColumns([t: 0, s: 1, v: 2])");
+                    "Using default description : columns([t: 0, s: 1, v: 2])");
             Map<String, Object> defaultDescription = new HashMap<>();
             defaultDescription.put("t", 0);
             defaultDescription.put("v", 1);

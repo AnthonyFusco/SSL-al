@@ -14,7 +14,7 @@ String path = "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdat
 //data1.csv
 //notATime.csv
 
-replay "Velo" fromPath path withColumns([t: 0, s: 1, v: 8]) withOffset 10.s withNoise ([100,200])
+replay "Velo" path path columns([t: 0, s: 1, v: 8]) offset 10.s noise ([100, 200])
 
 play "Velo", "eurecom"
 

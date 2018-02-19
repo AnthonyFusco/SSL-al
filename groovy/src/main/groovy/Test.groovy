@@ -25,7 +25,11 @@ sensorLot "s2" with {
     frequency 20 / s
 }
 
-//String path = "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/inconsistent.csv"
-//replay "file1" fromPath path withColumns([t: 0, s: 1, v: 8]) withOffset 10.s
-
+String filepath = "/home/fpastor/GroovyProjects/SSL-al/groovy/src/main/resources/rawdata/inconsistent.csv"
+//replay "file1" path path columns([t: 0, s: 1, v: 8]) offset 10.s
+replay "file1" with {
+    path filepath
+    columns([t: 0, s: 1, v: 8])
+    offset 10.s
+}
 runSimulation "10/02/2018 09:25:00", "10/02/2018 09:30:00"
