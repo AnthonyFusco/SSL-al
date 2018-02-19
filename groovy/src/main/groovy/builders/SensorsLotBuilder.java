@@ -2,7 +2,6 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.SensorsLot;
-import kernel.structural.composite.Composite;
 import kernel.units.Duration;
 import kernel.units.Frequency;
 import kernel.units.TimeUnit;
@@ -68,7 +67,7 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
             throw new IllegalArgumentException("The SensorLot " + name + " must have a non empty law name");
         }
 
-        if (!model.getLawNames().contains(lawName)) {
+        if (!model.getDataSourcesNames().contains(lawName)) {
             throw new IllegalArgumentException("The law of the sensorLot " + name + " does not exist");
         }
     }

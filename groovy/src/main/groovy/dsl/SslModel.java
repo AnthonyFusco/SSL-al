@@ -1,73 +1,39 @@
 package dsl;
 
-import builders.CompositeBuilder;
-import builders.LawBuilder;
-import builders.ReplayBuilder;
-import builders.SensorsLotBuilder;
+import builders.*;
 import groovy.lang.Binding;
-import kernel.structural.replay.Replay;
+import kernel.structural.laws.DataSource;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SslModel {
-    private List<SensorsLotBuilder> sensorsLotBuilders;
-    private List<LawBuilder> lawsBuilders;
-    private List<ReplayBuilder> replayBuilders;
-    private List<String> lawNames;
-    private List<CompositeBuilder> compositesBuilders;
+    private List<EntityBuilder<DataSource>> dataSourcesBuilders;
 
     private Binding binding;
 
     public SslModel(Binding binding) {
         this.binding = binding;
-        sensorsLotBuilders = new ArrayList<>();
-        lawsBuilders = new ArrayList<>();
-        replayBuilders = new ArrayList<>();
-        lawNames = new ArrayList<>();
-        compositesBuilders = new ArrayList<>();
+        dataSourcesBuilders = new ArrayList<>();
     }
 
-    public void addSensorsBuilder(SensorsLotBuilder builder) {
-        sensorsLotBuilders.add(builder);
-    }
-
-    public void addLawBuilder(LawBuilder builder) {
-        if (builder.getLawName() == null || builder.getLawName().isEmpty()) {
+    public void addDataSourcesBuilder(EntityBuilder<DataSource> builder) {
+        if (builder.getName() == null || builder.getName().isEmpty()) {
             throw new IllegalArgumentException("A law name cannot be null or empty");
         }
-        if (lawNames.contains(builder.getLawName())) {
-            throw new IllegalArgumentException("The name " + builder.getLawName() + " is already taken");
+        if (getDataSourcesNames().contains(builder.getName())) {
+            throw new IllegalArgumentException("The name " + builder.getName() + " is already taken");
         }
-        lawNames.add(builder.getLawName());
-        lawsBuilders.add(builder);
+        dataSourcesBuilders.add(builder);
     }
 
-    public void addCompositeBuilder(CompositeBuilder compositeBuilder) {
-        compositesBuilders.add(compositeBuilder);
+    public List<EntityBuilder<DataSource>> getDataSourcesBuilders() {
+        return dataSourcesBuilders;
     }
 
-    public void addReplayBuilder(ReplayBuilder replayBuilder) {
-        replayBuilders.add(replayBuilder);
+    public List<String> getDataSourcesNames() {
+        return dataSourcesBuilders.stream().map(EntityBuilder::getName).collect(Collectors.toList());
     }
 
-    public List<SensorsLotBuilder> getSensorsLotBuilders() {
-        return sensorsLotBuilders;
-    }
-
-    public List<LawBuilder> getLawsBuilders() {
-        return lawsBuilders;
-    }
-
-    public List<ReplayBuilder> getReplayBuilders() {
-        return replayBuilders;
-    }
-
-    public List<String> getLawNames() {
-        return lawNames;
-    }
-
-    public List<CompositeBuilder> getCompositesBuilders() {
-        return compositesBuilders;
-    }
 }

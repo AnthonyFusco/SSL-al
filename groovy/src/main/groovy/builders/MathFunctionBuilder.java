@@ -4,7 +4,6 @@ import dsl.SslModel;
 import groovy.lang.Closure;
 import kernel.structural.laws.MathFunctionLaw;
 
-
 public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
 
     private Closure mapExpressionsConditions;
@@ -22,15 +21,15 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
     @Override
     public MathFunctionLaw build() {
         MathFunctionLaw law = new MathFunctionLaw();
-        law.setName(getLawName());
+        law.setName(this.getName());
         law.setExpression(mapExpressionsConditions);
         return law;
     }
 
     @Override
     public void validate(SslModel model) {
-        String name = getLawName();
-        if(name == null || name.isEmpty()){
+        String name = this.getName();
+        if (name == null || name.isEmpty()) {
             addError(new IllegalArgumentException("The name of a MathFunction must not be empty"));
         }
 
@@ -39,8 +38,9 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
                     ", please define a lambda. Example lam = { x -> x+1}"));
         }
 
-        if (mapExpressionsConditions.getMaximumNumberOfParameters() != 1){
+        if (mapExpressionsConditions.getMaximumNumberOfParameters() != 1) {
             addError(new IllegalArgumentException("Math laws are function of time, they should take only one parameter."));
         }
     }
+
 }

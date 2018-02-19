@@ -2,27 +2,26 @@ package kernel;
 
 import kernel.structural.SensorsLot;
 import kernel.structural.composite.Composite;
-import kernel.structural.laws.Law;
+import kernel.structural.laws.DataSource;
 import kernel.structural.replay.Replay;
 import kernel.visitor.Visitable;
 import kernel.visitor.Visitor;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Application implements NamedElement, Visitable {
     private List<SensorsLot> sensorsLots = new ArrayList<>();
-    private List<Law> laws = new ArrayList<>();
+    private List<DataSource> dataSources = new ArrayList<>();
     private List<Replay> replays = new ArrayList<>();
     private List<Composite> composites = new ArrayList<>();
     private String name;
     private Date endDate;
     private Date startDate;
 
-    public List<Law> getLaws() {
-        return laws;
+    public List<DataSource> getDataSources() {
+        return dataSources;
     }
 
     @Override
@@ -72,8 +71,8 @@ public class Application implements NamedElement, Visitable {
         this.replays.add(replay);
     }
 
-    public void addLaw(Law law) {
-        this.laws.add(law);
+    public void addLaw(DataSource dataSource) {
+        this.dataSources.add(dataSource);
     }
 
     public void addSensorLot(SensorsLot sensorsLot) {

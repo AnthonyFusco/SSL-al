@@ -17,7 +17,9 @@ public abstract class AbstractEntityBuilder<T> implements EntityBuilder<T> {
         for (Exception exception : exceptions) {
             System.out.println("\u001B[31mERROR: " + exception.getMessage() + "\u001B[37m");
         }
-        System.out.println("\n");
+        if (!exceptions.empty()) {
+            System.out.println("\n");
+        }
     }
 
     public abstract T build();

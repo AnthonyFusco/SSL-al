@@ -2,17 +2,17 @@ package kernel.structural;
 
 import kernel.Measurement;
 import kernel.NamedElement;
-import kernel.structural.laws.Law;
+import kernel.structural.laws.DataSource;
 
-import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 public class Sensor implements NamedElement {
     private String name;
-    private Law law;
+    private DataSource dataSource;
 
-    public Sensor(Law law) {
-        this.law = law;
+    public Sensor(DataSource dataSource) {
+        this.dataSource = dataSource;
         this.name = UUID.randomUUID().toString();
     }
 
@@ -26,12 +26,9 @@ public class Sensor implements NamedElement {
         this.name = name;
     }
 
-    public Measurement generateNextMeasurement(double t) {
-        Measurement value = law.generateNextMeasurement(t);
-        if (value == null) {
-            return null;
-        }
-        value.setSensorName(name);
-        return value;
+    public List<Measurement> generateNextMeasurement(double t) {
+        List<Measurement> values = dataSource.generateNextMeasurement(t);
+        values.forEach(v -> v.setSensorName(name));
+        return values;
     }
 }

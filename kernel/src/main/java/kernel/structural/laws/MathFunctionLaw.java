@@ -1,19 +1,12 @@
 package kernel.structural.laws;
 
 import kernel.Measurement;
-import org.mariuszgromada.math.mxparser.Argument;
-import org.mariuszgromada.math.mxparser.Expression;
 import groovy.lang.Closure;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
 
-import static kernel.structural.laws.MathFunctionReturnType.INT;
-
-public class MathFunctionLaw implements Law {
+public class MathFunctionLaw implements DataSource {
 
     private String name;
     private Closure expression;
@@ -24,11 +17,10 @@ public class MathFunctionLaw implements Law {
     }
 
     @Override
-    public Measurement generateNextMeasurement(double t) {
-        System.out.println(counter);
+    public List<Measurement> generateNextMeasurement(double t) {
         Object value = expression.call(counter);
         counter++;
-        return new Measurement<>(name, (long) t, value);
+        return Collections.singletonList(new Measurement<>(name, (long) t, value));
     }
 
     @Override

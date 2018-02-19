@@ -1,17 +1,13 @@
 package dsl;
 
-import builders.CompositeBuilder;
-import builders.LawBuilder;
-import builders.ReplayBuilder;
-import builders.SensorsLotBuilder;
+import builders.EntityBuilder;
 import kernel.Application;
 import kernel.structural.SensorsLot;
 import kernel.structural.composite.Composite;
-import kernel.structural.laws.Law;
+import kernel.structural.laws.DataSource;
 import kernel.structural.replay.Replay;
 import kernel.visitor.SslVisitor;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,88 +25,70 @@ public class Runner {
         app.setStartDate(startDate);
         app.setEndDate(endDate);
 
-        model.getLawsBuilders().forEach(builder -> {
-            builder.validate(model);
-            builder.printErrors();
-        });
+        validateDataSources();
 
-        for (LawBuilder lawBuilder : model.getLawsBuilders()) {
-            if (lawBuilder.isInErrorState()) {
-                return;
-            }
-        }
+        if (anyError()) return;
 
-        model.getLawsBuilders().forEach(builder -> {
-            Law law = builder.build();
-            app.getLaws().add(law);
-        });
+        dispatchDataSourcesByType(app);
 
-        model.getReplayBuilders().forEach(builder -> {
-            builder.validate(model);
-            builder.printErrors();
-        });
+        addLawToSensorLot(app);
 
-        for (ReplayBuilder replayBuilder : model.getReplayBuilders()) {
-            if (replayBuilder.isInErrorState()) {
-                return;
-            }
-        }
-
-        model.getReplayBuilders().forEach(builder -> {
-            Replay replay = builder.build();
-            app.getReplays().add(replay);
-        });
-
-        model.getSensorsLotBuilders().forEach(builder -> {
-            builder.validate(model);
-            builder.printErrors();
-        });
-
-        for (SensorsLotBuilder lotBuilder : model.getSensorsLotBuilders()) {
-            if (lotBuilder.isInErrorState()) {
-                return;
-            }
-        }
-
-        model.getSensorsLotBuilders().forEach(builder -> {
-            SensorsLot lot = builder.build();
-            Law law = findLawByName(lot.getLawName());
-            lot.generatesSensors(law);
-            app.getSensorsLots().add(lot);
-        });
-
-        model.getCompositesBuilders().forEach(builder -> {
-            builder.validate(model);
-            builder.printErrors();
-        });
-
-        for (CompositeBuilder compositeBuilder : model.getCompositesBuilders()) {
-            if (compositeBuilder.isInErrorState()) {
-                return;
-            }
-        }
-
-        model.getCompositesBuilders().forEach(builder -> {
-            Composite composite = builder.build();
-            List<SensorsLot> lots = composite.getSensorsLotsNames().stream()
-                    .map(lotName -> findSensorLotByName(app, lotName)).collect(Collectors.toList());
-            composite.setSensorsLots(lots);
-            app.addComposite(composite);
-        });
+        addSensorLotToComposite(app);
 
         SslVisitor visitor = new SslVisitor();
         visitor.visit(app);
     }
 
-    private Law findLawByName(String lawName) {
-        Optional<LawBuilder> builderOpt =
-                model.getLawsBuilders().stream().filter(law -> law.getLawName().equals(lawName)).findFirst();
-        if (builderOpt.isPresent()) {
-            LawBuilder builder = builderOpt.get();
-            //builder.validate(model);
-            return builder.build();
+    private void validateDataSources() {
+        model.getDataSourcesBuilders().forEach(builder -> {
+            builder.validate(model);
+            builder.printErrors();
+        });
+    }
+
+    private boolean anyError() {
+        for (EntityBuilder<DataSource> dataSourceEntityBuilder : model.getDataSourcesBuilders()) {
+            if (dataSourceEntityBuilder.isInErrorState()) {
+                return true;
+            }
         }
-        return null;
+        return false;
+    }
+
+    private void addSensorLotToComposite(Application app) {
+        app.getComposites().forEach(composite -> {
+            List<SensorsLot> lots = composite.getSensorsLotsNames().stream()
+                    .map(lotName -> findSensorLotByName(app, lotName)).collect(Collectors.toList());
+            composite.setSensorsLots(lots);
+        });
+    }
+
+    private void addLawToSensorLot(Application app) {
+        app.getSensorsLots().forEach(lot -> {
+            DataSource d = findLawByName(app, lot.getLawName());
+            lot.generatesSensors(d);
+        });
+    }
+
+    private void dispatchDataSourcesByType(Application app) {
+        model.getDataSourcesBuilders().forEach(builder -> {
+            DataSource dataSource = builder.build();
+            if (dataSource instanceof Replay) {
+                app.addReplay((Replay) dataSource);
+            } else if (dataSource instanceof SensorsLot) {
+                app.addSensorLot((SensorsLot) dataSource);
+            } else if (dataSource instanceof Composite) {
+                app.addComposite((Composite) dataSource);
+            } else {
+                app.getDataSources().add(dataSource);
+            }
+        });
+    }
+
+    private DataSource findLawByName(Application app, String lawName) {
+        Optional<DataSource> dataSourceOptional =
+                app.getDataSources().stream().filter(law -> law.getName().equals(lawName)).findFirst();
+        return dataSourceOptional.orElse(null);
     }
 
     private SensorsLot findSensorLotByName(Application app, String lotName) {

@@ -1,18 +1,17 @@
 package builders;
 
-import kernel.structural.laws.Law;
+import kernel.structural.laws.DataSource;
 
-public abstract class LawBuilder<T extends Law> extends AbstractEntityBuilder<T> {
-    private String lawName;
+public abstract class LawBuilder<T extends DataSource> extends AbstractEntityBuilder<T> {
+    private String name;
 
-    public LawBuilder(String lawName) {
-        this.lawName = lawName;
+    public LawBuilder(String name) {
+        this.name = name;
     }
 
-    public String getLawName() {
-        return lawName;
+    public String getName() {
+        return name;
     }
-
 
     public abstract T build();
 }

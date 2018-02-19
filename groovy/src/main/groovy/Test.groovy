@@ -13,7 +13,7 @@ simpleExpression = { x ->
 }
 
 law "polynomialLaw" ofType FunctionLaw withExpressions simpleExpression
-//law "poly2" ofType FunctionLaw itReturns "STRING" withExpressions (["Shiny": "x>0.22","Rainy" : "x<0.22"])
+//dataSource "poly2" ofType FunctionLaw itReturns "STRING" withExpressions (["Shiny": "x>0.22","Rainy" : "x<0.22"])
 
 //sensorLot "markovLot" sensorsNumber 2 withLaw "markovLaw" withFrequency 1 / s
 //sensorLot "polynomialLot" sensorsNumber 2 withLaw "polynomialLaw" withFrequency 1 / s

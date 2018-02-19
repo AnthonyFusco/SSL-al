@@ -7,7 +7,7 @@ import builders.MathFunctionBuilder
 import builders.RandomBuilder
 import builders.ReplayBuilder
 import builders.SensorsLotBuilder
-import kernel.structural.laws.Law
+import kernel.structural.laws.DataSource
 import kernel.structural.laws.LawType
 import kernel.units.Duration
 import kernel.units.Frequency
@@ -29,19 +29,22 @@ abstract class SslBaseScript extends Script {
 
     def law(String name) {
         [ofType: { String typeKey ->
-            LawBuilder<? extends Law> builder = lawFactory(name, typeKey)
-            ((SslBinding) getBinding()).getModel().addLawBuilder(builder)
+            LawBuilder builder = lawFactory(name, typeKey)
+            ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
             return builder
         }]
     }
 
+    def run(String name) {
+
+    }
+
     def composite(String name) {
         CompositeBuilder builder = new CompositeBuilder<>(name)
-        ((SslBinding) getBinding()).getModel().addCompositeBuilder(builder)
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         return builder
     }
 
-    //composite "eurecom" withLots (["top", "bot"]) filter({x -> x == x}) map({x -> x}) reduce({res, sensor -> res + sensor}) withFrequency 2 / h
     def parkingComposite(String name) {
         CompositeBuilder builder = composite(name)
         builder.filter({x -> x == x}).map({x -> x}).reduce({res, sensor -> res + sensor}).withFrequency(2 / h)
@@ -60,7 +63,7 @@ abstract class SslBaseScript extends Script {
         return builder
     }
 
-    static LawBuilder<? extends Law> lawFactory(String name, String typeKey) {
+    static LawBuilder<? extends DataSource> lawFactory(String name, String typeKey) {
         LawType lawType = LawType.valueOf(typeKey)
         LawBuilder builder
         switch (lawType) {
@@ -79,13 +82,13 @@ abstract class SslBaseScript extends Script {
 
     def replay(String name) {
         ReplayBuilder replayBuilder = new ReplayBuilder(name)
-        ((SslBinding) getBinding()).getModel().addReplayBuilder(replayBuilder)
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(replayBuilder)
         return replayBuilder
     }
 
     def sensorLot(String name) {
         SensorsLotBuilder builder = new SensorsLotBuilder(name)
-        ((SslBinding) getBinding()).getModel().addSensorsBuilder(builder)
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         return builder
     }
 

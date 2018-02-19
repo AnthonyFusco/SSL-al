@@ -36,7 +36,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     @Override
     public MarkovChainLaw build() {
         MarkovChainLaw law = new MarkovChainLaw();
-        law.setName(getLawName());
+        law.setName(getName());
         law.setMatrix(matrix);
         law.setChangeStateFrequencyValue(frequency.getValue());
         return law;
@@ -44,7 +44,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
 
     @Override
     public void validate(SslModel model) {
-        String name = getLawName();
+        String name = getName();
         if (name == null || name.isEmpty()) {
             addError(new IllegalArgumentException("The name of a Markov Chain must not be empty"));
         }

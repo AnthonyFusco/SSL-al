@@ -2,11 +2,12 @@ package demo
 
 resetDB()
 
-law "Alpha" ofType RandomLaw withinRange ([0,10])
+law "Alpha" ofType RandomLaw withinRange([10,20])
+//dataSource "Alpha" ofType RandomLaw withinRange ([10,20])
 
-randomLaw "Beta"
+//randomLaw "Beta"
 
-sensorLot "AlphaLot" withLaw "Alpha" withFrequency 1 / s
+sensorLot "AlphaLot" withLaw "Alpha" sensorsNumber 1 withFrequency 1 / s
 
 //sensorLot "BetaLot" sensorsNumber 20 withLaw "Toto"
 

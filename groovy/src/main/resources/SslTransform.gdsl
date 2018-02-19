@@ -1,5 +1,5 @@
 contribute(currentType('groovy.lang.Script')) {
-    method name: 'law', type: 'builders.LawBuilder', params: [name: 'java.lang.String']
+    method name: 'dataSource', type: 'builders.LawBuilder', params: [name: 'java.lang.String']
     method name: 'sensorLot', type: 'builders.SensorsLotBuilder', params: [name: 'java.lang.String']
 
     method name: 'replay', type: 'builders.ReplayBuilder', params: [name: 'java.lang.String']

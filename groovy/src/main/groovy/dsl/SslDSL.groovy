@@ -40,8 +40,9 @@ class SslDSL {
 			methodDefinitionAllowed = true
 			//empty white list => forbid imports
 			importsWhitelist = [
-				'java.lang.*'
+
 			]
+
 
 			staticImportsWhitelist = []
 			staticStarImportsWhitelist= []

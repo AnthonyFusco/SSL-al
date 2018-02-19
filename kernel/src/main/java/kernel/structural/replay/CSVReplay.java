@@ -1,6 +1,7 @@
 package kernel.structural.replay;
 
 import kernel.Measurement;
+import kernel.structural.laws.DataSource;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
 
-public class CSVReplay implements Replay {
+public class CSVReplay implements DataSource {
     private String name;
     private String path;
     private Map<String, Object> columnsDescriptions = new HashMap<>();
@@ -18,12 +19,12 @@ public class CSVReplay implements Replay {
     private List<Integer> noise;
 
     @Override
-    public List<Measurement> getMeasurements(Date startDate) {
+    public List<Measurement> generateNextMeasurement(double startDate) {
         Integer tColumn = (Integer) columnsDescriptions.get("t");
         Integer sColumn = (Integer) columnsDescriptions.get("s");
         Integer vColumn = (Integer) columnsDescriptions.get("v");
 
-        int noiseValue = 0;
+        int noiseValue;
 
         try {
             File csvData = new File(path);
@@ -37,9 +38,9 @@ public class CSVReplay implements Replay {
             List<Measurement> measurementList = new ArrayList<>();
             for (CSVRecord record : records) {
                 String s = record.get(sColumn).trim();
-                Long t = Long.parseLong(record.get(tColumn).trim()) + startDate.getTime() +  offset;
+                Long t = Long.parseLong(record.get(tColumn).trim()) + (long)startDate + offset;
                 Object v = record.get(vColumn).trim();
-                if(noise != null){
+                if (noise != null) {
                     int inf = noise.get(0);
                     int sup = noise.get(1);
                     noiseValue = new Random()

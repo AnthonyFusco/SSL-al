@@ -7,4 +7,9 @@ public interface EntityBuilder<T> {
 
     void validate(SslModel model);
 
+    String getName();
+
+    void printErrors();
+
+    boolean isInErrorState();
 }

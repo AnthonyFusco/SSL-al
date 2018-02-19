@@ -3,20 +3,18 @@ package kernel.structural.composite;
 import kernel.Measurement;
 import kernel.structural.Sensor;
 import kernel.structural.SensorsLot;
-import kernel.structural.laws.Law;
+import kernel.structural.laws.DataSource;
 import kernel.units.Frequency;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class Composite implements Law {
+public class Composite implements DataSource {
     private String name;
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
@@ -26,11 +24,12 @@ public class Composite implements Law {
     private Frequency frequency;
 
     @Override
-    public Measurement generateNextMeasurement(double t) {
+    public List<Measurement> generateNextMeasurement(double t) {
         List<Double> values = new ArrayList<>();
         for (SensorsLot sensorsLot : sensorsLots) {
-            for (Sensor sensor : sensorsLot.getSensors()) {
-                values.add(Double.valueOf(sensor.generateNextMeasurement(t).getValue().toString()));
+            List<Measurement> measurements = sensorsLot.generateNextMeasurement(t);
+            for (Measurement measurement : measurements) {
+                values.add(Double.valueOf(measurement.getValue().toString()));
             }
         }
 
@@ -41,7 +40,7 @@ public class Composite implements Law {
             return null;
         }
 
-        return new Measurement<>(name, (long) t, value.get());
+        return Collections.singletonList(new Measurement<>(name, (long) t, value.get()));
     }
 
     @Override

@@ -2,6 +2,7 @@ package builders;
 
 import dsl.SslModel;
 import kernel.structural.composite.Composite;
+import kernel.structural.laws.DataSource;
 import kernel.structural.replay.CSVReplay;
 import kernel.structural.replay.Replay;
 import kernel.units.Duration;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReplayBuilder extends AbstractEntityBuilder<Replay> {
+public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
     private String name;
     private String path;
     //private DataSourceType format;
@@ -35,10 +36,10 @@ public class ReplayBuilder extends AbstractEntityBuilder<Replay> {
         return this;
     }
 
-    /*public ReplayBuilder format(String format) {
-        this.format = DataSourceType.valueOf(format);
-        return this;
-    }*/
+    @Override
+    public String getName() {
+        return name;
+    }
 
     public ReplayBuilder withColumns(Map<String, Object> columnsDescriptions) {
         this.columnsDescriptions = columnsDescriptions;
@@ -56,7 +57,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<Replay> {
     }
 
     @Override
-    public Replay build() {
+    public DataSource build() {
         CSVReplay replay = new CSVReplay(); //only csv for now
         replay.setName(name);
         replay.setPath(path);
