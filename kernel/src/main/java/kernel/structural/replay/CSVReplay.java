@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.*;
 
-public class CSVReplay implements DataSource {
+public class CSVReplay implements Replay {
     private String name;
     private String path;
     private Map<String, Object> columnsDescriptions = new HashMap<>();

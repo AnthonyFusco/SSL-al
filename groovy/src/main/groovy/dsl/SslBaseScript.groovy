@@ -35,10 +35,6 @@ abstract class SslBaseScript extends Script {
         }]
     }
 
-    def run(String name) {
-
-    }
-
     def composite(String name) {
         CompositeBuilder builder = new CompositeBuilder<>(name)
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)

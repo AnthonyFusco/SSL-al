@@ -6,10 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 public class JsonReplay implements Replay {
-    @Override
-    public List<Measurement> getMeasurements(Date startDate) {
-        return null;
-    }
 
     @Override
     public String getName() {
@@ -19,5 +15,10 @@ public class JsonReplay implements Replay {
     @Override
     public void setName(String name) {
 
+    }
+
+    @Override
+    public List<Measurement> generateNextMeasurement(double t) {
+        return null;
     }
 }

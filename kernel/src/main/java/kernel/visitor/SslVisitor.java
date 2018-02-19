@@ -80,7 +80,7 @@ public class SslVisitor implements Visitor {
 
     @Override
     public void visit(Replay replay) {
-        List<Measurement> measurements = replay.getMeasurements(startDate);
+        List<Measurement> measurements = replay.generateNextMeasurement(startDate.getTime());
         System.out.println("Starting the replay " + replay.getName() + " (" + measurements.size() + " values)");
         databaseHelper.sendToDatabase(measurements, replay.getName(), "Replay");
         System.out.println(replay.getName() + " done\n");

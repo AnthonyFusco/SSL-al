@@ -8,9 +8,6 @@ sensorLot "bot" sensorsNumber 2 withLaw "parkingLaw" withFrequency 2 / h
 //composite "eurecom" withLots (["top", "bot"]) filter({x -> x == x}) map({x -> x}) reduce({res, sensor -> res + sensor}) withFrequency 2 / h
 parkingComposite "test" withLots (["top", "bot"])
 
-run "top"
-run "test"
-
 //randomLaw "rand"
 //sensorLot "randy" sensorsNumber 2 withLaw "rand" withFrequency 1 / d
 //sensorLot "rando" sensorsNumber 2 withLaw "rand" withFrequency 1 / d
