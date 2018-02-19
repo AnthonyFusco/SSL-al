@@ -131,7 +131,7 @@ public class KernelTest {
         RandomLaw randomLaw = new RandomLaw();
         randomLaw.setName("randomLaw");
 
-        app.addLaw(randomLaw);
+        app.getDataSources().add(randomLaw);
 
         SensorsLot randomLot = new SensorsLot();
         randomLot.setSensorsNumber(1);
@@ -156,7 +156,7 @@ public class KernelTest {
         List<Double> l3 = Arrays.asList(0.25, 0.25, 0.5);
         markovChainLaw.setMatrix(Arrays.asList(l1, l2, l3));
 
-        app.addLaw(markovChainLaw);
+        app.getDataSources().add(markovChainLaw);
 
         SensorsLot markovLot = new SensorsLot();
         markovLot.setSensorsNumber(1);

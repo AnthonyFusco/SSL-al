@@ -71,10 +71,6 @@ public class Application implements NamedElement, Visitable {
         this.replays.add(replay);
     }
 
-    public void addLaw(DataSource dataSource) {
-        this.dataSources.add(dataSource);
-    }
-
     public void addSensorLot(SensorsLot sensorsLot) {
         this.sensorsLots.add(sensorsLot);
     }

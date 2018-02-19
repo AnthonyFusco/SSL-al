@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class RandomLaw implements DataSource {
     private String name;
-    private Integer borneinf;
-    private Integer bornesup;
+    private Integer borneinf = 0;
+    private Integer bornesup = 10;
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
