@@ -39,6 +39,6 @@ sensorLot "SensorTempExt2" sensorsNumber 1 law "temperatureExerieure2" frequency
 
 //sensorLot "SensorAtmoshpereInt" sensorsNumber 4 withLaw "AtmoshpereInt" withFrequency 1/h
 
-play "SensorTempExt2"
+play "SensorTempExt"
 
 runSimulation "10/02/2018 07:25:00", "10/02/2018 18:30:00"

@@ -50,7 +50,7 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
         try {
             mapExpressionsConditions.call(1);
         } catch (MissingMethodException e) {
-            addError(new IllegalArgumentException("No Recursions allowed, sorry bro."));
+            addError(new IllegalArgumentException("In " + name + ", No Recursions allowed, sorry bro."));
         }
     }
 
