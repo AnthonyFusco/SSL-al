@@ -4,6 +4,7 @@ import kernel.structural.laws.LawType
 import org.codehaus.groovy.ast.stmt.ForStatement
 import org.codehaus.groovy.ast.stmt.WhileStatement
 import org.codehaus.groovy.control.CompilerConfiguration
+import org.codehaus.groovy.control.MultipleCompilationErrorsException
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 import org.codehaus.groovy.syntax.Types
 import kernel.units.Duration
@@ -110,7 +111,15 @@ class SslDSL {
 
 		String evaluate = ScriptTransformer.evaluate(scriptStrings)
 
-		Script script = shell.parse(evaluate)
+		//TODO: Refactorer en plus beau, validation ailleurs
+		// que dans SslDsl ?
+		try {
+			Script script = shell.parse(evaluate)
+		}catch(MultipleCompilationErrorsException se){
+			println("Security Error, don't overpass laws !")
+			println(se.getErrorCollector().getException(0).localizedMessage)
+			System.exit(0)
+		}
 
 		binding.setScript(script)
 		script.setBinding(binding)
