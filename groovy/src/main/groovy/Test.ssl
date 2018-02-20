@@ -8,7 +8,7 @@
 
 //TODO write macros like this one
 
-//#define MARKOV => law ("markovLaw" + i++) ofType MarkovLaw changeStateFrequency 1 / 20.s
+#define MARKOV => law ("markovLaw" + i++) ofType MarkovLaw changeStateFrequency 1 / 20.s
 
 randomLaw "randomLaw" //useless, could be inlined
 

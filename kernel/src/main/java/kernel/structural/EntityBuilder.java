@@ -1,11 +1,9 @@
-package builders;
-
-import dsl.SslModel;
+package kernel.structural;
 
 public interface EntityBuilder<T> {
     T build();
 
-    void validate(SslModel model);
+    void validate();
 
     String getName();
 

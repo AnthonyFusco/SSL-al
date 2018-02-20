@@ -7,14 +7,13 @@ import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class SensorsLot implements DataSource, Visitable {
     private List<Sensor> sensors;
     private int sensorsNumber;
     private String name;
-    private String lawName;
     private double frequencyValue;
+    private EntityBuilder<DataSource> builder;
 
     public SensorsLot() {
         //ignore
@@ -34,7 +33,8 @@ public class SensorsLot implements DataSource, Visitable {
         return sensors;
     }
 
-    public void generatesSensors(DataSource dataSource) {
+    public void generatesSensors() {
+        DataSource dataSource = builder.build();
         sensors = new ArrayList<>();
         for (int i = 0; i < sensorsNumber; i++) {
             sensors.add(new Sensor(dataSource));
@@ -49,14 +49,6 @@ public class SensorsLot implements DataSource, Visitable {
             measurements.addAll(measurement);
         }
         return measurements;
-    }
-
-    public String getLawName() {
-        return lawName;
-    }
-
-    public void setLawName(String lawName) {
-        this.lawName = lawName;
     }
 
     public void setSensorsNumber(int sensorsNumber) {
@@ -74,5 +66,13 @@ public class SensorsLot implements DataSource, Visitable {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    public void setBuilder(EntityBuilder<DataSource> builder) {
+        this.builder = builder;
+    }
+
+    public EntityBuilder<DataSource> getLawBuilder() {
+        return builder;
     }
 }

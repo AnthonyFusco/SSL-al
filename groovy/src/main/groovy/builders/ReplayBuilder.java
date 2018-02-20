@@ -1,10 +1,7 @@
 package builders;
 
-import dsl.SslModel;
-import kernel.structural.composite.Composite;
 import kernel.structural.laws.DataSource;
 import kernel.structural.replay.CSVReplay;
-import kernel.structural.replay.Replay;
 import kernel.units.Duration;
 import kernel.units.TimeUnit;
 import org.apache.commons.csv.CSVFormat;
@@ -14,7 +11,6 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +64,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
     }
 
     @Override
-    public void validate(SslModel model) {
+    public void validate() {
         if (name == null || name.isEmpty()) {
             addError(new IllegalArgumentException("The name of a Replay must not be empty"));
         }

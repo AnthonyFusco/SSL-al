@@ -85,7 +85,7 @@ public class SslVisitor implements Visitor {
 
         for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
             List<Measurement> measurements = sensorsLot.generateNextMeasurement(t);
-            databaseHelper.sendToDatabase(measurements, sensorsLot.getName(), sensorsLot.getLawName());
+            databaseHelper.sendToDatabase(measurements, sensorsLot.getName(), sensorsLot.getLawBuilder().getName());
         }
 
         System.out.println(sensorsLot.getName() + " done\n");

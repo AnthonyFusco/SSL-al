@@ -135,10 +135,10 @@ public class KernelTest {
 
         SensorsLot randomLot = new SensorsLot();
         randomLot.setSensorsNumber(1);
-        randomLot.setLawName("randomLaw");
+//        randomLot.setLawName("randomLaw");
         randomLot.setName("randomLot");
         randomLot.setFrequencyValue(new Frequency(1, new Duration(1, TimeUnit.Second)).getValue());
-        randomLot.generatesSensors(randomLaw);
+//        randomLot.generatesSensors(randomLaw);
 
         app.addSensorLot(randomLot);
     }
@@ -160,10 +160,10 @@ public class KernelTest {
 
         SensorsLot markovLot = new SensorsLot();
         markovLot.setSensorsNumber(1);
-        markovLot.setLawName("markovChainLaw");
+//        markovLot.setLawName("markovChainLaw");
         markovLot.setName("markovLot");
         markovLot.setFrequencyValue(new Frequency(1, new Duration(1, TimeUnit.Second)).getValue());
-        markovLot.generatesSensors(markovChainLaw);
+//        markovLot.generatesSensors(markovChainLaw);
 
         app.addSensorLot(markovLot);
     }

@@ -1,6 +1,5 @@
 package builders;
 
-import dsl.SslModel;
 import kernel.structural.composite.Composite;
 import kernel.units.Frequency;
 
@@ -63,7 +62,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
     }
 
     @Override
-    public void validate(SslModel model) {
+    public void validate() {
 
     }
 }

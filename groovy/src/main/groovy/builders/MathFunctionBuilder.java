@@ -1,6 +1,5 @@
 package builders;
 
-import dsl.SslModel;
 import groovy.lang.Closure;
 import groovy.lang.MissingMethodException;
 import kernel.structural.laws.MathFunctionLaw;
@@ -28,7 +27,7 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
     }
 
     @Override
-    public void validate(SslModel model) {
+    public void validate() {
         String name = this.getName();
         if (name == null || name.isEmpty()) {
             addError(new IllegalArgumentException("The name of a MathFunction must not be empty"));

@@ -12,6 +12,7 @@ import kernel.structural.laws.LawType
 import kernel.units.Duration
 import kernel.units.Frequency
 import kernel.units.TimeUnit
+import org.codehaus.groovy.control.CompilationFailedException
 import org.influxdb.InfluxDB
 import org.influxdb.InfluxDBFactory
 

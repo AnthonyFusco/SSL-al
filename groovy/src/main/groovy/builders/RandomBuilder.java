@@ -1,6 +1,5 @@
 package builders;
 
-import dsl.SslModel;
 import kernel.structural.laws.RandomLaw;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class RandomBuilder extends LawBuilder<RandomLaw> {
     }
 
     @Override
-    public void validate(SslModel model) {
+    public void validate() {
         String name = this.getName();
         if (name == null || name.isEmpty()) {
             addError(new IllegalArgumentException("The name of a Random law must not be empty"));

@@ -1,4 +1,4 @@
-def ctx = context(filetypes: ["gdsl"])
+def ctx = context(filetypes: [".ssl", "ssl"])
 
 contributor(ctx) {
     method name: 'dataSource', type: 'builders.LawBuilder', params: [name: 'java.lang.String']

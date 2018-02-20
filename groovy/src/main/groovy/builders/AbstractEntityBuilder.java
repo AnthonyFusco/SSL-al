@@ -1,5 +1,7 @@
 package builders;
 
+import kernel.structural.EntityBuilder;
+
 import java.util.Stack;
 
 public abstract class AbstractEntityBuilder<T> implements EntityBuilder<T> {

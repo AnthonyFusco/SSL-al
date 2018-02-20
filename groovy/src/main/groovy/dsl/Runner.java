@@ -1,6 +1,6 @@
 package dsl;
 
-import builders.EntityBuilder;
+import kernel.structural.EntityBuilder;
 import kernel.Application;
 import kernel.structural.SensorsLot;
 import kernel.structural.composite.Composite;
@@ -33,7 +33,7 @@ public class Runner {
 
         dispatchDataSourcesByType(app);
 
-        addLawToSensorLot(app);
+//        addLawToSensorLot(app);
 
         addSensorLotToComposite(app);
 
@@ -41,16 +41,28 @@ public class Runner {
         app.accept(visitor);
     }
 
-    private void validateDataSources() {
+    private void dispatchDataSourcesByType(Application app) {
         model.getDataSourcesBuilders().forEach(builder -> {
-            builder.validate(model);
-            builder.printErrors();
+            DataSource dataSource = builder.build();
+            if (dataSource instanceof Replay) {
+                app.addReplay((Replay) dataSource);
+            } else if (dataSource instanceof SensorsLot) {
+                ((SensorsLot) dataSource).generatesSensors();
+                app.addSensorLot((SensorsLot) dataSource);
+            } else if (dataSource instanceof Composite) {
+                app.addComposite((Composite) dataSource);
+            } else {
+                app.getDataSources().add(dataSource);
+            }
         });
     }
 
-    private boolean anyError() {
-        return model.getDataSourcesBuilders().stream().anyMatch(EntityBuilder::isInErrorState);
-    }
+//    private void addLawToSensorLot(Application app) {
+//        app.getSensorsLots().forEach(lot -> {
+//            DataSource d = findLawByName(app, lot.getLawName());
+//            lot.generatesSensors(d);
+//        });
+//    }
 
     private void addSensorLotToComposite(Application app) {
         app.getComposites().forEach(composite -> {
@@ -60,26 +72,15 @@ public class Runner {
         });
     }
 
-    private void addLawToSensorLot(Application app) {
-        app.getSensorsLots().forEach(lot -> {
-            DataSource d = findLawByName(app, lot.getLawName());
-            lot.generatesSensors(d);
+    private void validateDataSources() {
+        model.getDataSourcesBuilders().forEach(builder -> {
+            builder.validate();
+            builder.printErrors();
         });
     }
 
-    private void dispatchDataSourcesByType(Application app) {
-        model.getDataSourcesBuilders().forEach(builder -> {
-            DataSource dataSource = builder.build();
-            if (dataSource instanceof Replay) {
-                app.addReplay((Replay) dataSource);
-            } else if (dataSource instanceof SensorsLot) {
-                app.addSensorLot((SensorsLot) dataSource);
-            } else if (dataSource instanceof Composite) {
-                app.addComposite((Composite) dataSource);
-            } else {
-                app.getDataSources().add(dataSource);
-            }
-        });
+    private boolean anyError() {
+        return model.getDataSourcesBuilders().stream().anyMatch(EntityBuilder::isInErrorState);
     }
 
     private DataSource findLawByName(Application app, String lawName) {

@@ -1,6 +1,5 @@
 package builders;
 
-import dsl.SslModel;
 import kernel.structural.laws.MarkovChainLaw;
 import kernel.units.Duration;
 import kernel.units.Frequency;
@@ -43,7 +42,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     }
 
     @Override
-    public void validate(SslModel model) {
+    public void validate() {
         String name = getName();
         if (name == null || name.isEmpty()) {
             addError(new IllegalArgumentException("The name of a Markov Chain must not be empty"));

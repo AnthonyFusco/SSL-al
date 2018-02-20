@@ -1,6 +1,6 @@
 package dsl;
 
-import builders.EntityBuilder;
+import kernel.structural.EntityBuilder;
 import groovy.lang.Binding;
 import kernel.structural.laws.DataSource;
 
