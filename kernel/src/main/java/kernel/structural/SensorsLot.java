@@ -2,14 +2,14 @@ package kernel.structural;
 
 import kernel.Measurement;
 import kernel.structural.laws.DataSource;
-import kernel.visitor.Visitable;
+import kernel.visitor.ExecutableSource;
 import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SensorsLot implements DataSource, Visitable {
-    private List<Sensor> sensors;
+public class SensorsLot extends ExecutableSource {
+    private List<Sensor> sensors = new ArrayList<>();
     private int sensorsNumber;
     private String name;
     private double frequencyValue;
@@ -29,20 +29,18 @@ public class SensorsLot implements DataSource, Visitable {
         this.name = name;
     }
 
-    public List<Sensor> getSensors() {
-        return sensors;
-    }
-
-    public void generatesSensors() {
-        DataSource dataSource = builder.build();
-        sensors = new ArrayList<>();
-        for (int i = 0; i < sensorsNumber; i++) {
-            sensors.add(new Sensor(dataSource));
+    private void populateSensors() {
+        if (sensors.isEmpty()) {
+            DataSource dataSource = builder.build();
+            for (int i = 0; i < sensorsNumber; i++) {
+                sensors.add(new Sensor(dataSource));
+            }
         }
     }
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
+        populateSensors();
         List<Measurement> measurements = new ArrayList<>();
         for (Sensor sensor : sensors) {
             List<Measurement> measurement = sensor.generateNextMeasurement(t);
@@ -55,6 +53,7 @@ public class SensorsLot implements DataSource, Visitable {
         this.sensorsNumber = sensorsNumber;
     }
 
+    @Override
     public double getFrequencyValue() {
         return frequencyValue;
     }
@@ -72,7 +71,4 @@ public class SensorsLot implements DataSource, Visitable {
         this.builder = builder;
     }
 
-    public EntityBuilder<DataSource> getLawBuilder() {
-        return builder;
-    }
 }

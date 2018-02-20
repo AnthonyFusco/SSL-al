@@ -2,11 +2,25 @@ package demo
 
 resetDB()
 
-parkingLaw "parkingLaw"
-sensorLot "top" sensorsNumber 2 law "parkingLaw" frequency 1 / h
-sensorLot "bot" sensorsNumber 2 law "parkingLaw" frequency 2 / h
+//parkingLaw "parkingLaw"
+//def top = sensorLot "top" sensorsNumber 2 law "parkingLaw" frequency 1 / h
+//def bot = sensorLot "bot" sensorsNumber 2 law "parkingLaw" frequency 2 / h
 //composite "eurecom" withLots (["top", "bot"]) filter({x -> x == x}) map({x -> x}) reduce({res, sensor -> res + sensor}) frequency 2 / h
-parkingComposite "test" withLots (["top", "bot"])
+
+def r = parkingLaw "parkingLaw"
+
+def top = sensorLot "s2" with {
+    sensorsNumber 2
+    law r
+    frequency 1 / h
+}
+
+def bot = sensorLot "s3" with {
+    sensorsNumber 2
+    law r
+    frequency 1 / h
+}
+parkingComposite "test" withLots([top, bot])
 
 //randomLaw "rand"
 //sensorLot "randy" sensorsNumber 2 law "rand" frequency 1 / d

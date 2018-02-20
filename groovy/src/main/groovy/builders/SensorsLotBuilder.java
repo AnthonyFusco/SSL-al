@@ -60,8 +60,8 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
 
         if (frequency == null) {
             System.out.println("\u001B[33mWARNING: no frequency specified on sensor lot " + name +
-                    ", using default frequency of 1/s\u001B[37m");
-            frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
+                    ", using default frequency of 1/min\u001B[37m");
+            frequency = new Frequency(1, new Duration(1, TimeUnit.Minute));
         }
 
         /*if (lawName == null || lawName.isEmpty()) {

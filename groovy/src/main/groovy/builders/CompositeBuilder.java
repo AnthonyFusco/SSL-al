@@ -1,6 +1,9 @@
 package builders;
 
+import kernel.structural.EntityBuilder;
+import kernel.structural.SensorsLot;
 import kernel.structural.composite.Composite;
+import kernel.structural.laws.DataSource;
 import kernel.units.Frequency;
 
 import java.util.List;
@@ -10,7 +13,7 @@ import java.util.function.Predicate;
 
 public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
     private String name;
-    private List<String> lots;
+    private List<EntityBuilder<SensorsLot>> lots;
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
@@ -25,7 +28,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         return name;
     }
 
-    public CompositeBuilder withLots(List<String> lots) {
+    public CompositeBuilder withLots(List<EntityBuilder<SensorsLot>> lots) {
         this.lots = lots;
         return this;
     }
@@ -56,7 +59,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         composite.setFilterPredicate(filterPredicate);
         composite.setMapFunction(mapFunction);
         composite.setReduceFunction(reduceFunction);
-        composite.setSensorsLotsNames(lots);
+        composite.setBuilders(lots);
         composite.setFrequency(frequency);
         return composite;
     }

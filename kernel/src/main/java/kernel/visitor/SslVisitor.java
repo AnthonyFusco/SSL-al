@@ -4,8 +4,10 @@ import kernel.Application;
 import kernel.Measurement;
 import kernel.structural.SensorsLot;
 import kernel.structural.composite.Composite;
+import kernel.structural.laws.DataSource;
 import kernel.structural.replay.Replay;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,9 +30,9 @@ public class SslVisitor implements Visitor {
         this.startDate = application.getStartDate();
         this.endDate = application.getEndDate();
 
-        for (SensorsLot sensorsLot : application.getSensorsLots()) {
-            if (application.getToPlay().contains(sensorsLot.getName())) {
-                sensorsLot.accept(this);
+        for (ExecutableSource source : application.getExecutableSources()) {
+            if (application.getToPlay().contains(source.getName())) {
+                source.accept(this);
             }
         }
 
@@ -39,56 +41,28 @@ public class SslVisitor implements Visitor {
                 replay.accept(this);
             }
         }
-
-        for (Composite composite : application.getComposites()) {
-            if (application.getToPlay().contains(composite.getName())) {
-                composite.accept(this);
-            }
-        }
     }
 
     @Override
-    public void visit(Composite composite) {
+    public void visit(ExecutableSource executableSource) {
         double startTime = startDate.getTime();
         double endTime = endDate.getTime();
 
-        double period = 1.0 / composite.getFrequency().getValue();
+        double period = 1.0 / executableSource.getFrequencyValue();
 
         int numberIterations = (int) ((endTime - startTime) / period);
 
-        System.out.println("Starting the composite " + composite.getName() + " (" + numberIterations + " points)");
+        System.out.println("Starting the simulation " + executableSource.getName() + " (" + numberIterations + " points)");
 
         for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
-            List<Measurement> measurement = composite.generateNextMeasurement(t);
+            List<Measurement> measurement = executableSource.generateNextMeasurement(t);
             databaseHelper.sendToDatabase(
                     measurement,
-                    "composite_",
-                    "composite"); //composite lot law
+                    executableSource.getName() + "_",
+                    "");
         }
 
-        System.out.println(composite.getName() + " done\n");
-    }
-
-    @Override
-    public void visit(SensorsLot sensorsLot) {
-        double startTime = startDate.getTime();
-        double endTime = endDate.getTime();
-
-        double period = 1.0 / sensorsLot.getFrequencyValue();
-
-        int numberIterations = (int) ((endTime - startTime) / period);
-
-        int sensorNumber = sensorsLot.getSensors().size();
-        System.out.println("Starting the lot " + sensorsLot.getName() +
-                " (" + sensorNumber + " sensors * " + numberIterations + " iterations = "
-                + sensorNumber * numberIterations + " points)");
-
-        for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
-            List<Measurement> measurements = sensorsLot.generateNextMeasurement(t);
-            databaseHelper.sendToDatabase(measurements, sensorsLot.getName(), sensorsLot.getLawBuilder().getName());
-        }
-
-        System.out.println(sensorsLot.getName() + " done\n");
+        System.out.println(executableSource.getName() + " done\n");
     }
 
     @Override

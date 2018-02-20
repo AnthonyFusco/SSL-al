@@ -1,9 +1,11 @@
 package kernel.structural.composite;
 
 import kernel.Measurement;
+import kernel.structural.EntityBuilder;
 import kernel.structural.SensorsLot;
 import kernel.structural.laws.DataSource;
 import kernel.units.Frequency;
+import kernel.visitor.ExecutableSource;
 import kernel.visitor.Visitable;
 import kernel.visitor.Visitor;
 
@@ -15,17 +17,19 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Composite implements DataSource, Visitable {
+public class Composite extends ExecutableSource {
     private String name;
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
-    private List<SensorsLot> sensorsLots;
-    private List<String> sensorsLotsNames;
+    private List<SensorsLot> sensorsLots = new ArrayList<>();
+    private List<EntityBuilder<SensorsLot>> builders;
     private Frequency frequency;
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
+
+        populateSensorLots();
 
         List<Double> values = new ArrayList<>();
         for (SensorsLot sensorsLot : sensorsLots) {
@@ -43,6 +47,12 @@ public class Composite implements DataSource, Visitable {
         }
 
         return Collections.singletonList(new Measurement<>(name, (long) t, value.get()));
+    }
+
+    private void populateSensorLots() {
+        if (sensorsLots.isEmpty()) {
+            builders.forEach(builder -> sensorsLots.add(builder.build()));
+        }
     }
 
     @Override
@@ -67,20 +77,12 @@ public class Composite implements DataSource, Visitable {
         this.reduceFunction = reduceFunction;
     }
 
-    public void setSensorsLots(List<SensorsLot> sensorsLots) {
-        this.sensorsLots = sensorsLots;
+    public void setBuilders(List<EntityBuilder<SensorsLot>> builders) {
+        this.builders = builders;
     }
 
-    public List<String> getSensorsLotsNames() {
-        return sensorsLotsNames;
-    }
-
-    public void setSensorsLotsNames(List<String> sensorsLotsNames) {
-        this.sensorsLotsNames = sensorsLotsNames;
-    }
-
-    public Frequency getFrequency() {
-        return frequency;
+    public double getFrequencyValue() {
+        return frequency.getValue();
     }
 
     public void setFrequency(Frequency frequency) {

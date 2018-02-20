@@ -140,7 +140,7 @@ public class KernelTest {
         randomLot.setFrequencyValue(new Frequency(1, new Duration(1, TimeUnit.Second)).getValue());
 //        randomLot.generatesSensors(randomLaw);
 
-        app.addSensorLot(randomLot);
+//        app.addSensorLot(randomLot);
     }
 
     private void addMarkovLot() {
@@ -165,6 +165,6 @@ public class KernelTest {
         markovLot.setFrequencyValue(new Frequency(1, new Duration(1, TimeUnit.Second)).getValue());
 //        markovLot.generatesSensors(markovChainLaw);
 
-        app.addSensorLot(markovLot);
+//        app.addSensorLot(markovLot);
     }
 }

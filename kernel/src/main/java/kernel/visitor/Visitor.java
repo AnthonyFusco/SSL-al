@@ -8,9 +8,11 @@ import kernel.structural.replay.Replay;
 public interface Visitor {
     void visit(Application application);
 
-    void visit(Composite composite);
+    /*void visit(Composite composite);
 
-    void visit(SensorsLot sensorsLot);
+    void visit(SensorsLot sensorsLot);*/
+
+    void visit(ExecutableSource executableSource);
 
     void visit(Replay replay);
 }

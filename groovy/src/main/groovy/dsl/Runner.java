@@ -1,11 +1,11 @@
 package dsl;
 
-import kernel.structural.EntityBuilder;
 import kernel.Application;
+import kernel.structural.EntityBuilder;
 import kernel.structural.SensorsLot;
-import kernel.structural.composite.Composite;
 import kernel.structural.laws.DataSource;
 import kernel.structural.replay.Replay;
+import kernel.visitor.ExecutableSource;
 import kernel.visitor.SslVisitor;
 
 import java.util.Date;
@@ -35,7 +35,7 @@ public class Runner {
 
 //        addLawToSensorLot(app);
 
-        addSensorLotToComposite(app);
+//        addSensorLotToComposite(app);
 
         SslVisitor visitor = new SslVisitor();
         app.accept(visitor);
@@ -46,11 +46,13 @@ public class Runner {
             DataSource dataSource = builder.build();
             if (dataSource instanceof Replay) {
                 app.addReplay((Replay) dataSource);
-            } else if (dataSource instanceof SensorsLot) {
+            } /*else if (dataSource instanceof SensorsLot) {
                 ((SensorsLot) dataSource).generatesSensors();
                 app.addSensorLot((SensorsLot) dataSource);
             } else if (dataSource instanceof Composite) {
                 app.addComposite((Composite) dataSource);
+            }*/ else if (dataSource instanceof ExecutableSource) {
+                app.addExecutableSource((ExecutableSource) dataSource);
             } else {
                 app.getDataSources().add(dataSource);
             }
@@ -64,13 +66,13 @@ public class Runner {
 //        });
 //    }
 
-    private void addSensorLotToComposite(Application app) {
+/*    private void addSensorLotToComposite(Application app) {
         app.getComposites().forEach(composite -> {
             List<SensorsLot> lots = composite.getSensorsLotsNames().stream()
                     .map(lotName -> findSensorLotByName(app, lotName)).collect(Collectors.toList());
             composite.setSensorsLots(lots);
         });
-    }
+    }*/
 
     private void validateDataSources() {
         model.getDataSourcesBuilders().forEach(builder -> {
@@ -83,7 +85,7 @@ public class Runner {
         return model.getDataSourcesBuilders().stream().anyMatch(EntityBuilder::isInErrorState);
     }
 
-    private DataSource findLawByName(Application app, String lawName) {
+ /*   private DataSource findLawByName(Application app, String lawName) {
         Optional<DataSource> dataSourceOptional =
                 app.getDataSources().stream().filter(law -> law.getName().equals(lawName)).findFirst();
         return dataSourceOptional.orElse(null);
@@ -93,5 +95,5 @@ public class Runner {
         Optional<SensorsLot> lotOpt =
                 app.getSensorsLots().stream().filter(sensorsLot -> sensorsLot.getName().equals(lotName)).findFirst();
         return lotOpt.orElse(null);
-    }
+    }*/
 }
