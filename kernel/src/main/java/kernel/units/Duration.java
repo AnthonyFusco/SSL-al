@@ -20,4 +20,9 @@ public class Duration implements Comparable<Duration> {
     public int compareTo(Duration duration) {
         return Double.compare(amount * unit.getMillisecondsNumber(), duration.amount * duration.unit.getMillisecondsNumber());
     }
+
+    @Override
+    public String toString() {
+        return (amount == 1 ? "" : amount + ".") + unit;
+    }
 }

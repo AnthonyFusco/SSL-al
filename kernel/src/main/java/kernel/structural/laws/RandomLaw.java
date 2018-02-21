@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class RandomLaw implements DataSource {
     private String name;
-    private Integer borneinf = 0;
-    private Integer bornesup = 10;
+    private Integer rangeInf = 0;
+    private Integer rangeSup = 10;
     private boolean isExecutable;
 
     public RandomLaw() {
@@ -19,7 +19,7 @@ public class RandomLaw implements DataSource {
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
         int value = new Random()
-                .nextInt(bornesup + 1 - borneinf) + borneinf;
+                .nextInt(rangeSup + 1 - rangeInf) + rangeInf;
         return Collections.singletonList(new Measurement<>(name, (long)t, value));
     }
 
@@ -29,11 +29,11 @@ public class RandomLaw implements DataSource {
     }
 
     public void setBorneInf(Integer borneInf) {
-        this.borneinf = borneInf;
+        this.rangeInf = borneInf;
     }
 
     public void setBorneSup(Integer borneSup) {
-        this.bornesup = borneSup;
+        this.rangeSup = borneSup;
     }
 
     @Override

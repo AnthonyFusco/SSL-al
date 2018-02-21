@@ -6,8 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RandomBuilder extends LawBuilder<RandomLaw> {
-
-    private List<Integer> bornes = Arrays.asList(0, 10);
+    private static final List<Integer> DEFAULT_RANGE = Arrays.asList(0, 10);
+    private boolean rangeDeclared = false;
+    private List<Integer> range = DEFAULT_RANGE;
 
     public RandomBuilder(int definitionLine) {
         super(definitionLine);
@@ -16,25 +17,25 @@ public class RandomBuilder extends LawBuilder<RandomLaw> {
     @Override
     public RandomLaw build() {
         RandomLaw law = new RandomLaw();
-        law.setBorneInf(bornes.get(0));
-        law.setBorneSup(bornes.get(1));
+        law.setBorneInf(range.get(0));
+        law.setBorneSup(range.get(1));
         law.setExecutable(isExecutable());
         return law;
     }
 
     public RandomBuilder range(List<Integer> range) {
-        this.bornes = range;
+        this.range = range;
+        rangeDeclared = true;
         return this;
     }
 
     @Override
     public void validate() {
-        if (bornes == null) {
-            addError(new IllegalArgumentException("You must declare a non-empty range interval"));
-
+        if (!rangeDeclared) {
+            addWarning("no range declared, using default [" + DEFAULT_RANGE + "]");
         }
-        if (bornes.size() != 2) {
-            addError(new IllegalArgumentException("You must declare a good range interval ex:([ 0, 10])"));
+        if (range.size() != 2) {
+            addError(new IllegalArgumentException("You must declare a good range interval ex:([" + DEFAULT_RANGE + "])"));
         }
     }
 

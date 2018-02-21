@@ -8,15 +8,21 @@ import kernel.units.Frequency;
 import kernel.units.TimeUnit;
 
 public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
-    private int sensorsNumber;
+    private static final int DEFAULT_SENSORS_NUMBER = 1;
+    private static final Frequency DEFAULT_FREQUENCY = new Frequency(1, new Duration(1, TimeUnit.Minute));
+
+    private int sensorsNumber = DEFAULT_SENSORS_NUMBER;
     private EntityBuilder<DataSource> builder;
-    private Frequency frequency;
+    private Frequency frequency = DEFAULT_FREQUENCY;
+    private boolean frequencyDefined = false;
+    private boolean numberDefined = false;
 
     public SensorsLotBuilder(int definitionLine) {
         super(definitionLine);
     }
 
     public SensorsLotBuilder sensorsNumber(int sensorsNumber) {
+        numberDefined = true;
         this.sensorsNumber = sensorsNumber;
         return this;
     }
@@ -27,6 +33,7 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
     }
 
     public SensorsLotBuilder frequency(Frequency frequency) {
+        frequencyDefined = true;
         this.frequency = frequency;
         return this;
     }
@@ -43,15 +50,14 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
 
     @Override
     public void validate() {
-        if (sensorsNumber <= 0) {
-            System.out.println("\u001B[33mWARNING: no sensor number specified on sensor lot " + /*name +*/
-                    ", using default number of 1\u001B[37m");
-            sensorsNumber = 1;
+        if (!numberDefined) {
+            addWarning("no sensor number specified, using default number of " + DEFAULT_SENSORS_NUMBER);
         }
-        if (frequency == null) {
-            System.out.println("\u001B[33mWARNING: no frequency specified on sensor lot " + /*name +*/
-                    ", using default frequency of 1/min\u001B[37m");
-            frequency = new Frequency(1, new Duration(1, TimeUnit.Minute));
+        if (sensorsNumber <= 0) {
+            addWarning("bad sensor number specified : " + sensorsNumber + ", using default number of " + DEFAULT_SENSORS_NUMBER);
+        }
+        if (!frequencyDefined) {
+            addWarning("no frequency specified, using default frequency of " + DEFAULT_FREQUENCY);
         }
     }
 }

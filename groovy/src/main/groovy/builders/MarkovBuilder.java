@@ -10,8 +10,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
+    private static final Frequency DEFAULT_FREQUENCY = new Frequency(1, new Duration(1, TimeUnit.Second));
+
     private List<List<Double>> matrix;
-    private Frequency frequency;
+    private Frequency frequency = DEFAULT_FREQUENCY;
+    private boolean frequencyDefined = false;
 
     public MarkovBuilder(int definitionLine) {
         super(definitionLine);
@@ -28,6 +31,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     }
 
     public MarkovBuilder stateFrequency(Frequency frequency) {
+        frequencyDefined = true;
         this.frequency = frequency;
         return this;
     }
@@ -44,43 +48,38 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     @Override
     public void validate() {
         if (matrix == null) {
-            addError(new IllegalArgumentException("Missing a matrix for the markov chain at" + getErrorLocation() +
-                    ", use the method matrix"));
-        }
+            addError(new IllegalArgumentException("Missing a matrix, use the method matrix"));
+        } else {
+            if (matrix.isEmpty()) {
+                addError(new IllegalArgumentException("The matrix cannot be empty.\n" +
+                        "Example: matrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])"));
+            }
+            int firstLineSize = matrix.get(0).size();
+            for (List<Double> line : matrix) {
+                if (line.size() != firstLineSize) {
+                    addError(new IllegalArgumentException("The matrix isn't square"));
+                    break;
+                }
+            }
 
-        if (matrix.isEmpty()) {
-            addError(new IllegalArgumentException("The matrix of a markov chain cannot be empty.\n" +
-                    "Example: matrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])"));
-        }
+            boolean isNotSumOfOne = matrix
+                    .stream()
+                    .mapToDouble(doubles -> doubles
+                            .stream()
+                            .mapToDouble(aDouble -> aDouble)
+                            .sum())
+                    .anyMatch(v -> Math.abs(1.0 - v) > Math.ulp(1.0));
 
-        int firstLineSize = matrix.get(0).size();
-        for (List<Double> line : matrix) {
-            if (line.size() != firstLineSize) {
-                addError(new IllegalArgumentException("The matrix at " + getErrorLocation() + " isn't square"));
-                break;
+            if (isNotSumOfOne) {
+                addError(new IllegalArgumentException("All lines of the matrix must have a sum of 1"));
             }
         }
 
-        boolean isNotSumOfOne = matrix
-                .stream()
-                .mapToDouble(doubles -> doubles
-                        .stream()
-                        .mapToDouble(aDouble -> aDouble)
-                        .sum())
-                .anyMatch(v -> Math.abs(1.0 - v) > Math.ulp(1.0));
 
-        if (isNotSumOfOne) {
-            addError(new IllegalArgumentException("All lines of the matrix at " + getErrorLocation() + " must have a sum of 1"));
-        }
-
-        if (frequency == null) {
-            System.out.println("\u001B[33mWARNING: no frequency specified on markov chain at " + getErrorLocation() +
-                    ", using default frequency of 1/s\u001B[37m");
-            frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
-        }
-
-        if (frequency.getValue() <= 0 || frequency.getDuration().getValue() <= 0 || frequency.getOccurrences() <= 0) {
-            addError(new IllegalArgumentException("Frequency of the markov chain at " + getErrorLocation() + " cannot be <= 0\u001B[37m"));
+        if (!frequencyDefined) {
+            addWarning("no frequency specified, using default frequency of " + DEFAULT_FREQUENCY);
+        } else if (frequency.getValue() <= 0 || frequency.getDuration().getValue() <= 0 || frequency.getOccurrences() <= 0) {
+            addError(new IllegalArgumentException("Frequency cannot be <= 0"));
         }
     }
 }

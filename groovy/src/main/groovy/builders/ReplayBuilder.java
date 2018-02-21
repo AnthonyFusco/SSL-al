@@ -16,9 +16,17 @@ import java.util.List;
 import java.util.Map;
 
 public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
-    private String path;
-    private Map<String, Object> columnsDescriptions;
-    private Duration offset = new Duration(0, TimeUnit.Second);
+    private static final Map<String, Object> DEFAULT_DESCRIPTION_COLUMNS = new HashMap<>();
+    static {
+        DEFAULT_DESCRIPTION_COLUMNS.put("t", 0);
+        DEFAULT_DESCRIPTION_COLUMNS.put("v", 1);
+        DEFAULT_DESCRIPTION_COLUMNS.put("s", 2);
+    }
+    private static final Duration DEFAULT_OFFSET = new Duration(0, TimeUnit.Second);
+
+    private String path = "";
+    private Map<String, Object> columnsDescriptions = DEFAULT_DESCRIPTION_COLUMNS;
+    private Duration offset = DEFAULT_OFFSET;
     private List<Integer> noise;
 
     public ReplayBuilder(int definitionLine) {
@@ -59,73 +67,70 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
     @Override
     public void validate() {
         if (columnsDescriptions.size() < 3) {
-            System.out.println("\u001B[33mWARNING : Columns descriptions of " + /*name +*/ " is empty or not complete\n" +
-                    "Using default description : columns([t: 0, s: 1, v: 2])");
-            Map<String, Object> defaultDescription = new HashMap<>();
-            defaultDescription.put("t", 0);
-            defaultDescription.put("v", 1);
-            defaultDescription.put("s", 2);
-            columnsDescriptions = defaultDescription;
+            addWarning("Columns description is empty or not complete\n" +
+                    "Using default description : columns(" + DEFAULT_DESCRIPTION_COLUMNS + ")");
         }
 
-        if (path == null || path.isEmpty()) {
-            addError(new IllegalArgumentException("The path of " + /*name +*/ " must not be empty"));
+        if (noise != null) {
+            if (noise.size() != 2) {
+                addError(new IllegalArgumentException("You must specify a valid noise interval"));
+            } else if (noise.get(0) >= noise.get(1)) {
+                addError(new IllegalArgumentException("the range is reversed"));
+            }
         }
 
-        File file = new File(path);
-        if (!file.exists() || !file.canRead() || !file.isFile()) {
-            addError(new IllegalArgumentException("The path of " + /*name +*/ " must be a valid file"));
-        }
-
-        try {
-            CSVParser parser = CSVParser.parse(file, Charset.defaultCharset(), CSVFormat.DEFAULT);
-            List<CSVRecord> records = parser.getRecords();
-            if (records.isEmpty()) {
-                addError(new IllegalArgumentException("The csv file of " + /*name +*/ " must not be empty"));
-            }
-
-            int isAllConsistent = (int) records.stream()
-                    .mapToInt(CSVRecord::size)
-                    .distinct()
-                    .count();
-            if (isAllConsistent > 1) {
-                addError(new IllegalArgumentException("The csv file of " + /*name +*/
-                        " is inconsistent (all lines must have the same number of columns)"));
-            }
-
-            Integer tColumn = (Integer) columnsDescriptions.get("t");
-            Integer sColumn = (Integer) columnsDescriptions.get("s");
-            Integer vColumn = (Integer) columnsDescriptions.get("v");
-            if (records.size() > 1) {
-                records.remove(0); //remove header
-            }
-            //parsing the whole file might be long...
-            String s = records.get(0).get(sColumn);
-            if (s == null) {
-                addError(new IllegalArgumentException("The s column of CSV " + /*name +*/ " is not correct"));
-            }
-            Object v = records.get(0).get(vColumn);
-            if (v == null) {
-                addError(new IllegalArgumentException("The v column of CSV " + /*name +*/ " is not correct"));
-            }
-            Object t = records.get(0).get(tColumn);
-            if (t == null) {
-                addError(new IllegalArgumentException("The t column of CSV " + /*name +*/ " is not correct"));
+        if (path.isEmpty()) {
+            addError(new IllegalArgumentException("The path must not be empty"));
+        } else {
+            File file = new File(path);
+            if (!file.exists() || !file.canRead() || !file.isFile()) {
+                addError(new IllegalArgumentException("The path must be a valid file"));
             }
             try {
-                long l = Long.parseLong(t.toString());
-            } catch (NumberFormatException e) {
-                addError(new IllegalArgumentException("The t column of CSV " + /*name +*/ " is not a time"));
+                CSVParser parser = CSVParser.parse(file, Charset.defaultCharset(), CSVFormat.DEFAULT);
+                List<CSVRecord> records = parser.getRecords();
+                if (records.isEmpty()) {
+                    addError(new IllegalArgumentException("The csv file must not be empty"));
+                }
+
+                int isAllConsistent = (int) records.stream()
+                        .mapToInt(CSVRecord::size)
+                        .distinct()
+                        .count();
+                if (isAllConsistent > 1) {
+                    addError(new IllegalArgumentException("The csv file is inconsistent (all lines must have the same number of columns)"));
+                }
+
+                Integer tColumn = (Integer) columnsDescriptions.get("t");
+                Integer sColumn = (Integer) columnsDescriptions.get("s");
+                Integer vColumn = (Integer) columnsDescriptions.get("v");
+                if (records.size() > 1) {
+                    records.remove(0); //remove header
+                }
+                //parsing the whole file might be long...
+                String s = records.get(0).get(sColumn);
+                if (s == null) {
+                    addError(new IllegalArgumentException("The s column of CSV is not correct"));
+                }
+                Object v = records.get(0).get(vColumn);
+                if (v == null) {
+                    addError(new IllegalArgumentException("The v column of CSV is not correct"));
+                }
+                Object t = records.get(0).get(tColumn);
+                if (t == null) {
+                    addError(new IllegalArgumentException("The t column of CSV is not correct"));
+                }
+                try {
+                    long l = Long.parseLong(t.toString());
+                } catch (NumberFormatException e) {
+                    addError(new IllegalArgumentException("The t column of CSV is not a time"));
+                }
+            } catch (IOException e) {
+                System.out.println("Error while parsing the CSV file");
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            System.out.println("Error while parsing the CSV file for replay " /*+ name*/);
-            e.printStackTrace();
         }
 
-        if(noise != null){
-            if (noise.size() != 2){
-                addError(new IllegalArgumentException("You must specify a valid noise interval"));
-            }
-        }
+
     }
 }

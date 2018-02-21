@@ -7,7 +7,7 @@ public interface EntityBuilder<T extends DataSource> {
 
     void validate();
 
-    void printErrors();
+    void printWarningsErrors();
 
     boolean isInErrorState();
 

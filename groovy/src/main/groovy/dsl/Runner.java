@@ -2,16 +2,12 @@ package dsl;
 
 import kernel.Application;
 import kernel.structural.EntityBuilder;
-import kernel.structural.SensorsLot;
 import kernel.structural.laws.DataSource;
 import kernel.structural.replay.Replay;
 import kernel.visitor.ExecutableSource;
 import kernel.visitor.SslVisitor;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Runner {
     private SslModel model;
@@ -53,7 +49,7 @@ public class Runner {
     private void validateDataSources() {
         model.getDataSourcesBuilders().forEach(builder -> {
             builder.validate();
-            builder.printErrors();
+            builder.printWarningsErrors();
         });
     }
 
