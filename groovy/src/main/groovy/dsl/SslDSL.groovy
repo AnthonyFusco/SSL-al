@@ -5,6 +5,7 @@ import kernel.units.Duration
 import kernel.units.Frequency
 import kernel.units.TimeUnit
 import org.codehaus.groovy.ast.stmt.ForStatement
+import org.codehaus.groovy.ast.stmt.IfStatement
 import org.codehaus.groovy.ast.stmt.WhileStatement
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.MultipleCompilationErrorsException
@@ -63,7 +64,8 @@ class SslDSL {
                     Types.COMPARE_GREATER_THAN,
                     Types.COMPARE_GREATER_THAN_EQUAL,
                     Types.ASSIGN,
-                    Types.POWER
+                    Types.POWER,
+                    Types.KEYWORD_ELSE
             ].asImmutable()
             //types allowed to be used  (including primitive types)
             constantTypesClassesWhiteList = [
@@ -88,6 +90,11 @@ class SslDSL {
         statementBlacklist.add(WhileStatement)
         statementBlacklist.add(ForStatement)
         secure.setStatementsBlacklist(statementBlacklist)
+
+        /*List<Class> statementWhitelist = new ArrayList<>()
+        statementWhitelist.add(IfStatement)
+
+        secure.setStatementsWhitelist(statementWhitelist)*/
 
         Number.metaClass {
             getS { -> new Duration(delegate as double, TimeUnit.Second) }
