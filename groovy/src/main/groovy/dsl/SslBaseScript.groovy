@@ -31,7 +31,7 @@ abstract class SslBaseScript extends Script {
     }
 
     def composite(Closure closure) {
-        CompositeBuilder builder = new CompositeBuilder<>()
+        CompositeBuilder builder = new CompositeBuilder<>(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
         code()
@@ -47,7 +47,7 @@ abstract class SslBaseScript extends Script {
     }
 
     def randomLaw(Closure closure) {
-        RandomBuilder builder = new RandomBuilder()
+        RandomBuilder builder = new RandomBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
         code()
@@ -55,7 +55,7 @@ abstract class SslBaseScript extends Script {
     }
 
     def markovLaw(Closure closure) {
-        MarkovBuilder builder = new MarkovBuilder()
+        MarkovBuilder builder = new MarkovBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
         code()
@@ -63,7 +63,7 @@ abstract class SslBaseScript extends Script {
     }
 
     def mathFunction(Closure closure) {
-        MathFunctionBuilder builder = new MathFunctionBuilder()
+        MathFunctionBuilder builder = new MathFunctionBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
         code()
@@ -71,7 +71,7 @@ abstract class SslBaseScript extends Script {
     }
 
     def replay(Closure closure) {
-        def builder = new ReplayBuilder()
+        def builder = new ReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
         code()
@@ -79,8 +79,7 @@ abstract class SslBaseScript extends Script {
     }
 
     def sensorLot(Closure closure) {
-        int line = this.getBinding().getVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME)
-        def builder = new SensorsLotBuilder()
+        def builder = new SensorsLotBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
         code()
@@ -93,6 +92,10 @@ abstract class SslBaseScript extends Script {
         Date endDate = format.parse(endDateString)
 
         return new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
+    }
+
+    private int getCurrentLine() {
+        return this.getBinding().getVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME) as int
     }
 
     int count = 0

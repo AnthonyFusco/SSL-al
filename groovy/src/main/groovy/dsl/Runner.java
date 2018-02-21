@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
 public class Runner {
     private SslModel model;
 
+    public static String currentFile = "";
+
     public Runner(SslModel model) {
         this.model = model;
     }

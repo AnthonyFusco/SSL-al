@@ -2,16 +2,17 @@
 //todo add a test for the demo
 //todo some validation
 
-resetDB()
+//resetDB()
 
 //TODO write macros like this one
 
 //#define MARKOV => law ("markovLaw" + i++) ofType MarkovLaw stateFrequency 1 / 20.s
 
-def random = randomLaw {}
-random = randomLaw {
-
+def random = markovLaw {
+    matrix([[0.5,0.5], [0.4, 0.6]])
 }
+
+
 //law "markovLaw" ofType MarkovLaw stateFrequency 1 / 20.s matrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])
 
 //law "polynomialLaw" ofType FunctionLaw expression simpleExpression

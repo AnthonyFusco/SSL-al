@@ -1,5 +1,6 @@
 package builders;
 
+import dsl.Runner;
 import kernel.structural.EntityBuilder;
 import kernel.structural.laws.DataSource;
 
@@ -8,6 +9,11 @@ import java.util.Stack;
 public abstract class AbstractEntityBuilder<T extends DataSource> implements EntityBuilder<T> {
     private Stack<Exception> exceptions = new Stack<>();
     private boolean isExecutable;
+    private int definitionLine;
+
+    public AbstractEntityBuilder(int definitionLine) {
+        this.definitionLine = definitionLine;
+    }
 
     void addError(Exception e) {
         exceptions.push(e);
@@ -26,10 +32,18 @@ public abstract class AbstractEntityBuilder<T extends DataSource> implements Ent
         }
     }
 
+    public String getErrorLocation() {
+        return ".(" + Runner.currentFile + ":" + definitionLine + ")";
+    }
+
     public abstract T build();
 
     boolean isExecutable() {
         return isExecutable;
+    }
+
+    public int getDefinitionLine() {
+        return definitionLine;
     }
 
     @Override

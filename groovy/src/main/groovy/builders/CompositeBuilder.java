@@ -18,6 +18,10 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
     private BinaryOperator<Double> reduceFunction;
     private Frequency frequency;
 
+    public CompositeBuilder(int definitionLine) {
+        super(definitionLine);
+    }
+
 
     public CompositeBuilder withLots(List<EntityBuilder<SensorsLot>> lots) {
         this.lots = lots;

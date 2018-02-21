@@ -8,6 +8,10 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
 
     private Closure mapExpressionsConditions;
 
+    public MathFunctionBuilder(int definitionLine) {
+        super(definitionLine);
+    }
+
     public MathFunctionBuilder expression(Closure expression) {
         this.mapExpressionsConditions = expression;
         return this;

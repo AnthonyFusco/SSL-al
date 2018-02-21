@@ -12,6 +12,10 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
     private EntityBuilder<DataSource> builder;
     private Frequency frequency;
 
+    public SensorsLotBuilder(int definitionLine) {
+        super(definitionLine);
+    }
+
     public SensorsLotBuilder sensorsNumber(int sensorsNumber) {
         this.sensorsNumber = sensorsNumber;
         return this;

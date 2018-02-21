@@ -9,6 +9,10 @@ public class RandomBuilder extends LawBuilder<RandomLaw> {
 
     private List<Integer> bornes = Arrays.asList(0, 10);
 
+    public RandomBuilder(int definitionLine) {
+        super(definitionLine);
+    }
+
     @Override
     public RandomLaw build() {
         RandomLaw law = new RandomLaw();

@@ -13,6 +13,10 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     private List<List<Double>> matrix;
     private Frequency frequency;
 
+    public MarkovBuilder(int definitionLine) {
+        super(definitionLine);
+    }
+
     public MarkovBuilder matrix(List<List<BigDecimal>> matrix) {
         this.matrix = matrix
                 .stream()
@@ -40,7 +44,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     @Override
     public void validate() {
         if (matrix == null) {
-            addError(new IllegalArgumentException("Missing a matrix for the markov chain " + /*name +*/
+            addError(new IllegalArgumentException("Missing a matrix for the markov chain at" + getErrorLocation() +
                     ", use the method matrix"));
         }
 
@@ -52,7 +56,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
         int firstLineSize = matrix.get(0).size();
         for (List<Double> line : matrix) {
             if (line.size() != firstLineSize) {
-                addError(new IllegalArgumentException("The matrix " + /*name +*/ " isn't square"));
+                addError(new IllegalArgumentException("The matrix at " + getErrorLocation() + " isn't square"));
                 break;
             }
         }
@@ -66,17 +70,17 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
                 .anyMatch(v -> Math.abs(1.0 - v) > Math.ulp(1.0));
 
         if (isNotSumOfOne) {
-            addError(new IllegalArgumentException("All lines of the matrix " + /*name +*/ " must have a sum of 1"));
+            addError(new IllegalArgumentException("All lines of the matrix at " + getErrorLocation() + " must have a sum of 1"));
         }
 
         if (frequency == null) {
-            System.out.println("\u001B[33mWARNING: no frequency specified on markov chain " + /*name +*/
+            System.out.println("\u001B[33mWARNING: no frequency specified on markov chain at " + getErrorLocation() +
                     ", using default frequency of 1/s\u001B[37m");
             frequency = new Frequency(1, new Duration(1, TimeUnit.Second));
         }
 
         if (frequency.getValue() <= 0 || frequency.getDuration().getValue() <= 0 || frequency.getOccurrences() <= 0) {
-            addError(new IllegalArgumentException("Frequency of the markov chain " + /*name +*/ " cannot be <= 0\u001B[37m"));
+            addError(new IllegalArgumentException("Frequency of the markov chain at " + getErrorLocation() + " cannot be <= 0\u001B[37m"));
         }
     }
 }
