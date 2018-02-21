@@ -8,12 +8,12 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
 
     private Closure mapExpressionsConditions;
 
-    public MathFunctionBuilder(String lawName) {
-        super(lawName);
+    public MathFunctionBuilder() {
+        super("math");
     }
 
 
-    public MathFunctionBuilder withExpressions(Closure expression) {
+    public MathFunctionBuilder expression(Closure expression) {
         this.mapExpressionsConditions = expression;
         return this;
     }

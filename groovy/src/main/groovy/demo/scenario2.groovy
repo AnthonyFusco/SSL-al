@@ -2,9 +2,9 @@ package demo
 
 resetDB()
 
-//law "parkingLaw" ofType MarkovLaw withMatrix([[0.3, 0.7], [0.15, 0.8, 0.05], [0.25, 0.3, 0.5]]) changeStateFrequency 1 / min
+//law "parkingLaw" ofType MarkovLaw matrix([[0.3, 0.7], [0.15, 0.8, 0.05], [0.25, 0.3, 0.5]]) stateFrequency 1 / min
 
-//dataSource "parkingLaw" ofType MarkovLaw withMatrix([[0.3, 0.7], [0.2, 0.8]]) changeStateFrequency 2 / h
+//dataSource "parkingLaw" ofType MarkovLaw matrix([[0.3, 0.7], [0.2, 0.8]]) stateFrequency 2 / h
 
 parkingLaw "parkingLaw"
 

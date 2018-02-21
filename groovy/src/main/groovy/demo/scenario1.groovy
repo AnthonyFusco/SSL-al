@@ -2,8 +2,8 @@ package demo
 
 resetDB()
 
-law "Alpha" ofType RandomLaw withinRange([10,20])
-//dataSource "Alpha" ofType RandomLaw withinRange ([10,20])
+law "Alpha" ofType RandomLaw range([10, 20])
+//dataSource "Alpha" ofType RandomLaw range ([10,20])
 
 //randomLaw "Beta"
 

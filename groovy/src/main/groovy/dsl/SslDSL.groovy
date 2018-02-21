@@ -1,12 +1,12 @@
 package dsl
 
 import kernel.structural.laws.LawType
-import org.codehaus.groovy.control.CompilerConfiguration
-import org.codehaus.groovy.control.customizers.SecureASTCustomizer
-import org.codehaus.groovy.syntax.Types
 import kernel.units.Duration
 import kernel.units.Frequency
 import kernel.units.TimeUnit
+import org.codehaus.groovy.control.CompilerConfiguration
+import org.codehaus.groovy.control.customizers.SecureASTCustomizer
+import org.codehaus.groovy.syntax.Types
 
 class SslDSL {
 	private GroovyShell shell
@@ -28,6 +28,7 @@ class SslDSL {
         binding.setVariable("min", new Duration(1, TimeUnit.Minute))
         binding.setVariable("h", new Duration(1, TimeUnit.Hour))
         binding.setVariable("d", new Duration(1, TimeUnit.Day))
+		binding.setVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME, 1)
 	}
 
 
@@ -97,6 +98,7 @@ class SslDSL {
 		configuration.addCompilationCustomizers(secure)
 		
 		return configuration
+
 	}
 	
 	void eval(File scriptFile) {

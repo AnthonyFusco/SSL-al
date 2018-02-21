@@ -2,14 +2,15 @@ package builders;
 
 import kernel.structural.laws.RandomLaw;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RandomBuilder extends LawBuilder<RandomLaw> {
 
-    private List<Integer> bornes;
+    private List<Integer> bornes = Arrays.asList(0, 10);
 
-    public RandomBuilder(String lawName) {
-        super(lawName);
+    public RandomBuilder() {
+        super("random");
     }
 
     @Override
@@ -21,7 +22,7 @@ public class RandomBuilder extends LawBuilder<RandomLaw> {
         return law;
     }
 
-    public RandomBuilder withinRange(List<Integer> range) {
+    public RandomBuilder range(List<Integer> range) {
         this.bornes = range;
         return this;
     }

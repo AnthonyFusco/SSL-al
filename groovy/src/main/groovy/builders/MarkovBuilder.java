@@ -13,11 +13,11 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
     private List<List<Double>> matrix;
     private Frequency frequency;
 
-    public MarkovBuilder(String lawName) {
-        super(lawName);
+    public MarkovBuilder() {
+        super("markov");
     }
 
-    public MarkovBuilder withMatrix(List<List<BigDecimal>> matrix) {
+    public MarkovBuilder matrix(List<List<BigDecimal>> matrix) {
         this.matrix = matrix
                 .stream()
                 .map(bigDecimals -> bigDecimals.stream()
@@ -27,7 +27,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
         return this;
     }
 
-    public MarkovBuilder changeStateFrequency(Frequency frequency) {
+    public MarkovBuilder stateFrequency(Frequency frequency) {
         this.frequency = frequency;
         return this;
     }
@@ -50,12 +50,12 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
 
         if (matrix == null) {
             addError(new IllegalArgumentException("Missing a matrix for the markov chain " + name +
-                    ", use the method withMatrix"));
+                    ", use the method matrix"));
         }
 
         if (matrix.isEmpty()) {
             addError(new IllegalArgumentException("The matrix of a markov chain cannot be empty.\n" +
-                    "Example: withMatrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])"));
+                    "Example: matrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])"));
         }
 
         int firstLineSize = matrix.get(0).size();

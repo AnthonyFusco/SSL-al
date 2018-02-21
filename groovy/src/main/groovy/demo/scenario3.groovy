@@ -30,18 +30,18 @@ extfunc2 = {x ->
     extfunc2(x)
 }
 
-//law "temperatureExerieure" ofType FunctionLaw withExpressions extfunc
+//law "temperatureExerieure" ofType FunctionLaw expression extfunc
 
-def l = law "temperatureExerieure2" ofType FunctionLaw withExpressions extfunc2
+def l = law "temperatureExerieure2" ofType FunctionLaw expression extfunc2
 //State 1 : Comfy  State2: Uncomfortable
-//law "AtmoshpereInt" ofType MarkovLaw withMatrix ([[0.8, 0.2], [0.6, 0.4]]) changeStateFrequency 1 / min
+//law "AtmoshpereInt" ofType MarkovLaw matrix ([[0.8, 0.2], [0.6, 0.4]]) stateFrequency 1 / min
 
-//sensorLot "SensorLumiereExt" withLaw "luminosite" withFrequency 2 / h sensorsNumber 2
+//sensorLot "SensorLumiereExt" withLaw "luminosite" frequency 2 / h sensorsNumber 2
 
 //sensorLot "SensorTempExt" sensorsNumber 1 law "temperatureExerieure" frequency 1/h
 sensorLot "SensorTempExt2" sensorsNumber 1 law l frequency 1/h
 
-//sensorLot "SensorAtmoshpereInt" sensorsNumber 4 withLaw "AtmoshpereInt" withFrequency 1/h
+//sensorLot "SensorAtmoshpereInt" sensorsNumber 4 withLaw "AtmoshpereInt" frequency 1/h
 
 play "SensorTempExt2"
 
