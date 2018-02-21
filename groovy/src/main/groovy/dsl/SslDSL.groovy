@@ -1,28 +1,28 @@
 package dsl
 
 import kernel.structural.laws.LawType
+import kernel.units.Duration
+import kernel.units.Frequency
+import kernel.units.TimeUnit
 import org.codehaus.groovy.ast.stmt.ForStatement
 import org.codehaus.groovy.ast.stmt.WhileStatement
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.MultipleCompilationErrorsException
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 import org.codehaus.groovy.syntax.Types
-import kernel.units.Duration
-import kernel.units.Frequency
-import kernel.units.TimeUnit
 
 class SslDSL {
-	private GroovyShell shell
-	private CompilerConfiguration configuration
-	private SslBinding binding
-	private SslBaseScript basescript
+    private GroovyShell shell
+    private CompilerConfiguration configuration
+    private SslBinding binding
+    private SslBaseScript basescript
 
-	SslDSL() {
-		binding = new SslBinding()
-		binding.setModel(new SslModel(binding))
-		configuration = getDSLConfiguration()
-		configuration.setScriptBaseClass("dsl.SslBaseScript")
-		shell = new GroovyShell(configuration)
+    SslDSL() {
+        binding = new SslBinding()
+        binding.setModel(new SslModel(binding))
+        configuration = getDSLConfiguration()
+        configuration.setScriptBaseClass("dsl.SslBaseScript")
+        shell = new GroovyShell(configuration)
 
         for (LawType type : LawType.values()) {
             binding.setVariable(type.toString(), type.toString())
@@ -31,108 +31,105 @@ class SslDSL {
         binding.setVariable("min", new Duration(1, TimeUnit.Minute))
         binding.setVariable("h", new Duration(1, TimeUnit.Hour))
         binding.setVariable("d", new Duration(1, TimeUnit.Day))
-		binding.setVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME, 1)
-	}
+        binding.setVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME, 1)
+    }
 
 
-	private static CompilerConfiguration getDSLConfiguration() {
-		def secure = new SecureASTCustomizer()
+    private static CompilerConfiguration getDSLConfiguration() {
+        def secure = new SecureASTCustomizer()
 
-		secure.with {
-			closuresAllowed = true
-			methodDefinitionAllowed = true
-			importsWhitelist = [
+        secure.with {
+            closuresAllowed = true
+            methodDefinitionAllowed = true
+            importsWhitelist = [
 
-			]
+            ]
 
-			staticImportsWhitelist = []
-			staticStarImportsWhitelist= []
+            staticImportsWhitelist = []
+            staticStarImportsWhitelist = []
 //			tokensBlacklist= []
-			tokensWhitelist= [
-					Types.PLUS_PLUS,
-					Types.DIVIDE,
-					Types.PLUS,
-					Types.MULTIPLY,
-					Types.POWER,
-					Types.EQUAL,
-					Types.MOD,
-					Types.COMPARE_EQUAL,
-					Types.COMPARE_NOT_EQUAL,
-					Types.COMPARE_LESS_THAN,
-					Types.COMPARE_LESS_THAN_EQUAL,
-					Types.COMPARE_GREATER_THAN,
-					Types.COMPARE_GREATER_THAN_EQUAL,
-					Types.ASSIGN,
-					Types.POWER
-			]
-			//types allowed to be used  (including primitive types)
-			constantTypesClassesWhiteList= [
-				int,
-				Integer,
-				Number,
-				Integer.TYPE,
-				double,
-				Double,
-				Double.TYPE,
-				String,
-				Object,
-				BigDecimal
-			]
-			//classes who are allowed to be receivers of method calls
-			receiversClassesWhiteList= [
-				int, Number, Integer, String, Object
-			]
-		}
+            tokensWhitelist = [
+                    Types.PLUS_PLUS,
+                    Types.DIVIDE,
+                    Types.PLUS,
+                    Types.MULTIPLY,
+                    Types.POWER,
+                    Types.EQUAL,
+                    Types.MOD,
+                    Types.COMPARE_EQUAL,
+                    Types.COMPARE_NOT_EQUAL,
+                    Types.COMPARE_LESS_THAN,
+                    Types.COMPARE_LESS_THAN_EQUAL,
+                    Types.COMPARE_GREATER_THAN,
+                    Types.COMPARE_GREATER_THAN_EQUAL,
+                    Types.ASSIGN,
+                    Types.POWER
+            ]
+            //types allowed to be used  (including primitive types)
+            constantTypesClassesWhiteList = [
+                    int,
+                    Integer,
+                    Number,
+                    Integer.TYPE,
+                    double,
+                    Double,
+                    Double.TYPE,
+                    String,
+                    Object,
+                    BigDecimal
+            ]
+            //classes who are allowed to be receivers of method calls
+            receiversClassesWhiteList = [
+                    int, Number, Integer, String, Object
+            ]
+        }
 
-		List<Class> statementBlacklist = new ArrayList<>();
-		statementBlacklist.add(WhileStatement);
-		statementBlacklist.add(ForStatement);
-		secure.setStatementsBlacklist( statementBlacklist );
+        List<Class> statementBlacklist = new ArrayList<>();
+        statementBlacklist.add(WhileStatement);
+        statementBlacklist.add(ForStatement);
+        secure.setStatementsBlacklist(statementBlacklist);
 
         Number.metaClass {
-            getS { -> new Duration(delegate as double, TimeUnit.Second)}
-            getMin { -> new Duration(delegate as double, TimeUnit.Minute)}
-            getH { -> new Duration(delegate as double, TimeUnit.Hour)}
-            getD { -> new Duration(delegate as double, TimeUnit.Day)}
-
-
+            getS { -> new Duration(delegate as double, TimeUnit.Second) }
+            getMin { -> new Duration(delegate as double, TimeUnit.Minute) }
+            getH { -> new Duration(delegate as double, TimeUnit.Hour) }
+            getD { -> new Duration(delegate as double, TimeUnit.Day) }
 
 
         }
-        Number.metaClass.div = { Duration d -> new Frequency(delegate as int, d)}
+        Number.metaClass.div = { Duration d -> new Frequency(delegate as int, d) }
 
 
-		
-		def configuration = new CompilerConfiguration()
-		configuration.addCompilationCustomizers(secure)
-		
-		return configuration
-	}
-	
-	void eval(File scriptFile) {
-		List<String> scriptStrings = scriptFile.readLines()
 
-		String evaluate = ScriptTransformer.evaluate(scriptStrings)
+        def configuration = new CompilerConfiguration()
+        configuration.addCompilationCustomizers(secure)
 
-		//TODO: Refactorer en plus beau, validation ailleurs
-		// que dans SslDsl ?
-		try {
-			Script script = shell.parse(evaluate)
+        return configuration
+    }
+
+    void eval(File scriptFile) {
+        List<String> scriptStrings = scriptFile.readLines()
+
+        String evaluate = ScriptTransformer.evaluate(scriptStrings)
+
+        //TODO: Refactorer en plus beau, validation ailleurs
+        // que dans SslDsl ?
+        try {
+            Script script = shell.parse(evaluate)
             binding.setScript(script)
             script.setBinding(binding)
 
             script.run()
-        }catch(MultipleCompilationErrorsException se){
-			println("Security Error, don't overpass laws !")
-			println(se.getErrorCollector().getException(0).localizedMessage)
-			System.exit(0)
-		}
+        } catch (MultipleCompilationErrorsException se) {
+            println("Security Error, don't overpass laws !")
+            println(se.getErrorCollector().getException(0).localizedMessage)
+            System.exit(0)
+        }
 
 
+    }
 
-	}
-
-	SslBinding getBinding() {
-		return binding
-	}
+    SslBinding getBinding() {
+        return binding
+    }
 }
