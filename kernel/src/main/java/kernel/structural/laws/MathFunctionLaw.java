@@ -15,7 +15,8 @@ public class MathFunctionLaw implements DataSource {
     private boolean isExecutable;
 
     public MathFunctionLaw() {
-        counter = 0;
+        this.counter = 0;
+        this.name = "composite";
     }
 
     @Override

@@ -17,7 +17,7 @@ public class SensorsLot extends ExecutableSource {
     private boolean isExecutable;
 
     public SensorsLot() {
-        //ignore
+        this.name = "SensorLot";
     }
 
     @Override

@@ -50,7 +50,6 @@ abstract class SslBaseScript extends Script {
         RandomBuilder builder = new RandomBuilder()
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        //code.resolveStrategy = Closure.DELEGATE_ONLY
         code()
         builder
     }
@@ -59,7 +58,6 @@ abstract class SslBaseScript extends Script {
         MarkovBuilder builder = new MarkovBuilder()
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        //code.resolveStrategy = Closure.DELEGATE_ONLY
         code()
         builder
     }
@@ -68,7 +66,6 @@ abstract class SslBaseScript extends Script {
         MathFunctionBuilder builder = new MathFunctionBuilder()
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        //code.resolveStrategy = Closure.DELEGATE_ONLY
         code()
         builder
     }

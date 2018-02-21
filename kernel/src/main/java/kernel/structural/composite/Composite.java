@@ -27,6 +27,10 @@ public class Composite extends ExecutableSource {
     private Frequency frequency;
     private boolean isExecutable;
 
+    public Composite() {
+        this.name = "composite";
+    }
+
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
 

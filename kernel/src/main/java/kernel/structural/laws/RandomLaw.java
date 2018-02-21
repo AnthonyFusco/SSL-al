@@ -12,6 +12,10 @@ public class RandomLaw implements DataSource {
     private Integer bornesup = 10;
     private boolean isExecutable;
 
+    public RandomLaw() {
+        this.name = "RandomLaw";
+    }
+
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
         int value = new Random()

@@ -64,7 +64,7 @@ class SslDSL {
                     Types.COMPARE_GREATER_THAN_EQUAL,
                     Types.ASSIGN,
                     Types.POWER
-            ]
+            ].asImmutable()
             //types allowed to be used  (including primitive types)
             constantTypesClassesWhiteList = [
                     int,
@@ -77,17 +77,17 @@ class SslDSL {
                     String,
                     Object,
                     BigDecimal
-            ]
+            ].asImmutable()
             //classes who are allowed to be receivers of method calls
             receiversClassesWhiteList = [
                     int, Number, Integer, String, Object
             ]
         }
 
-        List<Class> statementBlacklist = new ArrayList<>();
-        statementBlacklist.add(WhileStatement);
-        statementBlacklist.add(ForStatement);
-        secure.setStatementsBlacklist(statementBlacklist);
+        List<Class> statementBlacklist = new ArrayList<>()
+        statementBlacklist.add(WhileStatement)
+        statementBlacklist.add(ForStatement)
+        secure.setStatementsBlacklist(statementBlacklist)
 
         Number.metaClass {
             getS { -> new Duration(delegate as double, TimeUnit.Second) }

@@ -15,6 +15,9 @@ public class MarkovChainLaw implements DataSource {
     private double lastTimeCompute = 0;
     private boolean isExecutable;
 
+    public MarkovChainLaw() {
+        this.name = "MarkovChain";
+    }
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {

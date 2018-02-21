@@ -40,6 +40,8 @@ def s2 = sensorLot {
     offset 10.s
 }*/
 
+//play sensorLot { sensorsNumber 2 law random frequency 1 / min }, sensorLot { sensorsNumber 2 law random frequency 2 / min }
+
 play s1, s2
 
 runSimulation "10/02/2018 09:25:00", "10/02/2018 09:30:00"

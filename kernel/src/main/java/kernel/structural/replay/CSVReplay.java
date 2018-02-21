@@ -20,6 +20,10 @@ public class CSVReplay implements Replay {
     private List<Integer> noise;
     private boolean isExecutable;
 
+    public CSVReplay() {
+        this.name = "CSV Replay";
+    }
+
     @Override
     public List<Measurement> generateNextMeasurement(double startDate) {
         Integer tColumn = (Integer) columnsDescriptions.get("t");
