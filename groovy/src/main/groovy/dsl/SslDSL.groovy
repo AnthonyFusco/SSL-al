@@ -51,6 +51,7 @@ class SslDSL {
 //			tokensBlacklist= []
             tokensWhitelist = [
                     Types.PLUS_PLUS,
+                    Types.PLUS_EQUAL,
                     Types.DIVIDE,
                     Types.PLUS,
                     Types.MULTIPLY,
@@ -65,7 +66,9 @@ class SslDSL {
                     Types.COMPARE_GREATER_THAN_EQUAL,
                     Types.ASSIGN,
                     Types.POWER,
-                    Types.KEYWORD_ELSE
+                    Types.LEFT_SQUARE_BRACKET,
+                    Types.RIGHT_SQUARE_BRACKET,
+                    Types.POWER
             ].asImmutable()
             //types allowed to be used  (including primitive types)
             constantTypesClassesWhiteList = [
@@ -91,11 +94,6 @@ class SslDSL {
         statementBlacklist.add(ForStatement)
         secure.setStatementsBlacklist(statementBlacklist)
 
-        /*List<Class> statementWhitelist = new ArrayList<>()
-        statementWhitelist.add(IfStatement)
-
-        secure.setStatementsWhitelist(statementWhitelist)*/
-
         Number.metaClass {
             getS { -> new Duration(delegate as double, TimeUnit.Second) }
             getMin { -> new Duration(delegate as double, TimeUnit.Minute) }
@@ -105,8 +103,6 @@ class SslDSL {
 
         }
         Number.metaClass.div = { Duration d -> new Frequency(delegate as int, d) }
-
-
 
         def configuration = new CompilerConfiguration()
         configuration.addCompilationCustomizers(secure)
@@ -119,8 +115,6 @@ class SslDSL {
 
         String evaluate = ScriptTransformer.evaluate(scriptStrings)
 
-        //TODO: Refactorer en plus beau, validation ailleurs
-        // que dans SslDsl ?
         try {
             Script script = shell.parse(evaluate)
             binding.setScript(script)
@@ -128,8 +122,10 @@ class SslDSL {
 
             script.run()
         } catch (MultipleCompilationErrorsException se) {
-            println("Security Error, don't overpass laws !")
+            println("Security Error : You are using forbidden keywords")
             println(se.getErrorCollector().getException(0).localizedMessage)
+            println(se.getMessage())
+            println(se.getErrorCollector().getException(0).printStackTrace())
             System.exit(0)
         }
 

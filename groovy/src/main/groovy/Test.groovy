@@ -2,16 +2,17 @@
 //todo add a test for the demo
 //todo some validation
 
-//resetDB()
+resetDB()
 
 //TODO write macros like this one
 
 //#define MARKOV => law ("markovLaw" + i++) ofType MarkovLaw stateFrequency 1 / 20.s
 
-def random = markovLaw {
-    matrix([[0.5,0.5], [0.4, 0.6]])
-}
+def random = randomLaw {}
 
+def markov = markovLaw {
+    matrix([[0.5,0.5], [0.7,0.4]])
+}
 
 //law "markovLaw" ofType MarkovLaw stateFrequency 1 / 20.s matrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])
 
@@ -30,7 +31,7 @@ def s1 = sensorLot {
 
 def s2 = sensorLot {
     sensorsNumber 2
-    law random
+    law markov
     frequency 2 / min
 }
 //String filepath = "/home/fpastor/GroovyProjects/SSL-al/groovy/src/main/resources/rawdata/inconsistent.csv"

@@ -1,16 +1,19 @@
 package dsl;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public final class ScriptTransformer {
 
-    private ScriptTransformer(){}
-
     public static final String LINE_COUNT_VARIABLE_NAME = "LINECOUNTNAME";
     private static final String BEGIN_MACROS_LINE_PATTERN = "//#define";
     private static final String MACROS_SEPARATOR_PATTERN = "=>";
+
+    private ScriptTransformer() {
+    }
 
     public static String evaluate(List<String> lines) {
         Map<String, String> macros = new HashMap<>();
@@ -25,16 +28,32 @@ public final class ScriptTransformer {
             }
         }
 
+        int openBracketNumber = 0;
+        int lineCountBuffer = 0;
         for (String line : lines) {
             if (!line.startsWith(BEGIN_MACROS_LINE_PATTERN)) {
                 for (Map.Entry<String, String> entry : macros.entrySet()) {
                     line = line.replaceAll(entry.getKey(), entry.getValue());
                 }
             }
-            result.append(line).append("\n").append(LINE_COUNT_VARIABLE_NAME + "++").append("\n");
+
+            if (!(line.startsWith("//") || line.startsWith("/*") || line.startsWith("*")) &&
+                    (line.contains("{") || line.contains("}"))) {
+                openBracketNumber += StringUtils.countMatches(line, "{");
+                openBracketNumber -= StringUtils.countMatches(line, "}");
+                lineCountBuffer++;
+                result.append(line).append("\n");
+            } else if (openBracketNumber == 0) {
+                int toAdd = lineCountBuffer == 0 ? 1 : lineCountBuffer + 1;
+                result.append(line).append("\n")
+                        .append(LINE_COUNT_VARIABLE_NAME + "+=").append(toAdd).append("\n");
+                lineCountBuffer = 0;
+            } else {
+                lineCountBuffer++;
+                result.append(line).append("\n");
+            }
         }
-
-
+        System.out.println(result.toString());
         return result.toString();
     }
 }
