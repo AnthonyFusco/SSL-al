@@ -7,6 +7,7 @@ import kernel.structural.laws.MathFunctionLaw;
 public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
 
     private Closure mapExpressionsConditions;
+    private String LINECOUNTNAME = "LINECOUNTNAME";
 
     public MathFunctionBuilder(int definitionLine) {
         super(definitionLine);

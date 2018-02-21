@@ -31,8 +31,6 @@ public class Runner {
 
         if (anyError()) return;
 
-//        app.setToPlay(model.getToPlay());
-
         dispatchDataSourcesByType(app);
 
         SslVisitor visitor = new SslVisitor();
