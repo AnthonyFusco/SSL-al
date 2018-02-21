@@ -53,12 +53,12 @@ public class JsonReplay implements Replay {
                 JsonObject sensor = (JsonObject) o;
 
                 JsonElement jsonvalue = sensor.get(sensorValueToken);
-                long value = jsonvalue.getAsLong();
-
+                Double value = jsonvalue.getAsDouble();
                 JsonElement jsontime = sensor.get(sensorRelativeTimeToken);
-                Double relativeTime = jsontime.getAsDouble() + startDate + offset.getValue();
-
-                measurementList.add(new Measurement(sensorname.getAsString(),value,relativeTime));
+                long relativeTime = jsontime.getAsLong() + (long)startDate + (long)offset.getValue();
+                Measurement m = new Measurement(sensorname.getAsString(),relativeTime,value);
+                System.out.println(m.toString());
+                measurementList.add(m);
             }
             return measurementList;
         }

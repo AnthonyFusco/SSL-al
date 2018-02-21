@@ -1,6 +1,7 @@
 package dsl
 
 import builders.CompositeBuilder
+import builders.JsonReplayBuilder
 import builders.MarkovBuilder
 import builders.MathFunctionBuilder
 import builders.RandomBuilder
@@ -64,6 +65,14 @@ abstract class SslBaseScript extends Script {
 
     def mathFunction(Closure closure) {
         MathFunctionBuilder builder = new MathFunctionBuilder(getCurrentLine())
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
+        def code = closure.rehydrate(builder, this, this)
+        code()
+        builder
+    }
+
+    def jsonreplay(Closure closure){
+        def builder = new JsonReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
         code()
