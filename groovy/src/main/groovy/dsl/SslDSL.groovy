@@ -66,7 +66,9 @@ class SslDSL {
                     Types.COMPARE_GREATER_THAN_EQUAL,
                     Types.ASSIGN,
                     Types.POWER,
-                    Types.KEYWORD_ELSE
+                    Types.LEFT_SQUARE_BRACKET,
+                    Types.RIGHT_SQUARE_BRACKET,
+                    Types.POWER
             ].asImmutable()
             //types allowed to be used  (including primitive types)
             constantTypesClassesWhiteList = [
@@ -120,8 +122,10 @@ class SslDSL {
 
             script.run()
         } catch (MultipleCompilationErrorsException se) {
-            println("Security Error, don't overpass laws !")
+            println("Security Error : You are using forbidden keywords")
             println(se.getErrorCollector().getException(0).localizedMessage)
+            println(se.getMessage())
+            println(se.getErrorCollector().getException(0).printStackTrace())
             System.exit(0)
         }
 
