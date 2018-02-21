@@ -34,9 +34,9 @@ public class SensorsLot implements DataSource, Visitable {
     }
 
     public void generatesSensors() {
-        DataSource dataSource = builder.build();
         sensors = new ArrayList<>();
         for (int i = 0; i < sensorsNumber; i++) {
+            DataSource dataSource = builder.build();
             sensors.add(new Sensor(dataSource));
         }
     }

@@ -11,7 +11,7 @@ public class MarkovChainLaw implements DataSource {
     private List<List<Double>> matrix;
     private int currState = 0;
     private double changeStateFrequencyValue;
-
+    private boolean blockComputingNewState = false;
     private double lastTimeCompute = 0;
 
 
@@ -21,6 +21,7 @@ public class MarkovChainLaw implements DataSource {
         double step = 1.0 / changeStateFrequencyValue;
         if (lastTimeCompute + step < t) {
             lastTimeCompute = t;
+            blockComputingNewState = false;
         }
 
         MockNeat mockNeat = MockNeat.threadLocal();
@@ -30,8 +31,11 @@ public class MarkovChainLaw implements DataSource {
         for(int i = 0 ; i < matrix.size(); i++){
             p.add(getMatrix().get(currState).get(i), i);
         }
+        if (!blockComputingNewState) {
+            currState = p.val();
+             blockComputingNewState = true;
+        }
 
-        currState = p.val();
         return Collections.singletonList(new Measurement<>(name, (long) t, currState + ""));
     }
 
