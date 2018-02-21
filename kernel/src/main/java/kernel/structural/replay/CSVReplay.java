@@ -18,6 +18,7 @@ public class CSVReplay implements Replay {
     private Map<String, Object> columnsDescriptions = new HashMap<>();
     private long offset;
     private List<Integer> noise;
+    private boolean isExecutable;
 
     @Override
     public List<Measurement> generateNextMeasurement(double startDate) {
@@ -56,6 +57,15 @@ public class CSVReplay implements Replay {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
     }
 
     @Override

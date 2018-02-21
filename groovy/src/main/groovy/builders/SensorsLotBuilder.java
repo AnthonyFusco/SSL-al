@@ -10,12 +10,7 @@ import kernel.units.TimeUnit;
 public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
     private int sensorsNumber;
     private EntityBuilder<DataSource> builder;
-    private String name;
     private Frequency frequency;
-
-    public SensorsLotBuilder() {
-        this.name = "sensor";
-    }
 
     public SensorsLotBuilder sensorsNumber(int sensorsNumber) {
         this.sensorsNumber = sensorsNumber;
@@ -32,44 +27,27 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
         return this;
     }
 
-    public String getName() {
-        return name;
-    }
-
     @Override
     public SensorsLot build() {
         SensorsLot result = new SensorsLot();
-        result.setName(name);
         result.setBuilder(builder);
         result.setSensorsNumber(sensorsNumber);
         result.setFrequencyValue(frequency.getValue());
+        result.setExecutable(isExecutable());
         return result;
     }
 
     @Override
     public void validate() {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("The name of a SensorLot must not be empty");
-        }
-
         if (sensorsNumber <= 0) {
-            System.out.println("\u001B[33mWARNING: no sensor number specified on sensor lot " + name +
+            System.out.println("\u001B[33mWARNING: no sensor number specified on sensor lot " + /*name +*/
                     ", using default number of 1\u001B[37m");
             sensorsNumber = 1;
         }
-
         if (frequency == null) {
-            System.out.println("\u001B[33mWARNING: no frequency specified on sensor lot " + name +
+            System.out.println("\u001B[33mWARNING: no frequency specified on sensor lot " + /*name +*/
                     ", using default frequency of 1/min\u001B[37m");
             frequency = new Frequency(1, new Duration(1, TimeUnit.Minute));
         }
-
-        /*if (lawName == null || lawName.isEmpty()) {
-            throw new IllegalArgumentException("The SensorLot " + name + " must have a non empty law name");
-        }
-
-        if (!model.getDataSourcesNames().contains(lawName)) {
-            throw new IllegalArgumentException("The law of the sensorLot " + name + " does not exist");
-        }*/
     }
 }

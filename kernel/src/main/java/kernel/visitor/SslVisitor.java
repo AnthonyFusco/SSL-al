@@ -30,17 +30,13 @@ public class SslVisitor implements Visitor {
         this.startDate = application.getStartDate();
         this.endDate = application.getEndDate();
 
-        for (ExecutableSource source : application.getExecutableSources()) {
-            if (application.getToPlay().contains(source.getName())) {
-                source.accept(this);
-            }
-        }
+        application.getExecutableSources().stream()
+                .filter(DataSource::isExecutable)
+                .forEach(source -> source.accept(this));
 
-        for (Replay replay : application.getReplays()) {
-            if (application.getToPlay().contains(replay.getName())) {
-                replay.accept(this);
-            }
-        }
+        application.getReplays().stream()
+                .filter(DataSource::isExecutable)
+                .forEach(replay -> replay.accept(this));
     }
 
     @Override

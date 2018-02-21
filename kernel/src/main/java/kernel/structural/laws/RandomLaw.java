@@ -10,6 +10,7 @@ public class RandomLaw implements DataSource {
     private String name;
     private Integer borneinf = 0;
     private Integer bornesup = 10;
+    private boolean isExecutable;
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
@@ -29,6 +30,15 @@ public class RandomLaw implements DataSource {
 
     public void setBorneSup(Integer borneSup) {
         this.bornesup = borneSup;
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
     }
 
     @Override

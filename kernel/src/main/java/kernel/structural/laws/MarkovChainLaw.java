@@ -13,7 +13,7 @@ public class MarkovChainLaw implements DataSource {
     private double changeStateFrequencyValue;
     private boolean blockComputingNewState = false;
     private double lastTimeCompute = 0;
-
+    private boolean isExecutable;
 
 
     @Override
@@ -63,5 +63,14 @@ public class MarkovChainLaw implements DataSource {
 
     public void setChangeStateFrequencyValue(double changeStateFrequencyValue) {
         this.changeStateFrequencyValue = changeStateFrequencyValue;
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
     }
 }

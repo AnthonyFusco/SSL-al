@@ -8,11 +8,6 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
 
     private Closure mapExpressionsConditions;
 
-    public MathFunctionBuilder() {
-        super("math");
-    }
-
-
     public MathFunctionBuilder expression(Closure expression) {
         this.mapExpressionsConditions = expression;
         return this;
@@ -21,20 +16,15 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
     @Override
     public MathFunctionLaw build() {
         MathFunctionLaw law = new MathFunctionLaw();
-        law.setName(this.getName());
         law.setExpression(mapExpressionsConditions);
+        law.setExecutable(isExecutable());
         return law;
     }
 
     @Override
     public void validate() {
-        String name = this.getName();
-        if (name == null || name.isEmpty()) {
-            addError(new IllegalArgumentException("The name of a MathFunction must not be empty"));
-        }
-
         if (mapExpressionsConditions == null) {
-            addError(new IllegalArgumentException("Missing a body for" + name +
+            addError(new IllegalArgumentException("Missing a body for" + /*name +*/
                     ", please define a lambda. Example lam = { x -> x+1}"));
         }
 
@@ -45,11 +35,10 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
 
         mapExpressionsConditions.setResolveStrategy(Closure.DELEGATE_ONLY);
         mapExpressionsConditions.setDelegate(this); //just so the namespace is different and it crashes on recursions
-
         try {
             mapExpressionsConditions.call(1);
         } catch (MissingMethodException e) {
-            addError(new IllegalArgumentException("In " + name + ", No Recursions allowed, sorry bro."));
+            addError(new IllegalArgumentException("In " + /*name +*/ ", No Recursions allowed, sorry bro."));
         }
     }
 

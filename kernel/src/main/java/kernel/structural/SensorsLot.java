@@ -14,6 +14,7 @@ public class SensorsLot extends ExecutableSource {
     private String name;
     private double frequencyValue;
     private EntityBuilder<DataSource> builder;
+    private boolean isExecutable;
 
     public SensorsLot() {
         //ignore
@@ -71,4 +72,12 @@ public class SensorsLot extends ExecutableSource {
         this.builder = builder;
     }
 
+    @Override
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
+    }
 }

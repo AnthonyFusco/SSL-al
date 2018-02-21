@@ -5,6 +5,8 @@ import builders.RandomBuilder
 import builders.ReplayBuilder
 import builders.SensorsLotBuilder
 import groovy.transform.BaseScript
+import kernel.structural.EntityBuilder
+import kernel.structural.laws.DataSource
 import org.influxdb.InfluxDB
 import org.influxdb.InfluxDBFactory
 
@@ -20,12 +22,11 @@ abstract class SslBaseScript extends Script {
         influxDB.createDatabase(dbName)
     }
 
-    def play(String... names) {
-        for (String name : names) {
-            ((SslBinding) getBinding()).getModel().addToPlay(name)
+    def play(EntityBuilder<DataSource>... vars) {
+        for (EntityBuilder<DataSource> var : vars) {
+            var.setExecutable(true)
         }
     }
-
 
     def composite(Closure closure) {
         CompositeBuilder builder = new CompositeBuilder<>()

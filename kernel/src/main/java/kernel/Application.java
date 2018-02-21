@@ -14,7 +14,6 @@ public class Application implements NamedElement, Visitable {
     private String name;
     private Date endDate;
     private Date startDate;
-    private List<String> toPlay = new ArrayList<>();
     private List<DataSource> dataSources = new ArrayList<>();
     private List<Replay> replays = new ArrayList<>();
     private List<ExecutableSource> executableSources = new ArrayList<>();
@@ -60,14 +59,6 @@ public class Application implements NamedElement, Visitable {
 
     public List<Replay> getReplays() {
         return replays;
-    }
-
-    public List<String> getToPlay() {
-        return toPlay;
-    }
-
-    public void setToPlay(List<String> toPlay) {
-        this.toPlay = toPlay;
     }
 
     public void addExecutableSource(ExecutableSource dataSource) {

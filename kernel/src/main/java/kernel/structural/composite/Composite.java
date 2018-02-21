@@ -25,6 +25,7 @@ public class Composite extends ExecutableSource {
     private List<SensorsLot> sensorsLots = new ArrayList<>();
     private List<EntityBuilder<SensorsLot>> builders;
     private Frequency frequency;
+    private boolean isExecutable;
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
@@ -87,6 +88,15 @@ public class Composite extends ExecutableSource {
 
     public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
     }
 
     @Override

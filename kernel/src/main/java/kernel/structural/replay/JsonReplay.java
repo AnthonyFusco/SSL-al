@@ -8,6 +8,8 @@ import java.util.List;
 
 public class JsonReplay implements Replay {
 
+    private boolean isExecutable;
+
     @Override
     public String getName() {
         return null;
@@ -27,4 +29,13 @@ public class JsonReplay implements Replay {
     public void accept(Visitor visitor) {
         visitor.visit(this);
     }
+    @Override
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
+    }
+
 }

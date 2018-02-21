@@ -12,21 +12,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
-    private String name;
     private List<EntityBuilder<SensorsLot>> lots;
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
     private Frequency frequency;
 
-    public CompositeBuilder() {
-        this.name = "composite";
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
 
     public CompositeBuilder withLots(List<EntityBuilder<SensorsLot>> lots) {
         this.lots = lots;
@@ -55,12 +46,12 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
 
     public Composite build() {
         Composite composite = new Composite();
-        composite.setName(name);
         composite.setFilterPredicate(filterPredicate);
         composite.setMapFunction(mapFunction);
         composite.setReduceFunction(reduceFunction);
         composite.setBuilders(lots);
         composite.setFrequency(frequency);
+        composite.setExecutable(isExecutable());
         return composite;
     }
 

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface DataSource extends NamedElement {
     List<Measurement> generateNextMeasurement(double t);
+
+    boolean isExecutable();
 }

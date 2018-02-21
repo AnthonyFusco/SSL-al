@@ -1,13 +1,16 @@
 package kernel.structural;
 
-public interface EntityBuilder<T> {
+import kernel.structural.laws.DataSource;
+
+public interface EntityBuilder<T extends DataSource> {
     T build();
 
     void validate();
 
-    String getName();
-
     void printErrors();
 
     boolean isInErrorState();
+
+    void setExecutable(boolean isExecutable);
+
 }

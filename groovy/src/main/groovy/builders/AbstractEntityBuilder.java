@@ -1,11 +1,13 @@
 package builders;
 
 import kernel.structural.EntityBuilder;
+import kernel.structural.laws.DataSource;
 
 import java.util.Stack;
 
-public abstract class AbstractEntityBuilder<T> implements EntityBuilder<T> {
+public abstract class AbstractEntityBuilder<T extends DataSource> implements EntityBuilder<T> {
     private Stack<Exception> exceptions = new Stack<>();
+    private boolean isExecutable;
 
     void addError(Exception e) {
         exceptions.push(e);
@@ -26,4 +28,12 @@ public abstract class AbstractEntityBuilder<T> implements EntityBuilder<T> {
 
     public abstract T build();
 
+    boolean isExecutable() {
+        return isExecutable;
+    }
+
+    @Override
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
+    }
 }

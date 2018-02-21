@@ -12,6 +12,7 @@ public class MathFunctionLaw implements DataSource {
     private String name;
     private Closure expression;
     private int counter;
+    private boolean isExecutable;
 
     public MathFunctionLaw() {
         counter = 0;
@@ -42,6 +43,14 @@ public class MathFunctionLaw implements DataSource {
         this.name = name;
     }
 
+    @Override
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
+    }
 
     public void setExpression(Closure expression) {
         this.expression = expression;
