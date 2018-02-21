@@ -1,6 +1,8 @@
 package dsl
 
 import builders.CompositeBuilder
+import builders.MarkovBuilder
+import builders.MathFunctionBuilder
 import builders.RandomBuilder
 import builders.ReplayBuilder
 import builders.SensorsLotBuilder
@@ -45,6 +47,24 @@ abstract class SslBaseScript extends Script {
 
     def randomLaw(Closure closure) {
         RandomBuilder builder = new RandomBuilder()
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
+        def code = closure.rehydrate(builder, this, this)
+        //code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        builder
+    }
+
+    def markovLaw(Closure closure) {
+        MarkovBuilder builder = new MarkovBuilder()
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
+        def code = closure.rehydrate(builder, this, this)
+        //code.resolveStrategy = Closure.DELEGATE_ONLY
+        code()
+        builder
+    }
+
+    def mathFunction(Closure closure) {
+        MathFunctionBuilder builder = new MathFunctionBuilder()
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
         //code.resolveStrategy = Closure.DELEGATE_ONLY
