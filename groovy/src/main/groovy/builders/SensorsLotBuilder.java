@@ -13,8 +13,8 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
     private String name;
     private Frequency frequency;
 
-    public SensorsLotBuilder(String name) {
-        this.name = name;
+    public SensorsLotBuilder() {
+        this.name = "sensor";
     }
 
     public SensorsLotBuilder sensorsNumber(int sensorsNumber) {

@@ -9,7 +9,7 @@ koukou = { int x ->
 
 
 
-law "poly1" ofType FunctionLaw withExpressions koukou
+law "poly1" ofType FunctionLaw expression koukou
 
 
 parkingLaw "parkingLaw"

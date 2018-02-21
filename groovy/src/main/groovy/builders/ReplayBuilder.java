@@ -23,8 +23,8 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
     private Duration offset = new Duration(0, TimeUnit.Second);
     private List<Integer> noise;
 
-    public ReplayBuilder(String name) {
-        this.name = name;
+    public ReplayBuilder() {
+        this.name = "replay";
     }
 
     public ReplayBuilder path(String path) {

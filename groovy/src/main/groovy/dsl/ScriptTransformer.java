@@ -8,8 +8,10 @@ public final class ScriptTransformer {
 
     private ScriptTransformer(){}
 
+    public static final String LINE_COUNT_VARIABLE_NAME = "LINECOUNTNAME";
     private static final String BEGIN_MACROS_LINE_PATTERN = "//#define";
     private static final String MACROS_SEPARATOR_PATTERN = "=>";
+
     public static String evaluate(List<String> lines) {
         Map<String, String> macros = new HashMap<>();
 
@@ -28,8 +30,8 @@ public final class ScriptTransformer {
                 for (Map.Entry<String, String> entry : macros.entrySet()) {
                     line = line.replaceAll(entry.getKey(), entry.getValue());
                 }
-                result.append(line).append("\n");
             }
+            result.append(line).append("\n").append(LINE_COUNT_VARIABLE_NAME + "++").append("\n");
         }
 
 

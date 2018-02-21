@@ -19,8 +19,8 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
     private BinaryOperator<Double> reduceFunction;
     private Frequency frequency;
 
-    public CompositeBuilder(String name) {
-        this.name = name;
+    public CompositeBuilder() {
+        this.name = "composite";
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         return this;
     }
 
-    public CompositeBuilder withFrequency(Frequency frequency) {
+    public CompositeBuilder frequency(Frequency frequency) {
         this.frequency = frequency;
         return this;
     }

@@ -1,7 +1,10 @@
 package dsl
 
 import kernel.structural.laws.LawType
+import org.codehaus.groovy.ast.stmt.ForStatement
+import org.codehaus.groovy.ast.stmt.WhileStatement
 import org.codehaus.groovy.control.CompilerConfiguration
+import org.codehaus.groovy.control.MultipleCompilationErrorsException
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 import org.codehaus.groovy.syntax.Types
 import kernel.units.Duration
@@ -28,11 +31,13 @@ class SslDSL {
         binding.setVariable("min", new Duration(1, TimeUnit.Minute))
         binding.setVariable("h", new Duration(1, TimeUnit.Hour))
         binding.setVariable("d", new Duration(1, TimeUnit.Day))
+		binding.setVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME, 1)
 	}
 
 
 	private static CompilerConfiguration getDSLConfiguration() {
 		def secure = new SecureASTCustomizer()
+
 		secure.with {
 			closuresAllowed = true
 			methodDefinitionAllowed = true
@@ -79,6 +84,11 @@ class SslDSL {
 			]
 		}
 
+		List<Class> statementBlacklist = new ArrayList<>();
+		statementBlacklist.add(WhileStatement);
+		statementBlacklist.add(ForStatement);
+		secure.setStatementsBlacklist( statementBlacklist );
+
         Number.metaClass {
             getS { -> new Duration(delegate as double, TimeUnit.Second)}
             getMin { -> new Duration(delegate as double, TimeUnit.Minute)}
@@ -104,12 +114,21 @@ class SslDSL {
 
 		String evaluate = ScriptTransformer.evaluate(scriptStrings)
 
-		Script script = shell.parse(evaluate)
+		//TODO: Refactorer en plus beau, validation ailleurs
+		// que dans SslDsl ?
+		try {
+			Script script = shell.parse(evaluate)
+            binding.setScript(script)
+            script.setBinding(binding)
 
-		binding.setScript(script)
-		script.setBinding(binding)
-		
-		script.run()
+            script.run()
+        }catch(MultipleCompilationErrorsException se){
+			println("Security Error, don't overpass laws !")
+			println(se.getErrorCollector().getException(0).localizedMessage)
+			System.exit(0)
+		}
+
+
 
 	}
 
