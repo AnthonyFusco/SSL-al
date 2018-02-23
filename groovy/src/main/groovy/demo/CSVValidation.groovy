@@ -2,18 +2,18 @@ package demo
 
 resetDB()
 
-def markov = markovLaw {
+markov = markovLaw {
     matrix ([[0.5,0.5], [0.4, 0.6]])
     stateFrequency 1 / h
 }
 
-def eurecom = sensorLot {
+eurecom = sensorLot {
     sensorsNumber 5
     law markov
     frequency 10 / h
 }
 
-def bike = jsonreplay {
+bike = jsonreplay {
     path "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/bike.json"
     offset 10.s
     noise ([100,200])

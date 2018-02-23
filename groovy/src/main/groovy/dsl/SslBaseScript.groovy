@@ -58,7 +58,7 @@ abstract class SslBaseScript extends Script {
         builder
     }
 
-    def jsonreplay(Closure closure) {
+    def jsonreplay(Closure closure) { //todo abstract the builders for json and csv
         def builder = new JsonReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)

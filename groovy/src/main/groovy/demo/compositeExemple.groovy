@@ -7,15 +7,15 @@ resetDB()
 //def bot = sensorLot "bot" sensorsNumber 2 law "parkingLaw" frequency 2 / h
 //composite "eurecom" withLots (["top", "bot"]) filter({x -> x == x}) map({x -> x}) reduce({res, sensor -> res + sensor}) frequency 2 / h
 
-def r = parkingLaw "parkingLaw"
+r = parkingLaw "parkingLaw"
 
-def top = sensorLot "s2" with {
+top = sensorLot "s2" with {
     sensorsNumber 2
     law r
     frequency 1 / h
 }
 
-def bot = sensorLot "s3" with {
+bot = sensorLot "s3" with {
     sensorsNumber 2
     law r
     frequency 1 / h

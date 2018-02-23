@@ -10,6 +10,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +28,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
     private String path = "";
     private Map<String, Object> columnsDescriptions = DEFAULT_DESCRIPTION_COLUMNS;
     private Duration offset = DEFAULT_OFFSET;
-    private List<Integer> noise;
+    private List<BigDecimal> noise;
 
     public ReplayBuilder(int definitionLine) {
         super(definitionLine);
@@ -39,7 +40,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
     }
 
     public ReplayBuilder columns(Map<String, Object> columnsDescriptions) {
-        this.columnsDescriptions = columnsDescriptions;
+        this.columnsDescriptions.putAll(columnsDescriptions);
         return this;
     }
 
@@ -48,9 +49,9 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
         return this;
     }
 
-    public ReplayBuilder noise(List<Integer> noise) {
+    public ReplayBuilder noise(List<BigDecimal> noise) {
         this.noise = noise;
-        return this; //todo todo :)
+        return this;
     }
 
     @Override
@@ -75,7 +76,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
         if (noise != null) {
             if (noise.size() != 2) {
                 addError(new IllegalArgumentException("You must specify a valid noise interval"));
-            } else if (noise.get(0) >= noise.get(1)) {
+            } else if (noise.get(0).doubleValue() >= noise.get(1).doubleValue()) {
                 addError(new IllegalArgumentException("the range is reversed"));
             }
         }

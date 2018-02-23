@@ -8,6 +8,7 @@ import org.apache.commons.csv.CSVRecord;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.*;
 
@@ -16,7 +17,7 @@ public class CSVReplay implements Replay {
     private String path;
     private Map<String, Object> columnsDescriptions = new HashMap<>();
     private long offset;
-    private List<Integer> noise;
+    private List<BigDecimal> noise;
     private boolean isExecutable;
     private String executableName = "";
 
@@ -30,7 +31,7 @@ public class CSVReplay implements Replay {
         Integer sColumn = (Integer) columnsDescriptions.get("s");
         Integer vColumn = (Integer) columnsDescriptions.get("v");
 
-        int noiseValue;
+        double noiseValue;
 
         try {
             File csvData = new File(path);
@@ -47,10 +48,12 @@ public class CSVReplay implements Replay {
                 Long t = Long.parseLong(record.get(tColumn).trim()) + (long) startDate + offset;
                 Object v = record.get(vColumn).trim();
                 if (noise != null) {
-                    int inf = noise.get(0);
-                    int sup = noise.get(1);
-                    noiseValue = new Random()
-                            .nextInt(sup + 1 - inf) + inf;
+                    BigDecimal inf = noise.get(0);
+                    BigDecimal sup = noise.get(1);
+                    /*noiseValue = new Random()
+                            .nextInt(sup + 1 - inf) + inf;*/
+                    double random = new Random().nextDouble();
+                    noiseValue = inf.doubleValue() + (random * (sup.doubleValue() - inf.doubleValue()));
                     v = Double.parseDouble((String) v) + noiseValue;
                 }
                 measurementList.add(new Measurement<>(s, t, v));
@@ -94,7 +97,7 @@ public class CSVReplay implements Replay {
         this.offset = offset;
     }
 
-    public void setNoise(List<Integer> noise) {
+    public void setNoise(List<BigDecimal> noise) {
         this.noise = noise;
     }
 

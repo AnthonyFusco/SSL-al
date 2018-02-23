@@ -67,7 +67,7 @@ public class SslVisitor implements Visitor {
         List<Measurement> measurements = replay.generateNextMeasurement(startDate.getTime());
         System.out.println("Starting the replay " + replay.getExecutableName() +
                 " (" + measurements.size() +" values)");
-        databaseHelper.sendToDatabase(measurements, replay.getName(), "Replay");
+        databaseHelper.sendToDatabase(measurements, replay.getExecutableName() + "_", "Replay");
         System.out.println(replay.getName() + " done\n");
     }
 

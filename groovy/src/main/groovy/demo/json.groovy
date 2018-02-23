@@ -2,7 +2,7 @@ package demo
 
 resetDB()
 
-def bike = jsonreplay {
+bike = jsonreplay {
     path "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/bike.json"
     offset 10.s
     noise ([100,200])

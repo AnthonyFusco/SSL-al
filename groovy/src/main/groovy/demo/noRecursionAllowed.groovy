@@ -12,11 +12,11 @@ recursionFunction = { t ->
     recursion(t)
 }
 
-def recursionLaw = mathFunction {
+recursionLaw = mathFunction {
     expression recursionFunction
 }
 
-def recursionLot = sensorLot {
+recursionLot = sensorLot {
     sensorsNumber 2
     law recursionLaw
     frequency 1 / min

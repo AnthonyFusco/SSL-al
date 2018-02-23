@@ -2,12 +2,12 @@ package demo
 
 resetDB()
 
-def markov = markovLaw {
+markov = markovLaw {
     matrix ([[0.5,0.5], [0.4, 0.6]])
     stateFrequency 1 / h
 }
 
-def eurecom = sensorLot {
+eurecom = sensorLot {
     sensorsNumber 5
     law markov
     frequency 10 / h

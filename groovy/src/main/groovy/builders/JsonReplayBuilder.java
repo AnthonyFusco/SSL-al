@@ -1,6 +1,5 @@
 package builders;
 
-import kernel.structural.composite.Composite;
 import kernel.structural.laws.DataSource;
 import kernel.structural.replay.JsonReplay;
 import kernel.units.Duration;
@@ -19,17 +18,17 @@ public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
     }
 
 
-    public JsonReplayBuilder path(String path){
+    public JsonReplayBuilder path(String path) {
         this.path = path;
         return this;
     }
 
-    public JsonReplayBuilder offset(Duration offset){
+    public JsonReplayBuilder offset(Duration offset) {
         this.offset = offset;
         return this;
     }
 
-    public JsonReplayBuilder noise(List<Integer> noiseRange){
+    public JsonReplayBuilder noise(List<Integer> noiseRange) {
         this.noiseRange = noiseRange;
         return this;
     }
