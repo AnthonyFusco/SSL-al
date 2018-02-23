@@ -32,8 +32,8 @@ public class SensorsLot extends ExecutableSource {
 
     private void populateSensors() {
         if (sensors.isEmpty()) {
-            DataSource dataSource = builder.build();
             for (int i = 0; i < sensorsNumber; i++) {
+                DataSource dataSource = builder.build();
                 sensors.add(new Sensor(dataSource));
             }
         }
