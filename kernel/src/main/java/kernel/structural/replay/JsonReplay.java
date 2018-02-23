@@ -18,10 +18,10 @@ public class JsonReplay implements Replay {
     private Duration offset;
     private List<Integer> noiseRange;
 
-    private String sensorNameToken = "bn";
-    private String sensorRecordToken = "e";
-    private String sensorValueToken = "v";
-    private String sensorRelativeTimeToken = "t";
+    private String sensorNameToken;
+    private String sensorRecordToken;
+    private String sensorValueToken;
+    private String sensorRelativeTimeToken;
     private String executableName = "";
 
     public JsonReplay(){
@@ -58,7 +58,6 @@ public class JsonReplay implements Replay {
                 JsonElement jsontime = sensor.get(sensorRelativeTimeToken);
                 long relativeTime = jsontime.getAsLong() + (long)startDate + (long)offset.getValue();
                 Measurement m = new Measurement(sensorname.getAsString(),relativeTime,value);
-//                System.out.println(m.toString());
                 measurementList.add(m);
             }
             return measurementList;
