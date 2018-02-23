@@ -48,7 +48,8 @@ public class SslVisitor implements Visitor {
 
         int numberIterations = (int) ((endTime - startTime) / period);
 
-        System.out.println("Starting the simulation " + executableSource.getName() + " (" + numberIterations + " points)");
+        System.out.println("Starting the " + executableSource.getName() + " " + executableSource.getExecutableName() +
+                " (" + numberIterations + " points)");
 
         for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
             List<Measurement> measurement = executableSource.generateNextMeasurement(t);
@@ -64,7 +65,8 @@ public class SslVisitor implements Visitor {
     @Override
     public void visit(Replay replay) {
         List<Measurement> measurements = replay.generateNextMeasurement(startDate.getTime());
-        System.out.println("Starting the replay " + replay.getName() + " (" + measurements.size() + " values)");
+        System.out.println("Starting the replay " + replay.getExecutableName() +
+                " (" + measurements.size() +" values)");
         databaseHelper.sendToDatabase(measurements, replay.getName(), "Replay");
         System.out.println(replay.getName() + " done\n");
     }

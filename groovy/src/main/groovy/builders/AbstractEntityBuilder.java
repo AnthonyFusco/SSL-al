@@ -4,7 +4,6 @@ import dsl.Runner;
 import kernel.structural.EntityBuilder;
 import kernel.structural.laws.DataSource;
 
-import java.sql.Statement;
 import java.util.Stack;
 
 public abstract class AbstractEntityBuilder<T extends DataSource> implements EntityBuilder<T> {
@@ -12,6 +11,7 @@ public abstract class AbstractEntityBuilder<T extends DataSource> implements Ent
     private Stack<String> warnings = new Stack<>();
     private boolean isExecutable;
     private int definitionLine;
+    private String executableName = "";
 
     public AbstractEntityBuilder(int definitionLine) {
         this.definitionLine = definitionLine;
@@ -51,12 +51,21 @@ public abstract class AbstractEntityBuilder<T extends DataSource> implements Ent
         return isExecutable;
     }
 
+    @Override
+    public void setExecutable(boolean executable) {
+        isExecutable = executable;
+    }
+
     public int getDefinitionLine() {
         return definitionLine;
     }
 
+    String getExecutableName() {
+        return executableName;
+    }
+
     @Override
-    public void setExecutable(boolean executable) {
-        isExecutable = executable;
+    public void setExecutableName(String name) {
+        this.executableName = name;
     }
 }

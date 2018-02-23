@@ -18,12 +18,6 @@ abstract class SslBaseScript extends Script {
         influxDB.createDatabase(dbName)
     }
 
-    def play(EntityBuilder<DataSource>... vars) {
-        for (EntityBuilder<DataSource> var : vars) {
-            var.setExecutable(true)
-        }
-    }
-
     def composite(Closure closure) {
         CompositeBuilder builder = new CompositeBuilder<>(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
@@ -88,6 +82,17 @@ abstract class SslBaseScript extends Script {
         builder
     }
 
+    def play(EntityBuilder<DataSource>... vars) {
+        for (EntityBuilder<DataSource> var : vars) {
+            var.setExecutable(true)
+            getBinding().getVariables().entrySet().stream()
+                    .filter({ entry -> entry.value == var })
+                    .map({ entry -> entry.key })
+                    .findFirst()
+                    .ifPresent({ name -> var.setExecutableName(name.toString()) })
+        }
+    }
+
     def runSimulation(String startDateString, String endDateString) {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH)
         Date startDate = format.parse(startDateString)
@@ -118,4 +123,3 @@ abstract class SslBaseScript extends Script {
         }
     }
 }
-

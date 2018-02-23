@@ -1,7 +1,6 @@
 package kernel.structural.replay;
 
 import kernel.Measurement;
-import kernel.structural.laws.DataSource;
 import kernel.visitor.Visitor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -19,6 +18,7 @@ public class CSVReplay implements Replay {
     private long offset;
     private List<Integer> noise;
     private boolean isExecutable;
+    private String executableName = "";
 
     public CSVReplay() {
         this.name = "CSV Replay";
@@ -44,7 +44,7 @@ public class CSVReplay implements Replay {
             List<Measurement> measurementList = new ArrayList<>();
             for (CSVRecord record : records) {
                 String s = record.get(sColumn).trim();
-                Long t = Long.parseLong(record.get(tColumn).trim()) + (long)startDate + offset;
+                Long t = Long.parseLong(record.get(tColumn).trim()) + (long) startDate + offset;
                 Object v = record.get(vColumn).trim();
                 if (noise != null) {
                     int inf = noise.get(0);
@@ -101,5 +101,13 @@ public class CSVReplay implements Replay {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
+    }
+
+    public void setExecutableName(String executableName) {
+        this.executableName = executableName;
+    }
+
+    public String getExecutableName() {
+        return executableName;
     }
 }

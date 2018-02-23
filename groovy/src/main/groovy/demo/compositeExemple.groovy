@@ -22,7 +22,7 @@ def bot = sensorLot "s3" with {
 }
 parkingComposite "test" withLots([top, bot])
 
-//randomLaw "rand"
+//random "rand"
 //sensorLot "randy" sensorsNumber 2 law "rand" frequency 1 / d
 //sensorLot "rando" sensorsNumber 2 law "rand" frequency 1 / d
 //composite "randrand" withLots (["randy", "rando"]) filter({x -> x != 0}) map({x -> 2 / x}) reduce({res, sensor -> res + sensor}) frequency 1 / min

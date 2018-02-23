@@ -22,6 +22,7 @@ public class JsonReplay implements Replay {
     private String sensorRecordToken = "e";
     private String sensorValueToken = "v";
     private String sensorRelativeTimeToken = "t";
+    private String executableName = "";
 
     public JsonReplay(){
         this.name = "JSON Replay";
@@ -112,5 +113,13 @@ public class JsonReplay implements Replay {
 
     public void setSensorRelativeTimeToken(String sensorRelativeTimeToken) {
         this.sensorRelativeTimeToken = sensorRelativeTimeToken;
+    }
+
+    public void setExecutableName(String executableName) {
+        this.executableName = executableName;
+    }
+
+    public String getExecutableName() {
+        return executableName;
     }
 }

@@ -56,6 +56,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         composite.setBuilders(lots);
         composite.setFrequency(frequency);
         composite.setExecutable(isExecutable());
+        composite.setExecutableName(getExecutableName());
         return composite;
     }
 

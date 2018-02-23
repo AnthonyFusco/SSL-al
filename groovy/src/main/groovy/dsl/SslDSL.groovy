@@ -4,6 +4,7 @@ import kernel.structural.laws.LawType
 import kernel.units.Duration
 import kernel.units.Frequency
 import kernel.units.TimeUnit
+import org.codehaus.groovy.ast.expr.DeclarationExpression
 import org.codehaus.groovy.ast.stmt.ForStatement
 import org.codehaus.groovy.ast.stmt.IfStatement
 import org.codehaus.groovy.ast.stmt.WhileStatement
@@ -48,7 +49,7 @@ class SslDSL {
 
             staticImportsWhitelist = []
             staticStarImportsWhitelist = []
-//			tokensBlacklist= []
+//			tokensBlacklist= [Types.KEYWORD_DEF]
             tokensWhitelist = [
                     Types.PLUS_PLUS,
                     Types.PLUS_EQUAL,
@@ -64,7 +65,7 @@ class SslDSL {
                     Types.COMPARE_LESS_THAN_EQUAL,
                     Types.COMPARE_GREATER_THAN,
                     Types.COMPARE_GREATER_THAN_EQUAL,
-                    Types.ASSIGN,
+//                    Types.ASSIGN,
                     Types.POWER,
                     Types.LEFT_SQUARE_BRACKET,
                     Types.RIGHT_SQUARE_BRACKET,
@@ -86,7 +87,7 @@ class SslDSL {
             //classes who are allowed to be receivers of method calls
             receiversClassesWhiteList = [
                     int, Number, Integer, String, Object
-            ]
+            ].asImmutable()
         }
 
         List<Class> statementBlacklist = new ArrayList<>()
@@ -125,8 +126,6 @@ class SslDSL {
         } catch (MultipleCompilationErrorsException se) {
             println("Security Error : You are using forbidden keywords")
             println(se.getErrorCollector().getException(0).localizedMessage)
-            println(se.getMessage())
-            println(se.getErrorCollector().getException(0).printStackTrace())
             System.exit(0)
         }
 

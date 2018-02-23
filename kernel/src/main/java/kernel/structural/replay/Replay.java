@@ -5,4 +5,5 @@ import kernel.visitor.Visitable;
 
 public interface Replay extends DataSource, Visitable {
 
+    String getExecutableName();
 }

@@ -13,4 +13,6 @@ public interface EntityBuilder<T extends DataSource> {
 
     void setExecutable(boolean isExecutable);
 
+    void setExecutableName(String name);
+
 }

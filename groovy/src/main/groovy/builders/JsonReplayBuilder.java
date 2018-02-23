@@ -41,6 +41,7 @@ public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
         jsonReplay.setOffset(offset);
         jsonReplay.setNoiseRange(noiseRange);
         jsonReplay.setExecutable(isExecutable());
+        jsonReplay.setExecutableName(getExecutableName());
         return jsonReplay;
     }
 

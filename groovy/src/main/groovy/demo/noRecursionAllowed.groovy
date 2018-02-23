@@ -18,7 +18,7 @@ def recursionLaw = mathFunction {
 
 def recursionLot = sensorLot {
     sensorsNumber 2
-    law recursionLa
+    law recursionLaw
     frequency 1 / min
 }
 

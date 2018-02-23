@@ -45,6 +45,7 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
         result.setSensorsNumber(sensorsNumber);
         result.setFrequencyValue(frequency.getValue());
         result.setExecutable(isExecutable());
+        result.setExecutableName(getExecutableName());
         return result;
     }
 

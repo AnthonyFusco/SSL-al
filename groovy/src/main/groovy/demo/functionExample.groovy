@@ -20,11 +20,11 @@ extfunc2 = { x ->
     extfunc2(x)
 }
 
-def SensorTempExt2 = mathFunction {
+SensorTempExt2 = mathFunction {
     expression extfunc
 }
 
-def lot = sensorLot {
+lot = sensorLot {
     sensorsNumber 2
     law SensorTempExt2
     frequency 1 / min

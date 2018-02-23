@@ -61,6 +61,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
         replay.setOffset((long) offset.getValue());
         replay.setNoise(this.noise);
         replay.setExecutable(isExecutable());
+        replay.setExecutableName(getExecutableName());
         return replay;
     }
 
