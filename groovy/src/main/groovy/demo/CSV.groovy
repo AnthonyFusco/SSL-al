@@ -11,7 +11,7 @@ sprint = replay {
 
 longTrip = replay {
     path "datafiles/data2.csv"
-    columns([t : 0, s : 1, v : 5])
+    columns([t : 0, s : 1, v : 6])
 }
 
 play sprint, longTrip

@@ -17,21 +17,19 @@ import java.util.List;
 import java.util.Map;
 
 public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
-    private static final Map<String, Object> DEFAULT_DESCRIPTION_COLUMNS = new HashMap<>();
-    static {
-        DEFAULT_DESCRIPTION_COLUMNS.put("t", 0);
-        DEFAULT_DESCRIPTION_COLUMNS.put("v", 1);
-        DEFAULT_DESCRIPTION_COLUMNS.put("s", 2);
-    }
     private static final Duration DEFAULT_OFFSET = new Duration(0, TimeUnit.Second);
 
+    private Map<String, Object> defaultDescriptionColumns = new HashMap<>();
     private String path = "";
-    private Map<String, Object> columnsDescriptions = DEFAULT_DESCRIPTION_COLUMNS;
+    private Map<String, Object> columnsDescriptions = defaultDescriptionColumns;
     private Duration offset = DEFAULT_OFFSET;
     private List<BigDecimal> noise;
 
     public ReplayBuilder(int definitionLine) {
         super(definitionLine);
+        this.defaultDescriptionColumns.put("t", 0);
+        this.defaultDescriptionColumns.put("v", 1);
+        this.defaultDescriptionColumns.put("s", 2);
     }
 
     public ReplayBuilder path(String path) {
@@ -70,7 +68,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
     public void validate() {
         if (columnsDescriptions.size() < 3) {
             addWarning("Columns description is empty or not complete\n" +
-                    "Using default description : columns(" + DEFAULT_DESCRIPTION_COLUMNS + ")");
+                    "Using default description : columns(" + defaultDescriptionColumns + ")");
         }
 
         if (noise != null) {
