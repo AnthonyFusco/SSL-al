@@ -55,7 +55,7 @@ public class SslVisitor implements Visitor {
             List<Measurement> measurement = executableSource.generateNextMeasurement(t);
             databaseHelper.sendToDatabase(
                     measurement,
-                    executableSource.getName() + "_",
+                    executableSource.getExecutableName() + "_",
                     "");
         }
 
