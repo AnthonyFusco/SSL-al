@@ -1,6 +1,6 @@
 package demo
 
-resetDB()
+resetDB() //todo configure db
 
 //here global validation (play, dates, ...)
 

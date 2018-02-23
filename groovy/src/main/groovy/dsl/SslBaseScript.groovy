@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 
 abstract class SslBaseScript extends Script {
 
-    def resetDB() {
+    def resetDB() { //do not put static
         InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root")
         String dbName = "influxdb"
         influxDB.deleteDatabase(dbName)
@@ -24,14 +24,6 @@ abstract class SslBaseScript extends Script {
         def code = closure.rehydrate(builder, this, this)
         code()
         builder
-    }
-
-    def parkingComposite() {
-        composite({
-            filter({ x -> x == x }).map({ x -> x })
-            reduce({ res, sensor -> res + sensor })
-            withFrequency(2 / h)
-        })
     }
 
     def randomLaw(Closure closure) {
