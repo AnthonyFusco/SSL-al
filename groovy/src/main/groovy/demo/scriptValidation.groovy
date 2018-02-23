@@ -3,7 +3,7 @@ package demo
 resetDB()
 
 markov = markovLaw {
-    matrix([[0.5, 0.5, 0.5], [0.5, 0.6]])
+    matrix([[0.5, 0.5, 0.5], [0.4, 0.6]])
     stateFrequency 1 / h
 }
 
