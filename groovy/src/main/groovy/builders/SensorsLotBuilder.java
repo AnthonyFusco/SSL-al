@@ -60,5 +60,9 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
         if (!frequencyDefined) {
             addWarning("no frequency specified, using default frequency of " + DEFAULT_FREQUENCY);
         }
+
+        if (builder == null) {
+            addError(new IllegalArgumentException("No law specified for sensor lot"));
+        }
     }
 }

@@ -2,11 +2,6 @@ package demo
 
 resetDB()
 
-
-
-//dataSource "parkingLaw" ofType MarkovLaw withMatrix([[0.3, 0.7], [0.2, 0.8]]) changeStateFrequency 2 / h
-
-//parkingLaw "parkingLaw"
 def markov = markovLaw {
     matrix ([[0.5,0.5], [0.4, 0.6]])
     stateFrequency 1 / h
@@ -19,7 +14,7 @@ def eurecom = sensorLot {
 }
 
 def bike = jsonreplay {
-    path "/home/ringo/Bureau/SSL-al/groovy/src/main/resources/rawdata/bike.json"
+    path "/home/afusco/IdeaProjects/SSL-al/groovy/src/main/resources/rawdata/bike.json"
     offset 10.s
     noise ([100,200])
 }

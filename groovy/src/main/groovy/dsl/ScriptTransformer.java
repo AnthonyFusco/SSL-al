@@ -37,8 +37,7 @@ public final class ScriptTransformer {
                 }
             }
 
-            if (!(line.startsWith("//") || line.startsWith("/*") || line.startsWith("*")) &&
-                    (line.contains("{") || line.contains("}"))) {
+            if (!line.startsWith("//") && (line.contains("{") || line.contains("}"))) {
                 openBracketNumber += StringUtils.countMatches(line, "{");
                 openBracketNumber -= StringUtils.countMatches(line, "}");
                 lineCountBuffer++;
