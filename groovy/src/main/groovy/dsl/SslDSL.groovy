@@ -120,6 +120,7 @@ class SslDSL {
             binding.setScript(script)
             script.setBinding(binding)
 
+            script.setProperty("name", scriptFile.getName())
             script.run()
         } catch (MultipleCompilationErrorsException se) {
             println("Security Error : You are using forbidden keywords")

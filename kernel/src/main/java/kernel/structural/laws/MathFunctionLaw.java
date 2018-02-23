@@ -28,7 +28,7 @@ public class MathFunctionLaw implements DataSource {
         try {
             value = expression.call(counter);
         } catch (MissingMethodException e) {
-            throw new IllegalArgumentException("No Recursions allowed, sorry bro.");
+            throw new IllegalArgumentException("No Recursions allowed.");
         }
         counter++;
         return Collections.singletonList(new Measurement<>(name, (long) t, value));

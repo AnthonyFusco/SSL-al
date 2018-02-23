@@ -1,13 +1,6 @@
 package dsl
 
-import builders.CompositeBuilder
-import builders.JsonReplayBuilder
-import builders.MarkovBuilder
-import builders.MathFunctionBuilder
-import builders.RandomBuilder
-import builders.ReplayBuilder
-import builders.SensorsLotBuilder
-import groovy.transform.BaseScript
+import builders.*
 import kernel.structural.EntityBuilder
 import kernel.structural.laws.DataSource
 import org.influxdb.InfluxDB
@@ -41,8 +34,8 @@ abstract class SslBaseScript extends Script {
 
     def parkingComposite() {
         composite({
-            filter({x -> x == x}).map({x -> x})
-            reduce({res, sensor -> res + sensor})
+            filter({ x -> x == x }).map({ x -> x })
+            reduce({ res, sensor -> res + sensor })
             withFrequency(2 / h)
         })
     }
@@ -71,7 +64,7 @@ abstract class SslBaseScript extends Script {
         builder
     }
 
-    def jsonreplay(Closure closure){
+    def jsonreplay(Closure closure) {
         def builder = new JsonReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
@@ -99,12 +92,11 @@ abstract class SslBaseScript extends Script {
         DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH)
         Date startDate = format.parse(startDateString)
         Date endDate = format.parse(endDateString)
-
-        return new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
+        new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
     }
 
     private int getCurrentLine() {
-        return this.getBinding().getVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME) as int
+        this.getBinding().getVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME) as int
     }
 
     int count = 0
@@ -114,7 +106,13 @@ abstract class SslBaseScript extends Script {
     def run() {
         if (count == 0) {
             count++
-            scriptBody()
+            try {
+                scriptBody()
+            } catch (MissingPropertyException e) {
+                println "\u001B[31m" +
+                        e.getMessageWithoutLocationText().replace("Script1", getProperty("name").toString()) +
+                        "\u001B[37m"
+            }
         } else {
             println "Run method is disabled"
         }

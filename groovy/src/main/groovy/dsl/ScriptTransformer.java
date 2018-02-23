@@ -53,7 +53,6 @@ public final class ScriptTransformer {
                 result.append(line).append("\n");
             }
         }
-        System.out.println(result.toString());
         return result.toString();
     }
 }
