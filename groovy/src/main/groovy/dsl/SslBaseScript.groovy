@@ -25,7 +25,7 @@ abstract class SslBaseScript extends Script {
         try{
             code()
         }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
         }
         builder    }
 
@@ -37,7 +37,7 @@ abstract class SslBaseScript extends Script {
         try{
             code()
         }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
         }
         builder
     }
@@ -49,7 +49,7 @@ abstract class SslBaseScript extends Script {
         try{
             code()
         }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
         }
         builder
     }
@@ -61,7 +61,7 @@ abstract class SslBaseScript extends Script {
         try{
             code()
         }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
         }
         builder
     }
@@ -73,7 +73,7 @@ abstract class SslBaseScript extends Script {
         try{
             code()
         }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
         }
         builder
     }
@@ -85,7 +85,7 @@ abstract class SslBaseScript extends Script {
         try{
             code()
         }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
         }
         builder
     }
@@ -97,7 +97,7 @@ abstract class SslBaseScript extends Script {
         try{
             code()
         }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
         }
         builder
     }
@@ -139,7 +139,7 @@ abstract class SslBaseScript extends Script {
                         "\u001B[37m"
             } catch (MissingMethodException mme){
                 println "\u001B[31m" +
-                        "Keyword \"" + mme.getMethod() + "\" not recognized or misspelled" +
+                        "Keyword \"" + mme.getMethod() + mme.printStackTrace() + "\" not recognized, misspelled or wrong(s) parameter(s)" +
                         "\u001B[37m"
             }
         } else {

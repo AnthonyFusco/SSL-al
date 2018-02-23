@@ -25,4 +25,4 @@ valrose = sensorLot {
 
 play valrose, eurecom
 
-runSimlation "10/02/2018 08:00:00", "10/02/2018 19:00:00"
+runSimulation "10/02/2018 08:00:00" , "10/02/2018 19:00:00"
