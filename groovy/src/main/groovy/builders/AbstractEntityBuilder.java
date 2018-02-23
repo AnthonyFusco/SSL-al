@@ -17,11 +17,11 @@ public abstract class AbstractEntityBuilder<T extends DataSource> implements Ent
         this.definitionLine = definitionLine;
     }
 
-    void addError(Exception e) {
+    public void addError(Exception e) {
         exceptions.push(e);
     }
 
-    void addWarning(String message) {
+    public void addWarning(String message) {
         warnings.push(message);
     }
 

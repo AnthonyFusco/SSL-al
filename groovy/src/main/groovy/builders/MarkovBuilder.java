@@ -54,13 +54,16 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
                 addError(new IllegalArgumentException("The matrix cannot be empty.\n" +
                         "Example: matrix([[0.3, 0.2, 0.5], [0.15, 0.8, 0.05], [0.25, 0.25, 0.5]])"));
             }
+
+
             int firstLineSize = matrix.get(0).size();
             for (List<Double> line : matrix) {
-                if (line.size() != firstLineSize) {
+                if (line.size() != firstLineSize || line.size() != matrix.size()) {
                     addError(new IllegalArgumentException("The matrix isn't square"));
                     break;
                 }
             }
+
 
             boolean isNotSumOfOne = matrix
                     .stream()
@@ -71,7 +74,7 @@ public class MarkovBuilder extends LawBuilder<MarkovChainLaw> {
                     .anyMatch(v -> Math.abs(1.0 - v) > Math.ulp(1.0));
 
             if (isNotSumOfOne) {
-                addError(new IllegalArgumentException("All lines of the matrix must have a sum of 1"));
+                addError(new IllegalArgumentException("All lines of the matrix (splitted by ',') must have a sum of 1"));
             }
         }
 

@@ -37,6 +37,10 @@ public class RandomBuilder extends LawBuilder<RandomLaw> {
         if (range.size() != 2) {
             addError(new IllegalArgumentException("You must declare a good range interval ex:([" + DEFAULT_RANGE + "])"));
         }
+
+        if (range.get(0) < range.get(1)){
+            addWarning("Your lower limit is greater than your upper limit, unexpected result");
+        }
     }
 
 }

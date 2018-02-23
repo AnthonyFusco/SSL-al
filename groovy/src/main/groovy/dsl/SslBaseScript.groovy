@@ -22,15 +22,23 @@ abstract class SslBaseScript extends Script {
         CompositeBuilder builder = new CompositeBuilder<>(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        code()
-        builder
-    }
+        try{
+            code()
+        }catch(MissingMethodException mme){
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+        }
+        builder    }
+
 
     def randomLaw(Closure closure) {
         RandomBuilder builder = new RandomBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        code()
+        try{
+            code()
+        }catch(MissingMethodException mme){
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+        }
         builder
     }
 
@@ -38,7 +46,11 @@ abstract class SslBaseScript extends Script {
         MarkovBuilder builder = new MarkovBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        code()
+        try{
+            code()
+        }catch(MissingMethodException mme){
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+        }
         builder
     }
 
@@ -46,7 +58,11 @@ abstract class SslBaseScript extends Script {
         MathFunctionBuilder builder = new MathFunctionBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        code()
+        try{
+            code()
+        }catch(MissingMethodException mme){
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+        }
         builder
     }
 
@@ -54,7 +70,11 @@ abstract class SslBaseScript extends Script {
         def builder = new JsonReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        code()
+        try{
+            code()
+        }catch(MissingMethodException mme){
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+        }
         builder
     }
 
@@ -62,7 +82,11 @@ abstract class SslBaseScript extends Script {
         def builder = new ReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        code()
+        try{
+            code()
+        }catch(MissingMethodException mme){
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+        }
         builder
     }
 
@@ -70,7 +94,11 @@ abstract class SslBaseScript extends Script {
         def builder = new SensorsLotBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         def code = closure.rehydrate(builder, this, this)
-        code()
+        try{
+            code()
+        }catch(MissingMethodException mme){
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized or misspelled"))
+        }
         builder
     }
 
@@ -108,6 +136,10 @@ abstract class SslBaseScript extends Script {
             } catch (MissingPropertyException e) {
                 println "\u001B[31m" +
                         e.getMessageWithoutLocationText().replace("Script1", getProperty("name").toString()) +
+                        "\u001B[37m"
+            } catch (MissingMethodException mme){
+                println "\u001B[31m" +
+                        "Keyword \"" + mme.getMethod() + "\" not recognized or misspelled" +
                         "\u001B[37m"
             }
         } else {
