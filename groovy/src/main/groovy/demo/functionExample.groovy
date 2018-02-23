@@ -2,34 +2,34 @@ package demo
 
 resetDB()
 
-extfunc = { x ->
-    if (x < 7) {
-        4
-    } else if(x < 12) 6
-    else if(x < 14) 9
-    else if(x < 16) 9
-    else if(x > 16) 8
-    else 4
-}
-
-extfunc2 = { x ->
-    def f = { ->
-        f()
+SensorTempExt = mathFunction {
+    expression { t ->
+        if (t < 7) 4
+        else if (t < 12) 6
+        else if (t < 14) 9
+        else if (t < 16) 42
+        else 8
     }
-    f()
-    extfunc2(x)
 }
 
-SensorTempExt2 = mathFunction {
-    expression extfunc
+func2 = { t -> t * 2 + 1 }
+
+SensorLab = mathFunction {
+    expression func2
 }
 
-lot = sensorLot {
+ext = sensorLot {
     sensorsNumber 2
-    law SensorTempExt2
-    frequency 1 / min
+    law SensorTempExt
+    frequency 3 / h
 }
 
-play lot
+lab = sensorLot {
+    sensorsNumber 2
+    law SensorLab
+    frequency 3 / 40.min
+}
+
+play lab, ext
 
 runSimulation "10/02/2018 07:25:00", "10/02/2018 18:30:00"
