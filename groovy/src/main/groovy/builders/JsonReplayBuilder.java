@@ -114,6 +114,12 @@ public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
                             } catch (NumberFormatException ne) {
                                 addError(new Exception("Bad values format when collecting " + sensorValueToken + " fields"));
                             }
+                            try{
+                                Double time = jsontime.getAsDouble();
+                            }catch (NumberFormatException ne){
+                                addError(new Exception("Bad values format when collecting " + sensorRelativeTimeToken + " fields"));
+
+                            }
 
                         }
                         if (jsontime == null) {
