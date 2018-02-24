@@ -2,6 +2,7 @@ package kernel.visitor;
 
 import kernel.Application;
 import kernel.datasources.Measurement;
+import kernel.datasources.executables.ExecutableSource;
 import kernel.datasources.executables.replay.Replay;
 import kernel.datasources.executables.simulations.Simulation;
 import kernel.datasources.laws.DataSource;
@@ -11,13 +12,9 @@ import java.util.List;
 
 public class SslVisitor implements Visitor {
 
-    private DatabaseHelper databaseHelper = new InfluxDbHelper();
+    private DatabaseHelper databaseHelper;
     private Date startDate;
     private Date endDate;
-
-    public SslVisitor() {
-        //ignore
-    }
 
     public SslVisitor(DatabaseHelper databaseHelper) {
         this.databaseHelper = databaseHelper;
@@ -28,13 +25,10 @@ public class SslVisitor implements Visitor {
         this.startDate = application.getStartDate();
         this.endDate = application.getEndDate();
 
-        application.getExecutableSources().stream()
+        application.getDataSources().stream()
                 .filter(DataSource::isExecutable)
-                .forEach(source -> source.accept(this));
-
-        application.getReplays().stream()
-                .filter(DataSource::isExecutable)
-                .forEach(replay -> replay.accept(this));
+                .map(dataSource -> (ExecutableSource) dataSource)
+                .forEach(executableSource -> executableSource.accept(this));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package dsl;
 
-import groovy.lang.Binding;
 import builders.EntityBuilder;
+import groovy.lang.Binding;
 import kernel.datasources.laws.DataSource;
 
 import java.util.ArrayList;

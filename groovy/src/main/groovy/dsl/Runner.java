@@ -1,10 +1,9 @@
 package dsl;
 
-import kernel.Application;
 import builders.EntityBuilder;
-import kernel.datasources.executables.replay.Replay;
-import kernel.datasources.executables.simulations.Simulation;
+import kernel.Application;
 import kernel.datasources.laws.DataSource;
+import kernel.visitor.InfluxDbHelper;
 import kernel.visitor.SslVisitor;
 
 import java.util.Date;
@@ -28,18 +27,19 @@ public class Runner {
 
         dispatchDataSourcesByType(app);
 
-        SslVisitor visitor = new SslVisitor();
+        SslVisitor visitor = new SslVisitor(new InfluxDbHelper());
         app.accept(visitor);
     }
 
     private void dispatchDataSourcesByType(Application app) {
         model.getDataSourcesBuilders().forEach(builder -> {
             DataSource dataSource = builder.build();
-            if (dataSource instanceof Replay) {
+            app.addDataSource(dataSource);
+            /*if (dataSource instanceof Replay) {
                 app.addReplay((Replay) dataSource);
             } else if (dataSource instanceof Simulation) {
                 app.addSimulation((Simulation) dataSource);
-            }
+            }*/
         });
     }
 

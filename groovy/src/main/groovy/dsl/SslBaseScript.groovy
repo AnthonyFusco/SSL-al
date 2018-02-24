@@ -1,7 +1,6 @@
 package dsl
 
 import builders.*
-import builders.EntityBuilder
 import kernel.datasources.laws.DataSource
 import org.influxdb.InfluxDB
 import org.influxdb.InfluxDBFactory
