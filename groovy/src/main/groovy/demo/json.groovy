@@ -2,7 +2,7 @@ package demo
 
 createOrResetDB("influxdb")
 
-bike = jsonreplay {
+bike = jsonReplay {
     path "datafiles/bike.json"
     offset 10.s
     noise ([100,200])

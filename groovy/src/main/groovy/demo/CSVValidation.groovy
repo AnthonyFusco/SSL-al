@@ -2,14 +2,14 @@ package demo
 
 createOrResetDB("influxdb")
 
-sprint = replay {
+sprint = csvReplay {
     path "datafiles/notATime.csv"
     offset 1.h
     columns([v : 8])
     noise([0.01, 0.15])
 }
 
-longTrip = replay {
+longTrip = csvReplay {
     path "datafiles/inconsistent.csv"
     columns([t : 0, s : 1, v : 5])
 }

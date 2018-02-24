@@ -12,63 +12,41 @@ import java.text.SimpleDateFormat
 abstract class SslBaseScript extends Script {
 
     def composite(Closure closure) {
-        CompositeBuilder builder = new CompositeBuilder<>(getCurrentLine())
-        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateClosureWithBuilder(closure, builder)
-        builder
+        handleBuilder(new CompositeBuilder<>(getCurrentLine()), closure)
     }
 
     def randomLaw(Closure closure) {
-        RandomBuilder builder = new RandomBuilder(getCurrentLine())
-        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateClosureWithBuilder(closure, builder)
-        builder
+        handleBuilder(new RandomBuilder(getCurrentLine()), closure)
     }
 
-
     def markovLaw(Closure closure) {
-        MarkovBuilder builder = new MarkovBuilder(getCurrentLine())
-        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateClosureWithBuilder(closure, builder)
-        builder
+        handleBuilder(new MarkovBuilder(getCurrentLine()), closure)
     }
 
     def mathFunction(Closure closure) {
-        MathFunctionBuilder builder = new MathFunctionBuilder(getCurrentLine())
-        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateClosureWithBuilder(closure, builder)
-        builder
+        handleBuilder(new MathFunctionBuilder(getCurrentLine()), closure)
     }
 
-    def jsonreplay(Closure closure) { //todo abstract the builders for json and csv
-        def builder = new JsonReplayBuilder(getCurrentLine())
-        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateClosureWithBuilder(closure, builder)
-        builder
+    def jsonReplay(Closure closure) { //todo abstract the builders for json and csv
+        handleBuilder(new JsonReplayBuilder(getCurrentLine()), closure)
     }
 
-    def replay(Closure closure) {
-        def builder = new ReplayBuilder(getCurrentLine())
-        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateClosureWithBuilder(closure, builder)
-        builder
+    def csvReplay(Closure closure) {
+        handleBuilder(new ReplayBuilder(getCurrentLine()), closure)
     }
 
     def sensorLot(Closure closure) {
-        def builder = new SensorsLotBuilder(getCurrentLine())
-        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateClosureWithBuilder(closure, builder)
-        builder
+        handleBuilder(new SensorsLotBuilder(getCurrentLine()), closure)
     }
 
-    def play(EntityBuilder<DataSource>... vars) {
-        for (EntityBuilder<DataSource> var : vars) {
-            var.setExecutable(true)
+    def play(EntityBuilder<DataSource>... builders) {
+        for (EntityBuilder<DataSource> builder : builders) {
+            builder.setExecutable(true)
             getBinding().getVariables().entrySet().stream()
-                    .filter({ entry -> entry.value == var })
+                    .filter({ entry -> entry.value == builder })
                     .map({ entry -> entry.key })
                     .findFirst()
-                    .ifPresent({ name -> var.setExecutableName(name.toString()) })
+                    .ifPresent({ name -> builder.setExecutableName(name.toString()) })
         }
     }
 
@@ -77,6 +55,12 @@ abstract class SslBaseScript extends Script {
         Date startDate = format.parse(startDateString)
         Date endDate = format.parse(endDateString)
         new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
+    }
+
+    private AbstractEntityBuilder<DataSource> handleBuilder(AbstractEntityBuilder<DataSource> builder, Closure closure) {
+        ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
+        rehydrateClosureWithBuilder(closure, builder)
+        return builder
     }
 
     private void rehydrateClosureWithBuilder(Closure closure, AbstractEntityBuilder<DataSource> builder) {
@@ -118,7 +102,8 @@ abstract class SslBaseScript extends Script {
                         "\u001B[37m"
             } catch (MissingMethodException mme) {
                 println "\u001B[31m" +
-                        "Keyword \"" + mme.getMethod() + mme.printStackTrace() + "\" not recognized, misspelled or wrong(s) parameter(s)" +
+                        "Keyword \"" + mme.getMethod() + mme.printStackTrace() +
+                        "\" not recognized, misspelled or wrong(s) parameter(s)" +
                         "\u001B[37m"
             }
         } else {
