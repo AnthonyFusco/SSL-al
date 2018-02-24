@@ -11,32 +11,25 @@ import java.text.SimpleDateFormat
 
 abstract class SslBaseScript extends Script {
 
-    def composite(Closure closure) {
-        handleBuilder(new CompositeBuilder<>(getCurrentLine()), closure)
-    }
-
-    def randomLaw(Closure closure) {
-        handleBuilder(new RandomBuilder(getCurrentLine()), closure)
-    }
-
-    def markovLaw(Closure closure) {
-        handleBuilder(new MarkovBuilder(getCurrentLine()), closure)
-    }
-
-    def mathFunction(Closure closure) {
-        handleBuilder(new MathFunctionBuilder(getCurrentLine()), closure)
-    }
-
-    def jsonReplay(Closure closure) { //todo abstract the builders for json and csv
-        handleBuilder(new JsonReplayBuilder(getCurrentLine()), closure)
-    }
-
-    def csvReplay(Closure closure) {
-        handleBuilder(new ReplayBuilder(getCurrentLine()), closure)
-    }
-
-    def sensorLot(Closure closure) {
-        handleBuilder(new SensorsLotBuilder(getCurrentLine()), closure)
+    def methodMissing(String name, def args) {
+        switch (name) {
+            case "composite":
+                return handleBuilder(new CompositeBuilder<>(getCurrentLine()), args[0] as Closure)
+            case "randomLaw":
+                return handleBuilder(new RandomBuilder<>(getCurrentLine()), args[0] as Closure)
+            case "markovLaw":
+                return handleBuilder(new MarkovBuilder<>(getCurrentLine()), args[0] as Closure)
+            case "mathFunction":
+                return handleBuilder(new MathFunctionBuilder<>(getCurrentLine()), args[0] as Closure)
+            case "jsonReplay":
+                return handleBuilder(new JsonReplayBuilder<>(getCurrentLine()), args[0] as Closure)
+            case "csvReplay":
+                return handleBuilder(new ReplayBuilder<>(getCurrentLine()), args[0] as Closure)
+            case "sensorLot":
+                return handleBuilder(new SensorsLotBuilder<>(getCurrentLine()), args[0] as Closure)
+            default:
+                println("no idea")
+        }
     }
 
     def play(EntityBuilder<DataSource>... builders) {
