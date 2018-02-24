@@ -4,7 +4,7 @@ import kernel.Application;
 import kernel.structural.EntityBuilder;
 import kernel.structural.laws.DataSource;
 import kernel.structural.replay.Replay;
-import kernel.visitor.ExecutableSource;
+import kernel.structural.ExecutableSource;
 import kernel.visitor.SslVisitor;
 
 import java.util.Date;

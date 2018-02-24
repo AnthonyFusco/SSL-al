@@ -3,7 +3,7 @@ package builders;
 import kernel.structural.EntityBuilder;
 import kernel.structural.composite.Composite;
 import kernel.units.Frequency;
-import kernel.visitor.ExecutableSource;
+import kernel.structural.ExecutableSource;
 
 import java.util.List;
 import java.util.function.BinaryOperator;

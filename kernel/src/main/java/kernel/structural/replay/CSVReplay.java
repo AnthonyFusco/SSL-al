@@ -12,14 +12,13 @@ import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.util.*;
 
-public class CSVReplay implements Replay {
+public class CSVReplay extends Replay {
     private String name;
     private String path;
     private Map<String, Object> columnsDescriptions = new HashMap<>();
     private long offset;
     private List<BigDecimal> noise;
     private boolean isExecutable;
-    private String executableName = "";
 
     public CSVReplay() {
         this.name = "CSV Replay";
@@ -106,11 +105,4 @@ public class CSVReplay implements Replay {
         visitor.visit(this);
     }
 
-    public void setExecutableName(String executableName) {
-        this.executableName = executableName;
-    }
-
-    public String getExecutableName() {
-        return executableName;
-    }
 }

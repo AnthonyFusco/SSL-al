@@ -2,12 +2,10 @@ package kernel.visitor;
 
 import kernel.Application;
 import kernel.Measurement;
-import kernel.structural.SensorsLot;
-import kernel.structural.composite.Composite;
+import kernel.structural.Simulation;
 import kernel.structural.laws.DataSource;
 import kernel.structural.replay.Replay;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,26 +38,26 @@ public class SslVisitor implements Visitor {
     }
 
     @Override
-    public void visit(ExecutableSource executableSource) {
+    public void visit(Simulation simulation) {
         double startTime = startDate.getTime();
         double endTime = endDate.getTime();
 
-        double period = 1.0 / executableSource.getFrequencyValue();
+        double period = 1.0 / simulation.getFrequencyValue();
 
         int numberIterations = (int) ((endTime - startTime) / period);
 
-        System.out.println("Starting the " + executableSource.getName() + " " + executableSource.getExecutableName() +
+        System.out.println("Starting the " + simulation.getName() + " " + simulation.getExecutableName() +
                 " (" + numberIterations + " points)");
 
         for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
-            List<Measurement> measurement = executableSource.generateNextMeasurement(t);
+            List<Measurement> measurement = simulation.generateNextMeasurement(t);
             databaseHelper.sendToDatabase(
                     measurement,
-                    executableSource.getExecutableName() + "_",
+                    simulation.getExecutableName() + "_",
                     "");
         }
 
-        System.out.println(executableSource.getName() + " done\n");
+        System.out.println(simulation.getName() + " done\n");
     }
 
     @Override

@@ -13,7 +13,7 @@ public abstract class AbstractEntityBuilder<T extends DataSource> implements Ent
     private int definitionLine;
     private String executableName = "";
 
-    public AbstractEntityBuilder(int definitionLine) {
+    AbstractEntityBuilder(int definitionLine) {
         this.definitionLine = definitionLine;
     }
 
@@ -54,10 +54,6 @@ public abstract class AbstractEntityBuilder<T extends DataSource> implements Ent
     @Override
     public void setExecutable(boolean executable) {
         isExecutable = executable;
-    }
-
-    public int getDefinitionLine() {
-        return definitionLine;
     }
 
     String getExecutableName() {

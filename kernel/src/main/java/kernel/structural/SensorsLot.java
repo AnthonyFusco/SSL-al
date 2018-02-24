@@ -2,13 +2,12 @@ package kernel.structural;
 
 import kernel.Measurement;
 import kernel.structural.laws.DataSource;
-import kernel.visitor.ExecutableSource;
 import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SensorsLot extends ExecutableSource {
+public class SensorsLot extends Simulation {
     private List<Sensor> sensors = new ArrayList<>();
     private int sensorsNumber;
     private String name;

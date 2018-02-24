@@ -1,8 +1,7 @@
 package kernel.visitor;
 
 import kernel.Application;
-import kernel.structural.SensorsLot;
-import kernel.structural.composite.Composite;
+import kernel.structural.Simulation;
 import kernel.structural.replay.Replay;
 
 public interface Visitor {
@@ -12,7 +11,7 @@ public interface Visitor {
 
     void visit(SensorsLot sensorsLot);*/
 
-    void visit(ExecutableSource executableSource);
+    void visit(Simulation executableSource);
 
     void visit(Replay replay);
 }

@@ -2,8 +2,9 @@ package kernel.structural.composite;
 
 import kernel.Measurement;
 import kernel.structural.EntityBuilder;
+import kernel.structural.ExecutableSource;
+import kernel.structural.Simulation;
 import kernel.units.Frequency;
-import kernel.visitor.ExecutableSource;
 import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Composite extends ExecutableSource {
+public class Composite extends Simulation {
     private String name;
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
@@ -83,6 +84,7 @@ public class Composite extends ExecutableSource {
         this.builders = builders;
     }
 
+    @Override
     public double getFrequencyValue() {
         return frequency.getValue();
     }

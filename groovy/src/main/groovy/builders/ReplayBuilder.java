@@ -54,7 +54,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
 
     @Override
     public DataSource build() {
-        CSVReplay replay = new CSVReplay(); //only csv for now
+        CSVReplay replay = new CSVReplay();
         replay.setPath(path);
         replay.setColumnsDescriptions(columnsDescriptions);
         replay.setOffset((long) offset.getValue());

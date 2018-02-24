@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonReplay implements Replay {
+public class JsonReplay extends Replay {
 
     private boolean isExecutable;
     private String name;
@@ -22,7 +22,6 @@ public class JsonReplay implements Replay {
     private String sensorRecordToken;
     private String sensorValueToken;
     private String sensorRelativeTimeToken;
-    private String executableName = "";
 
     public JsonReplay(){
         this.name = "JSON Replay";
@@ -110,11 +109,4 @@ public class JsonReplay implements Replay {
         this.sensorRelativeTimeToken = sensorRelativeTimeToken;
     }
 
-    public void setExecutableName(String executableName) {
-        this.executableName = executableName;
-    }
-
-    public String getExecutableName() {
-        return executableName;
-    }
 }

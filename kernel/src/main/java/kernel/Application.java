@@ -2,7 +2,7 @@ package kernel;
 
 import kernel.structural.laws.DataSource;
 import kernel.structural.replay.Replay;
-import kernel.visitor.ExecutableSource;
+import kernel.structural.ExecutableSource;
 import kernel.visitor.Visitable;
 import kernel.visitor.Visitor;
 
