@@ -24,7 +24,7 @@ valroseMiddle = sensorLot {
 
 //a composite using two parkings (valroseTop, valroseMiddle) and one created on the fly
 valroseComposite = composite {
-    withLots([
+    withSensors([
             valroseTop,
             valroseMiddle,
             sensorLot {
@@ -62,7 +62,7 @@ eurecomBottom = sensorLot {
 
 //a composite using two parkings (eurecomTop, eurecomBottom) and a composite create before (valroseComposite)
 fac = composite {
-    withLots([valroseComposite, eurecomTop, eurecomBottom])
+    withSensors([valroseComposite, eurecomTop, eurecomBottom])
     filter({ x -> x == x })
     map({ x -> x })
     reduce({ res, sensor -> res + sensor })

@@ -2,73 +2,31 @@ package demo
 
 resetDB()
 
-//a simple simulation of a parking
+markov = markovLaw {
+    matrix([[0.5, 0.5], [0.5, 0.5]])
+    stateFrequency 1 / h
+}
+
 valroseTop = sensorLot {
     sensorsNumber 5
-    law markovLaw {
-        matrix([[0.9, 0.1], [0.1, 0.9]])
-        stateFrequency 2 / h
-    }
+    law markov
     frequency 2 / h
 }
 
-//a simple simulation of a parking
 valroseMiddle = sensorLot {
     sensorsNumber 15
-    law markovLaw {
-        matrix([[0.8, 0.2], [0.3, 0.7]])
-        stateFrequency 1 / h
-    }
+    law markov
     frequency 1 / h
 }
 
-//a composite using two parkings (valroseTop, valroseMiddle) and one created on the fly
 valroseComposite = composite {
-    withLots([
+    withSensors([
             valroseTop,
             valroseMiddle,
-            sensorLot {
-                law markovLaw {
-                    matrix([[0.7, 0.3], [0.3, 0.7]])
-                    stateFrequency 2 / h
-                }
-            }
+            markov
     ])
-    filter({ x -> x == x })
-    map({ x -> x })
-    reduce({ res, sensor -> res + sensor })
-    frequency 2 / h
 }
 
-//a simple simulation of a parking
-eurecomTop = sensorLot {
-    sensorsNumber 3
-    law markovLaw {
-        matrix([[0.6, 0.4], [0.1, 0.9]])
-        stateFrequency 2 / h
-    }
-    frequency 2 / h
-}
-
-//a simple simulation of a parking
-eurecomBottom = sensorLot {
-    sensorsNumber 7
-    law markovLaw {
-        matrix([[0.8, 0.2], [0.3, 0.7]])
-        stateFrequency 1 / h
-    }
-    frequency 1 / h
-}
-
-//a composite using two parkings (eurecomTop, eurecomBottom) and a composite create before (valroseComposite)
-fac = composite {
-    withLots([valroseComposite, eurecomTop, eurecomBottom])
-    filter({ x -> x == x })
-    map({ x -> x })
-    reduce({ res, sensor -> res + sensor })
-    frequency 2 / h
-}
-
-play fac
+play valroseComposite
 
 runSimulation "10/02/2018 08:00:00", "10/02/2018 19:00:00"

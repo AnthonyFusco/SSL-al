@@ -30,8 +30,7 @@ public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
     public void validate() {
         if (mapExpressionsConditions == null) {
             addError(new IllegalArgumentException("Missing a body, please define a lambda. Example lam = { x -> x+1}"));
-        }
-        else {
+        } else {
             if (mapExpressionsConditions.getMaximumNumberOfParameters() != 1) {
                 addError(new IllegalArgumentException("Math law should take only one parameter."));
             }

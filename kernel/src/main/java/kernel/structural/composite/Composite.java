@@ -2,7 +2,6 @@ package kernel.structural.composite;
 
 import kernel.Measurement;
 import kernel.structural.EntityBuilder;
-import kernel.structural.SensorsLot;
 import kernel.units.Frequency;
 import kernel.visitor.ExecutableSource;
 import kernel.visitor.Visitor;
@@ -21,7 +20,7 @@ public class Composite extends ExecutableSource {
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
     private List<ExecutableSource> executables = new ArrayList<>();
-    private List<EntityBuilder<SensorsLot>> builders;
+    private List<EntityBuilder<ExecutableSource>> builders;
     private Frequency frequency;
     private boolean isExecutable;
 
@@ -80,7 +79,7 @@ public class Composite extends ExecutableSource {
         this.reduceFunction = reduceFunction;
     }
 
-    public void setBuilders(List<EntityBuilder<SensorsLot>> builders) {
+    public void setBuilders(List<EntityBuilder<ExecutableSource>> builders) {
         this.builders = builders;
     }
 

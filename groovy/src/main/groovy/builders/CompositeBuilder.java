@@ -1,10 +1,11 @@
 package builders;
 
+import groovy.lang.Closure;
+import groovy.lang.MissingMethodException;
 import kernel.structural.EntityBuilder;
-import kernel.structural.SensorsLot;
 import kernel.structural.composite.Composite;
-import kernel.structural.laws.DataSource;
 import kernel.units.Frequency;
+import kernel.visitor.ExecutableSource;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
@@ -12,7 +13,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
-    private List<EntityBuilder<SensorsLot>> lots;
+    private List<EntityBuilder<ExecutableSource>> executables;
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
@@ -22,9 +23,8 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         super(definitionLine);
     }
 
-
-    public CompositeBuilder withLots(List<EntityBuilder<SensorsLot>> lots) {
-        this.lots = lots;
+    public CompositeBuilder withSensors(List<EntityBuilder<ExecutableSource>> sensors) {
+        this.executables = sensors;
         return this;
     }
 
@@ -53,7 +53,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         composite.setFilterPredicate(filterPredicate);
         composite.setMapFunction(mapFunction);
         composite.setReduceFunction(reduceFunction);
-        composite.setBuilders(lots);
+        composite.setBuilders(executables);
         composite.setFrequency(frequency);
         composite.setExecutable(isExecutable());
         composite.setExecutableName(getExecutableName());
@@ -62,6 +62,24 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
 
     @Override
     public void validate() {
+        //todo identity for functions
+        //check executables are executables or !!!replays!!!
+        if (filterPredicate == null) {
+            this.filterPredicate = (Predicate<Double>) aDouble -> true;
+            addWarning("No predicate function defined, using Identity by default");
+        }
+        if (mapFunction == null) {
+            this.mapFunction = Function.identity();
+            addWarning("No map function defined, using Identity by default");
+        }
+        if (reduceFunction == null) {
+            addError(new IllegalArgumentException("Reduce function cannot be null"));
+        }
+        boolean isNotExecutable = executables.stream().anyMatch(source -> source instanceof LawBuilder);
+        if (isNotExecutable) {
+            addError(new IllegalArgumentException("All sensors must be either sensor lots, replays or composites"));
+        }
 
     }
+
 }

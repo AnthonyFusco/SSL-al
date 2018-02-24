@@ -11,15 +11,21 @@ markovLot = sensorLot {
     frequency 2 / h
 }
 
+f = mathFunction {
+    expression { t -> t == 0 ? 42 : t * 2 + 1 }
+}
 
-functionLot = mathFunction {
-    expression { t -> t * 2 + 1 }
+functionLot = sensorLot {
+    sensorsNumber 2
+    law f
+    frequency 10 / h
 }
 
 composite = composite {
-    withLots([markovLot, functionLot])
-    map({ x -> x })
-    reduce({ res, sensor -> res + sensor })
+    withSensors([markovLot, functionLot])
+    filter({ x -> x == x })
+    map({ x -> x == 0 ? 10 : x })
+    reduce({ res, sensor -> res / sensor })
     frequency 2 / h
 }
 
