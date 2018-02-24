@@ -11,9 +11,12 @@ import java.text.SimpleDateFormat
 
 abstract class SslBaseScript extends Script {
 
-    def resetDB() { //do not put static
+    def createOrResetDB(String name) { //do not put static
+        if (name == null) {
+            name = "influxdb"
+        }
         InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root")
-        String dbName = "influxdb"
+        String dbName = name
         influxDB.deleteDatabase(dbName)
         influxDB.createDatabase(dbName)
     }

@@ -1,6 +1,6 @@
 package demo
 
-resetDB() //todo configure db
+createOrResetDB("influxdb") //todo configure db
 
 //here global validation (play, dates, ...)
 

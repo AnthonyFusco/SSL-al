@@ -1,6 +1,6 @@
 package demo
 
-resetDB()
+createOrResetDB("influxdb")
 
 //a simple simulation of a parking
 valroseTop = sensorLot {

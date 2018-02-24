@@ -2,6 +2,8 @@ package demo
 
 createOrResetDB("influxdb")
 
+//todo validation
+
 bike = jsonreplay {
     path "datafiles/bike.json"
     offset 10.s

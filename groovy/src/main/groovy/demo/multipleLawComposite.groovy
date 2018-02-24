@@ -1,6 +1,6 @@
 package demo
 
-resetDB()
+createOrResetDB("influxdb")
 
 markovLot = sensorLot {
     sensorsNumber 5

@@ -14,7 +14,7 @@ contributor(ctx) {
     method name: 'randomLaw', type: 'void', params: [name: 'java.lang.String']
     method name: 'parkingComposite', type: 'builders.CompositeBuilder', params: [name: 'java.lang.String']
     method name: 'composite', type: 'builders.CompositeBuilder', params: [name: 'java.lang.String']
-    method name: 'resetDB', type: 'void'
+    method name: 'createOrResetDB', type: 'void'
 }
 
 

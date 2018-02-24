@@ -1,6 +1,6 @@
 package demo
 
-resetDB()
+createOrResetDB("influxdb")
 
 alpha = randomLaw {
     range([10, 20])

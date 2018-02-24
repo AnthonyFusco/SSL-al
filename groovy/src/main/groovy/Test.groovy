@@ -2,7 +2,7 @@
 //todo add a test for the demo
 //todo some validation
 
-resetDB()
+createOrResetDB("influxdb")
 
 //TODO write macros like this one
 

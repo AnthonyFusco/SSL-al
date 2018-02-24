@@ -1,7 +1,5 @@
 package builders;
 
-import groovy.lang.Closure;
-import groovy.lang.MissingMethodException;
 import kernel.structural.EntityBuilder;
 import kernel.structural.composite.Composite;
 import kernel.units.Frequency;
