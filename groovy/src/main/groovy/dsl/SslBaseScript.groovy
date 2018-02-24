@@ -21,84 +21,50 @@ abstract class SslBaseScript extends Script {
     def composite(Closure closure) {
         CompositeBuilder builder = new CompositeBuilder<>(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        def code = closure.rehydrate(builder, this, this)
-        try{
-            code()
-        }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
-        }
-        builder    }
+        rehydrateDelegate(closure, builder)
+        builder
+    }
 
 
     def randomLaw(Closure closure) {
         RandomBuilder builder = new RandomBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        def code = closure.rehydrate(builder, this, this)
-        try{
-            code()
-        }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
-        }
+        rehydrateDelegate(closure, builder)
         builder
     }
 
     def markovLaw(Closure closure) {
         MarkovBuilder builder = new MarkovBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        def code = closure.rehydrate(builder, this, this)
-        try{
-            code()
-        }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
-        }
+        rehydrateDelegate(closure, builder)
         builder
     }
 
     def mathFunction(Closure closure) {
         MathFunctionBuilder builder = new MathFunctionBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        def code = closure.rehydrate(builder, this, this)
-        try{
-            code()
-        }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
-        }
+        rehydrateDelegate(closure, builder)
         builder
     }
 
     def jsonreplay(Closure closure) { //todo abstract the builders for json and csv
         def builder = new JsonReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        def code = closure.rehydrate(builder, this, this)
-        try{
-            code()
-        }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
-        }
+        rehydrateDelegate(closure, builder)
         builder
     }
 
     def replay(Closure closure) {
         def builder = new ReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        def code = closure.rehydrate(builder, this, this)
-        try{
-            code()
-        }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
-        }
+        rehydrateDelegate(closure, builder)
         builder
     }
 
     def sensorLot(Closure closure) {
         def builder = new SensorsLotBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        def code = closure.rehydrate(builder, this, this)
-        try{
-            code()
-        }catch(MissingMethodException mme){
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
-        }
+        rehydrateDelegate(closure, builder)
         builder
     }
 
@@ -120,6 +86,15 @@ abstract class SslBaseScript extends Script {
         new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
     }
 
+    private void rehydrateDelegate(Closure closure, AbstractEntityBuilder<DataSource> builder) {
+        def code = closure.rehydrate(builder, this, this)
+        try {
+            code()
+        } catch (MissingMethodException mme) {
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
+        }
+    }
+
     private int getCurrentLine() {
         this.getBinding().getVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME) as int
     }
@@ -137,7 +112,7 @@ abstract class SslBaseScript extends Script {
                 println "\u001B[31m" +
                         e.getMessageWithoutLocationText().replace("Script1", getProperty("name").toString()) +
                         "\u001B[37m"
-            } catch (MissingMethodException mme){
+            } catch (MissingMethodException mme) {
                 println "\u001B[31m" +
                         "Keyword \"" + mme.getMethod() + mme.printStackTrace() + "\" not recognized, misspelled or wrong(s) parameter(s)" +
                         "\u001B[37m"
