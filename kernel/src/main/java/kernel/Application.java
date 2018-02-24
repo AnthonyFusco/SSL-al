@@ -1,8 +1,9 @@
 package kernel;
 
-import kernel.structural.laws.DataSource;
-import kernel.structural.replay.Replay;
-import kernel.structural.ExecutableSource;
+import kernel.datasources.NamedElement;
+import kernel.datasources.executables.replay.Replay;
+import kernel.datasources.executables.simulations.Simulation;
+import kernel.datasources.laws.DataSource;
 import kernel.visitor.Visitable;
 import kernel.visitor.Visitor;
 
@@ -14,13 +15,8 @@ public class Application implements NamedElement, Visitable {
     private String name;
     private Date endDate;
     private Date startDate;
-    private List<DataSource> dataSources = new ArrayList<>();
     private List<Replay> replays = new ArrayList<>();
-    private List<ExecutableSource> executableSources = new ArrayList<>();
-
-    public List<DataSource> getDataSources() {
-        return dataSources;
-    }
+    private List<Simulation> simulations = new ArrayList<>();
 
     @Override
     public String getName() {
@@ -61,11 +57,11 @@ public class Application implements NamedElement, Visitable {
         return replays;
     }
 
-    public void addExecutableSource(ExecutableSource dataSource) {
-        this.executableSources.add(dataSource);
+    public void addSimulation(Simulation simulation) {
+        this.simulations.add(simulation);
     }
 
-    public List<ExecutableSource> getExecutableSources() {
-        return executableSources;
+    public List<Simulation> getExecutableSources() {
+        return simulations;
     }
 }

@@ -1,10 +1,10 @@
 package kernel.visitor;
 
 import kernel.Application;
-import kernel.Measurement;
-import kernel.structural.Simulation;
-import kernel.structural.laws.DataSource;
-import kernel.structural.replay.Replay;
+import kernel.datasources.Measurement;
+import kernel.datasources.executables.replay.Replay;
+import kernel.datasources.executables.simulations.Simulation;
+import kernel.datasources.laws.DataSource;
 
 import java.util.Date;
 import java.util.List;
@@ -64,7 +64,7 @@ public class SslVisitor implements Visitor {
     public void visit(Replay replay) {
         List<Measurement> measurements = replay.generateNextMeasurement(startDate.getTime());
         System.out.println("Starting the replay " + replay.getExecutableName() +
-                " (" + measurements.size() +" values)");
+                " (" + measurements.size() + " values)");
         databaseHelper.sendToDatabase(measurements, replay.getExecutableName() + "_", "Replay");
         System.out.println(replay.getName() + " done\n");
     }

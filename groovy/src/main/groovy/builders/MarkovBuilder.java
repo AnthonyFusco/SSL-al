@@ -1,6 +1,6 @@
 package builders;
 
-import kernel.structural.laws.MarkovChainLaw;
+import kernel.datasources.laws.MarkovChainLaw;
 import kernel.units.Duration;
 import kernel.units.Frequency;
 import kernel.units.TimeUnit;

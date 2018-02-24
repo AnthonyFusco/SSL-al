@@ -1,10 +1,11 @@
-package kernel.structural.laws;
+package kernel.datasources.laws;
 
-import kernel.Measurement;
+import kernel.datasources.Measurement;
 import net.andreinc.mockneat.MockNeat;
 import net.andreinc.mockneat.unit.objects.Probabilities;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
 
 public class MarkovChainLaw implements DataSource {
     private String name;
@@ -31,12 +32,12 @@ public class MarkovChainLaw implements DataSource {
         Probabilities<Integer> p = mockNeat.probabilites(Integer.class);
 
 
-        for(int i = 0 ; i < matrix.size(); i++){
+        for (int i = 0; i < matrix.size(); i++) {
             p.add(getMatrix().get(currState).get(i), i);
         }
         if (!blockComputingNewState) {
             currState = p.val();
-             blockComputingNewState = true;
+            blockComputingNewState = true;
         }
 
         return Collections.singletonList(new Measurement<>(name, (long) t, currState + ""));
@@ -47,21 +48,21 @@ public class MarkovChainLaw implements DataSource {
         return name;
     }
 
-    private List<List<Double>> getMatrix() {
-        return matrix;
-    }
-
     @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setCurrState(int currState) {
-        this.currState = currState;
+    private List<List<Double>> getMatrix() {
+        return matrix;
     }
 
     public void setMatrix(List<List<Double>> matrix) {
         this.matrix = matrix;
+    }
+
+    public void setCurrState(int currState) {
+        this.currState = currState;
     }
 
     public void setChangeStateFrequencyValue(double changeStateFrequencyValue) {

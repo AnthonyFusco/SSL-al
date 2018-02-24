@@ -1,6 +1,6 @@
 package builders;
 
-import kernel.structural.laws.RandomLaw;
+import kernel.datasources.laws.RandomLaw;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,7 +38,7 @@ public class RandomBuilder extends LawBuilder<RandomLaw> {
             addError(new IllegalArgumentException("You must declare a good range interval ex:([" + DEFAULT_RANGE + "])"));
         }
 
-        if (range.get(0) < range.get(1)){
+        if (range.get(0) < range.get(1)) {
             addWarning("Your lower limit is greater than your upper limit, unexpected result");
         }
     }

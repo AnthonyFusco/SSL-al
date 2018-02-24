@@ -1,7 +1,7 @@
-package kernel.structural.replay;
+package kernel.datasources.executables.replay;
 
 import com.google.gson.*;
-import kernel.Measurement;
+import kernel.datasources.Measurement;
 import kernel.units.Duration;
 import kernel.visitor.Visitor;
 
@@ -12,7 +12,6 @@ import java.util.List;
 
 public class JsonReplay extends Replay {
 
-    private boolean isExecutable;
     private String name;
     private String path;
     private Duration offset;
@@ -23,7 +22,7 @@ public class JsonReplay extends Replay {
     private String sensorValueToken;
     private String sensorRelativeTimeToken;
 
-    public JsonReplay(){
+    public JsonReplay() {
         this.name = "JSON Replay";
     }
 
@@ -48,20 +47,18 @@ public class JsonReplay extends Replay {
             JsonObject jo = jsontree.getAsJsonObject();
             JsonElement sensorname = jo.get(sensorNameToken);
             JsonArray record = jo.getAsJsonArray(sensorRecordToken);
-            for (Object o : record)
-            {
+            for (Object o : record) {
                 JsonObject sensor = (JsonObject) o;
 
                 JsonElement jsonvalue = sensor.get(sensorValueToken);
                 Double value = jsonvalue.getAsDouble();
                 JsonElement jsontime = sensor.get(sensorRelativeTimeToken);
-                long relativeTime = jsontime.getAsLong() + (long)startDate + (long)offset.getValue();
-                Measurement m = new Measurement<>(sensorname.getAsString(),relativeTime,value);
+                long relativeTime = jsontime.getAsLong() + (long) startDate + (long) offset.getValue();
+                Measurement m = new Measurement<>(sensorname.getAsString(), relativeTime, value);
                 measurementList.add(m);
             }
             return measurementList;
-        }
-        catch (JsonIOException | FileNotFoundException | JsonSyntaxException e) {
+        } catch (JsonIOException | FileNotFoundException | JsonSyntaxException e) {
             e.printStackTrace();
         }
 
@@ -71,14 +68,6 @@ public class JsonReplay extends Replay {
     @Override
     public void accept(Visitor visitor) {
         visitor.visit(this);
-    }
-    @Override
-    public boolean isExecutable() {
-        return isExecutable;
-    }
-
-    public void setExecutable(boolean executable) {
-        isExecutable = executable;
     }
 
     public void setPath(String path) {

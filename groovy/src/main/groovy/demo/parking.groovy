@@ -3,7 +3,7 @@ package demo
 createOrResetDB("influxdb")
 
 eurecomMarkov = markovLaw {
-    matrix ([[0.7,0.3], [0.3, 0.7]])
+    matrix([[0.7, 0.3], [0.3, 0.7]])
     stateFrequency 2 / h
 }
 

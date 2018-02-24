@@ -21,7 +21,7 @@ public class Frequency {
     }
 
     public double getValue() {
-        return (double)occurrences / duration.getValue();
+        return (double) occurrences / duration.getValue();
     }
 
     @Override

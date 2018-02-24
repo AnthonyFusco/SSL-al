@@ -1,11 +1,14 @@
 package builders;
 
-import kernel.structural.EntityBuilder;
-import kernel.structural.SensorsLot;
-import kernel.structural.laws.DataSource;
+import kernel.datasources.executables.simulations.sensors.Sensor;
+import kernel.datasources.executables.simulations.sensors.SensorsLot;
+import kernel.datasources.laws.DataSource;
 import kernel.units.Duration;
 import kernel.units.Frequency;
 import kernel.units.TimeUnit;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
     private static final int DEFAULT_SENSORS_NUMBER = 1;
@@ -41,12 +44,20 @@ public class SensorsLotBuilder extends AbstractEntityBuilder<SensorsLot> {
     @Override
     public SensorsLot build() {
         SensorsLot result = new SensorsLot();
-        result.setBuilder(builder);
-        result.setSensorsNumber(sensorsNumber);
+        result.setSensors(populateSensors());
         result.setFrequencyValue(frequency.getValue());
-        result.setExecutable(isExecutable());
+        result.setIsExecutable(isExecutable());
         result.setExecutableName(getExecutableName());
         return result;
+    }
+
+    private List<Sensor> populateSensors() {
+        List<Sensor> sensors = new ArrayList<>();
+        for (int i = 0; i < sensorsNumber; i++) {
+            DataSource dataSource = builder.build();
+            sensors.add(new Sensor(dataSource));
+        }
+        return sensors;
     }
 
     @Override

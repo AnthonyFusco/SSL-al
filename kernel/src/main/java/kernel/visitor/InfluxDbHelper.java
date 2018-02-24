@@ -1,6 +1,6 @@
 package kernel.visitor;
 
-import kernel.Measurement;
+import kernel.datasources.Measurement;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;

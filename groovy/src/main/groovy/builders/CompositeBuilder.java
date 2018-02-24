@@ -1,14 +1,14 @@
 package builders;
 
-import kernel.structural.EntityBuilder;
-import kernel.structural.composite.Composite;
+import kernel.datasources.executables.ExecutableSource;
+import kernel.datasources.executables.simulations.composite.Composite;
 import kernel.units.Frequency;
-import kernel.structural.ExecutableSource;
 
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
     private List<EntityBuilder<ExecutableSource>> executables;
@@ -51,9 +51,9 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         composite.setFilterPredicate(filterPredicate);
         composite.setMapFunction(mapFunction);
         composite.setReduceFunction(reduceFunction);
-        composite.setBuilders(executables);
-        composite.setFrequency(frequency);
-        composite.setExecutable(isExecutable());
+        composite.setExecutables(executables.stream().map(EntityBuilder::build).collect(Collectors.toList()));
+        composite.setFrequencyValue(frequency.getValue());
+        composite.setIsExecutable(isExecutable());
         composite.setExecutableName(getExecutableName());
         return composite;
     }
@@ -77,7 +77,6 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         if (isNotExecutable) {
             addError(new IllegalArgumentException("All sensors must be either sensor lots, replays or composites"));
         }
-
     }
 
 }

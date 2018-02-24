@@ -11,7 +11,7 @@ createOrResetDB("influxdb")
 def random = randomLaw {}
 
 def markov = markovLaw {
-    matrix([[0.5,0.5], [0.7,0.4]])
+    matrix([[0.5, 0.5], [0.7, 0.4]])
 }
 
 def s1 = sensorLot {

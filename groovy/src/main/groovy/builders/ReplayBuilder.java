@@ -1,7 +1,7 @@
 package builders;
 
-import kernel.structural.laws.DataSource;
-import kernel.structural.replay.CSVReplay;
+import kernel.datasources.executables.replay.CSVReplay;
+import kernel.datasources.laws.DataSource;
 import kernel.units.Duration;
 import kernel.units.TimeUnit;
 import org.apache.commons.csv.CSVFormat;
@@ -59,7 +59,7 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
         replay.setColumnsDescriptions(columnsDescriptions);
         replay.setOffset((long) offset.getValue());
         replay.setNoise(this.noise);
-        replay.setExecutable(isExecutable());
+        replay.setIsExecutable(isExecutable());
         replay.setExecutableName(getExecutableName());
         return replay;
     }
@@ -120,17 +120,18 @@ public class ReplayBuilder extends AbstractEntityBuilder<DataSource> {
                 if (t == null) {
                     addError(new IllegalArgumentException("The t column of CSV is not correct"));
                 }
-                try {
-                    long l = Long.parseLong(t.toString());
-                } catch (NumberFormatException e) {
-                    addError(new IllegalArgumentException("The t column of CSV is not a time"));
+                if (t != null) {
+                    try {
+                        long l = Long.parseLong(t.toString().trim());
+                    } catch (NumberFormatException e) {
+                        addError(new IllegalArgumentException("The t column of CSV is not a time"));
+                    }
                 }
             } catch (IOException e) {
                 System.out.println("Error while parsing the CSV file");
                 e.printStackTrace();
             }
         }
-
-
     }
+
 }

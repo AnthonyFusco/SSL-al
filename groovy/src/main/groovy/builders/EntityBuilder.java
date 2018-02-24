@@ -1,6 +1,6 @@
-package kernel.structural;
+package builders;
 
-import kernel.structural.laws.DataSource;
+import kernel.datasources.laws.DataSource;
 
 public interface EntityBuilder<T extends DataSource> {
     T build();
@@ -14,5 +14,4 @@ public interface EntityBuilder<T extends DataSource> {
     void setExecutable(boolean isExecutable);
 
     void setExecutableName(String name);
-
 }

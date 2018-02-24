@@ -6,9 +6,9 @@ contributor(ctx) {
 
     method name: 'replay', type: 'builders.ReplayBuilder', params: [name: 'java.lang.String']
     method name: 'runSimulation', type: 'void', params: [
-            name: 'java.lang.String',
-            begin:'java.lang.String',
-            end:'java.lang.String'
+            name : 'java.lang.String',
+            begin: 'java.lang.String',
+            end  : 'java.lang.String'
     ]
     method name: 'parkingLaw', type: 'builders.MarkovBuilder', params: [name: 'java.lang.String']
     method name: 'randomLaw', type: 'void', params: [name: 'java.lang.String']
@@ -18,7 +18,7 @@ contributor(ctx) {
 }
 
 
-contribute(currentType('builders.SensorsLotBuilder')){
+contribute(currentType('builders.SensorsLotBuilder')) {
     method name: 'sensorsNumber', type: 'builders.SensorsLotBuilder', params: [n: 'java.lang.Integer']
     method name: 'law', type: 'builders.SensorsLotBuilder', params: [law: 'java.lang.String']
     method name: 'frequency', type: 'builders.SensorsLotBuilder', params: [freq: 'kernel.units.Frequency']
@@ -33,7 +33,7 @@ contributor([contributorBody]) {
 }
 
 
-contribute(currentType('builders.LawBuilder')){
+contribute(currentType('builders.LawBuilder')) {
 
     method name: 'ofType', type: 'builders.LawBuilder',
             params: [type: 'java.lang.String']

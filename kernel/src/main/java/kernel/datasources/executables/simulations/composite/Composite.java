@@ -1,10 +1,8 @@
-package kernel.structural.composite;
+package kernel.datasources.executables.simulations.composite;
 
-import kernel.Measurement;
-import kernel.structural.EntityBuilder;
-import kernel.structural.ExecutableSource;
-import kernel.structural.Simulation;
-import kernel.units.Frequency;
+import kernel.datasources.Measurement;
+import kernel.datasources.executables.ExecutableSource;
+import kernel.datasources.executables.simulations.Simulation;
 import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
@@ -21,9 +19,7 @@ public class Composite extends Simulation {
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
     private List<ExecutableSource> executables = new ArrayList<>();
-    private List<EntityBuilder<ExecutableSource>> builders;
-    private Frequency frequency;
-    private boolean isExecutable;
+    private double frequency;
 
     public Composite() {
         this.name = "composite";
@@ -31,9 +27,6 @@ public class Composite extends Simulation {
 
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
-
-        populateSensorLots();
-
         List<Double> values = new ArrayList<>();
         for (ExecutableSource executableSource : executables) {
             List<Measurement> measurements = executableSource.generateNextMeasurement(t);
@@ -52,22 +45,6 @@ public class Composite extends Simulation {
         return Collections.singletonList(new Measurement<>(name, (long) t, value.get()));
     }
 
-    private void populateSensorLots() {
-        if (executables.isEmpty()) {
-            builders.forEach(builder -> executables.add(builder.build()));
-        }
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public void setFilterPredicate(Predicate<? super Double> filterPredicate) {
         this.filterPredicate = filterPredicate;
     }
@@ -80,26 +57,28 @@ public class Composite extends Simulation {
         this.reduceFunction = reduceFunction;
     }
 
-    public void setBuilders(List<EntityBuilder<ExecutableSource>> builders) {
-        this.builders = builders;
+    public void setExecutables(List<ExecutableSource> executables) {
+        this.executables = executables;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public double getFrequencyValue() {
-        return frequency.getValue();
-    }
-
-    public void setFrequency(Frequency frequency) {
-        this.frequency = frequency;
+        return frequency;
     }
 
     @Override
-    public boolean isExecutable() {
-        return isExecutable;
-    }
-
-    public void setExecutable(boolean executable) {
-        isExecutable = executable;
+    public void setFrequencyValue(double frequency) {
+        this.frequency = frequency;
     }
 
     @Override

@@ -1,17 +1,13 @@
 package kernel.visitor;
 
 import kernel.Application;
-import kernel.structural.Simulation;
-import kernel.structural.replay.Replay;
+import kernel.datasources.executables.replay.Replay;
+import kernel.datasources.executables.simulations.Simulation;
 
 public interface Visitor {
     void visit(Application application);
 
-    /*void visit(Composite composite);
-
-    void visit(SensorsLot sensorsLot);*/
-
-    void visit(Simulation executableSource);
+    void visit(Simulation simulation);
 
     void visit(Replay replay);
 }

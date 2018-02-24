@@ -1,18 +1,17 @@
 package dsl;
 
 import kernel.Application;
-import kernel.structural.EntityBuilder;
-import kernel.structural.laws.DataSource;
-import kernel.structural.replay.Replay;
-import kernel.structural.ExecutableSource;
+import builders.EntityBuilder;
+import kernel.datasources.executables.replay.Replay;
+import kernel.datasources.executables.simulations.Simulation;
+import kernel.datasources.laws.DataSource;
 import kernel.visitor.SslVisitor;
 
 import java.util.Date;
 
 public class Runner {
-    private SslModel model;
-
     public static String currentFile = "";
+    private SslModel model;
 
     public Runner(SslModel model) {
         this.model = model;
@@ -38,10 +37,8 @@ public class Runner {
             DataSource dataSource = builder.build();
             if (dataSource instanceof Replay) {
                 app.addReplay((Replay) dataSource);
-            } if (dataSource instanceof ExecutableSource) {
-                app.addExecutableSource((ExecutableSource) dataSource);
-            } else {
-                app.getDataSources().add(dataSource);
+            } else if (dataSource instanceof Simulation) {
+                app.addSimulation((Simulation) dataSource);
             }
         });
     }

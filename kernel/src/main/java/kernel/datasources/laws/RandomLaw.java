@@ -1,6 +1,6 @@
-package kernel.structural.laws;
+package kernel.datasources.laws;
 
-import kernel.Measurement;
+import kernel.datasources.Measurement;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,12 +20,17 @@ public class RandomLaw implements DataSource {
     public List<Measurement> generateNextMeasurement(double t) {
         int value = new Random()
                 .nextInt(rangeSup + 1 - rangeInf) + rangeInf;
-        return Collections.singletonList(new Measurement<>(name, (long)t, value));
+        return Collections.singletonList(new Measurement<>(name, (long) t, value));
     }
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setBorneInf(Integer borneInf) {
@@ -43,10 +48,5 @@ public class RandomLaw implements DataSource {
 
     public void setExecutable(boolean executable) {
         isExecutable = executable;
-    }
-
-    @Override
-    public void setName(String name) {
-        this.name = name;
     }
 }

@@ -1,8 +1,7 @@
 package builders;
 
 import dsl.Runner;
-import kernel.structural.EntityBuilder;
-import kernel.structural.laws.DataSource;
+import kernel.datasources.laws.DataSource;
 
 import java.util.Stack;
 

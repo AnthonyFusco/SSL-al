@@ -1,6 +1,6 @@
 package builders;
 
-import kernel.structural.laws.DataSource;
+import kernel.datasources.laws.DataSource;
 
 public abstract class LawBuilder<T extends DataSource> extends AbstractEntityBuilder<T> {
 

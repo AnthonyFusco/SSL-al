@@ -4,16 +4,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import kernel.Measurement;
-import kernel.structural.laws.DataSource;
-import kernel.structural.replay.JsonReplay;
+import kernel.datasources.executables.replay.JsonReplay;
+import kernel.datasources.laws.DataSource;
 import kernel.units.Duration;
 import kernel.units.TimeUnit;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
 
 public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
@@ -30,22 +28,22 @@ public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
         super(definitionLine);
     }
 
-    public JsonReplayBuilder sensorRecordToken(String sensorRecordToken){
+    public JsonReplayBuilder sensorRecordToken(String sensorRecordToken) {
         this.sensorRecordToken = "e";
         return this;
     }
 
-    public JsonReplayBuilder sensorValueToken(String sensorValueToken){
+    public JsonReplayBuilder sensorValueToken(String sensorValueToken) {
         this.sensorValueToken = "v";
         return this;
     }
 
-    public JsonReplayBuilder sensorRelativeTimeToken(String sensorRelativeTimeToken){
+    public JsonReplayBuilder sensorRelativeTimeToken(String sensorRelativeTimeToken) {
         this.sensorRelativeTimeToken = "t";
         return this;
     }
 
-    public JsonReplayBuilder sensorNameToken(String sensorNameToken){
+    public JsonReplayBuilder sensorNameToken(String sensorNameToken) {
         this.sensorNameToken = "bn";
         return this;
     }
@@ -71,7 +69,7 @@ public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
         jsonReplay.setPath(path);
         jsonReplay.setOffset(offset);
         jsonReplay.setNoiseRange(noiseRange);
-        jsonReplay.setExecutable(isExecutable());
+        jsonReplay.setIsExecutable(isExecutable());
         jsonReplay.setExecutableName(getExecutableName());
         jsonReplay.setSensorNameToken(sensorNameToken);
         jsonReplay.setSensorRecordToken(sensorRecordToken);
@@ -82,44 +80,43 @@ public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
 
     @Override
     public void validate() {
-        if(path.isEmpty() || path == null){
+        if (path.isEmpty() || path == null) {
             addError(new IllegalArgumentException("The path must not be empty or null"));
-        }else{
+        } else {
             File file = new File(path);
             if (!file.exists() || !file.canRead() || !file.isFile()) {
                 addError(new IllegalArgumentException("The path must be a valid file"));
             }
-            try{
+            try {
                 JsonParser parser = new JsonParser();
                 JsonElement jsontree = parser.parse(new FileReader(path));
                 JsonObject jo = jsontree.getAsJsonObject();
                 JsonElement sensorname = jo.get(this.sensorNameToken);
                 JsonArray record = jo.getAsJsonArray(this.sensorRecordToken);
-                if (sensorname == null){
+                if (sensorname == null) {
                     addError(new Exception("Wrong token : \"" + sensorNameToken + "\" for sensor name in file " + path));
                 }
-                if (record == null){
+                if (record == null) {
                     addError(new Exception("Wrong token : \"" + sensorRecordToken + "\" for sensor record in file" + path));
-                }else{
-                    for (Object o : record)
-                    {
+                } else {
+                    for (Object o : record) {
                         JsonObject sensor = (JsonObject) o;
                         JsonElement jsonvalue = sensor.get(sensorValueToken);
                         JsonElement jsontime = sensor.get(sensorRelativeTimeToken);
-                        if(jsonvalue == null){
+                        if (jsonvalue == null) {
                             addError(new Exception("Wrong token : \"" + sensorValueToken + "\" for sensor value in file " + path));
-                        }else{
+                        } else {
                             try {
                                 Double value = jsonvalue.getAsDouble();
-                                if(value.isNaN()){
+                                if (value.isNaN()) {
                                     addError(new Exception("Bad types values when trying to collect " + sensorValueToken + "fields"));
                                 }
-                            }catch (NumberFormatException ne){
+                            } catch (NumberFormatException ne) {
                                 addError(new Exception("Bad values format when collecting " + sensorValueToken + " fields"));
                             }
 
                         }
-                        if(jsontime == null){
+                        if (jsontime == null) {
                             addError(new Exception("Wrong token : \"" + sensorRecordToken + "\" for sensor time in file " + path));
                         }
 
@@ -127,7 +124,7 @@ public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
                 }
 
 
-            }catch (FileNotFoundException e){
+            } catch (FileNotFoundException e) {
                 addError(new IllegalArgumentException("The file must exist"));
             }
         }

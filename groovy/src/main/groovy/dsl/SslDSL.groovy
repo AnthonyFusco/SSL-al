@@ -1,12 +1,9 @@
 package dsl
 
-import kernel.structural.laws.LawType
 import kernel.units.Duration
 import kernel.units.Frequency
 import kernel.units.TimeUnit
-import org.codehaus.groovy.ast.expr.DeclarationExpression
 import org.codehaus.groovy.ast.stmt.ForStatement
-import org.codehaus.groovy.ast.stmt.IfStatement
 import org.codehaus.groovy.ast.stmt.WhileStatement
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.MultipleCompilationErrorsException
@@ -26,9 +23,6 @@ class SslDSL {
         configuration.setScriptBaseClass("dsl.SslBaseScript")
         shell = new GroovyShell(configuration)
 
-        for (LawType type : LawType.values()) {
-            binding.setVariable(type.toString(), type.toString())
-        }
         binding.setVariable("s", new Duration(1, TimeUnit.Second))
         binding.setVariable("min", new Duration(1, TimeUnit.Minute))
         binding.setVariable("h", new Duration(1, TimeUnit.Hour))

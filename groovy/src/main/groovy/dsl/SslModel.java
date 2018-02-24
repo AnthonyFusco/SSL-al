@@ -1,8 +1,8 @@
 package dsl;
 
-import kernel.structural.EntityBuilder;
 import groovy.lang.Binding;
-import kernel.structural.laws.DataSource;
+import builders.EntityBuilder;
+import kernel.datasources.laws.DataSource;
 
 import java.util.ArrayList;
 import java.util.List;

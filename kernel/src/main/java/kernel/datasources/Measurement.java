@@ -1,4 +1,4 @@
-package kernel;
+package kernel.datasources;
 
 public class Measurement<T> {
     private String sensorName;
@@ -23,12 +23,12 @@ public class Measurement<T> {
         return sensorName;
     }
 
+    public void setSensorName(String sensorName) {
+        this.sensorName = sensorName;
+    }
+
     @Override
     public String toString() {
         return "(" + timeStamp + ", " + sensorName + ", " + value + ")";
-    }
-
-    public void setSensorName(String sensorName) {
-        this.sensorName = sensorName;
     }
 }

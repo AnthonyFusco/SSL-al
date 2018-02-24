@@ -1,7 +1,7 @@
-package kernel.structural.laws;
+package kernel.datasources.laws;
 
-import kernel.Measurement;
-import kernel.NamedElement;
+import kernel.datasources.Measurement;
+import kernel.datasources.NamedElement;
 
 import java.util.List;
 

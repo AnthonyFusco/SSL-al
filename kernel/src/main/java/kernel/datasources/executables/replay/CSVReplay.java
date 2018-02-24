@@ -1,6 +1,6 @@
-package kernel.structural.replay;
+package kernel.datasources.executables.replay;
 
-import kernel.Measurement;
+import kernel.datasources.Measurement;
 import kernel.visitor.Visitor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -18,7 +18,6 @@ public class CSVReplay extends Replay {
     private Map<String, Object> columnsDescriptions = new HashMap<>();
     private long offset;
     private List<BigDecimal> noise;
-    private boolean isExecutable;
 
     public CSVReplay() {
         this.name = "CSV Replay";
@@ -63,15 +62,6 @@ public class CSVReplay extends Replay {
             e.printStackTrace();
         }
         return new ArrayList<>();
-    }
-
-    @Override
-    public boolean isExecutable() {
-        return isExecutable;
-    }
-
-    public void setExecutable(boolean executable) {
-        isExecutable = executable;
     }
 
     @Override

@@ -2,7 +2,7 @@ package builders;
 
 import groovy.lang.Closure;
 import groovy.lang.MissingMethodException;
-import kernel.structural.laws.MathFunctionLaw;
+import kernel.datasources.laws.MathFunctionLaw;
 
 public class MathFunctionBuilder extends LawBuilder<MathFunctionLaw> {
 

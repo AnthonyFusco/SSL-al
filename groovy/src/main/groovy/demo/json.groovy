@@ -5,7 +5,7 @@ createOrResetDB("influxdb")
 bike = jsonReplay {
     path "datafiles/bike.json"
     offset 10.s
-    noise ([100,200])
+    noise([100, 200])
 }
 
 play bike

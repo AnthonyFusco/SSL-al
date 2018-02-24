@@ -21,8 +21,15 @@ functionLot = sensorLot {
     frequency 10 / h
 }
 
+sprint = csvReplay {
+    path "datafiles/data1.csv"
+    offset 1.h
+    columns([v: 8])
+    noise([0.01, 0.15])
+}
+
 composite = composite {
-    withSensors([markovLot, functionLot])
+    withSensors([markovLot, functionLot, sprint])
     filter({ x -> x == x })
     map({ x -> x == 0 ? 10 : x })
     reduce({ res, sensor -> res / sensor })

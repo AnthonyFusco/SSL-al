@@ -1,6 +1,6 @@
 package kernel.visitor;
 
-import kernel.Measurement;
+import kernel.datasources.Measurement;
 
 import java.util.List;
 

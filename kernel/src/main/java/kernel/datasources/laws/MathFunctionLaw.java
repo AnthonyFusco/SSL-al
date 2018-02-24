@@ -1,8 +1,8 @@
-package kernel.structural.laws;
+package kernel.datasources.laws;
 
 import groovy.lang.Closure;
 import groovy.lang.MissingMethodException;
-import kernel.Measurement;
+import kernel.datasources.Measurement;
 
 import java.util.Collections;
 import java.util.List;

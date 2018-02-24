@@ -1,8 +1,8 @@
-package kernel.structural;
+package kernel.datasources.executables.simulations.sensors;
 
-import kernel.Measurement;
-import kernel.NamedElement;
-import kernel.structural.laws.DataSource;
+import kernel.datasources.Measurement;
+import kernel.datasources.NamedElement;
+import kernel.datasources.laws.DataSource;
 
 import java.util.List;
 import java.util.UUID;
