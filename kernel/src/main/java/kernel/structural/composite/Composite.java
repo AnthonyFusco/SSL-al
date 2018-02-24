@@ -3,10 +3,8 @@ package kernel.structural.composite;
 import kernel.Measurement;
 import kernel.structural.EntityBuilder;
 import kernel.structural.SensorsLot;
-import kernel.structural.laws.DataSource;
 import kernel.units.Frequency;
 import kernel.visitor.ExecutableSource;
-import kernel.visitor.Visitable;
 import kernel.visitor.Visitor;
 
 import java.util.ArrayList;
@@ -22,7 +20,7 @@ public class Composite extends ExecutableSource {
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
-    private List<SensorsLot> sensorsLots = new ArrayList<>();
+    private List<ExecutableSource> executables = new ArrayList<>();
     private List<EntityBuilder<SensorsLot>> builders;
     private Frequency frequency;
     private boolean isExecutable;
@@ -37,8 +35,8 @@ public class Composite extends ExecutableSource {
         populateSensorLots();
 
         List<Double> values = new ArrayList<>();
-        for (SensorsLot sensorsLot : sensorsLots) {
-            List<Measurement> measurements = sensorsLot.generateNextMeasurement(t);
+        for (ExecutableSource executableSource : executables) {
+            List<Measurement> measurements = executableSource.generateNextMeasurement(t);
             for (Measurement measurement : measurements) {
                 values.add(Double.valueOf(measurement.getValue().toString()));
             }
@@ -55,8 +53,8 @@ public class Composite extends ExecutableSource {
     }
 
     private void populateSensorLots() {
-        if (sensorsLots.isEmpty()) {
-            builders.forEach(builder -> sensorsLots.add(builder.build()));
+        if (executables.isEmpty()) {
+            builders.forEach(builder -> executables.add(builder.build()));
         }
     }
 
