@@ -6,7 +6,6 @@ import kernel.structural.laws.DataSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SslModel {
     private List<EntityBuilder<DataSource>> dataSourcesBuilders;

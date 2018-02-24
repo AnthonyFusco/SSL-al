@@ -11,63 +11,53 @@ import java.text.SimpleDateFormat
 
 abstract class SslBaseScript extends Script {
 
-    def createOrResetDB(String name) { //do not put static
-        if (name == null) {
-            name = "influxdb"
-        }
-        InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root")
-        String dbName = name
-        influxDB.deleteDatabase(dbName)
-        influxDB.createDatabase(dbName)
-    }
-
     def composite(Closure closure) {
         CompositeBuilder builder = new CompositeBuilder<>(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateDelegate(closure, builder)
+        rehydrateClosureWithBuilder(closure, builder)
         builder
     }
-
 
     def randomLaw(Closure closure) {
         RandomBuilder builder = new RandomBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateDelegate(closure, builder)
+        rehydrateClosureWithBuilder(closure, builder)
         builder
     }
+
 
     def markovLaw(Closure closure) {
         MarkovBuilder builder = new MarkovBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateDelegate(closure, builder)
+        rehydrateClosureWithBuilder(closure, builder)
         builder
     }
 
     def mathFunction(Closure closure) {
         MathFunctionBuilder builder = new MathFunctionBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateDelegate(closure, builder)
+        rehydrateClosureWithBuilder(closure, builder)
         builder
     }
 
     def jsonreplay(Closure closure) { //todo abstract the builders for json and csv
         def builder = new JsonReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateDelegate(closure, builder)
+        rehydrateClosureWithBuilder(closure, builder)
         builder
     }
 
     def replay(Closure closure) {
         def builder = new ReplayBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateDelegate(closure, builder)
+        rehydrateClosureWithBuilder(closure, builder)
         builder
     }
 
     def sensorLot(Closure closure) {
         def builder = new SensorsLotBuilder(getCurrentLine())
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
-        rehydrateDelegate(closure, builder)
+        rehydrateClosureWithBuilder(closure, builder)
         builder
     }
 
@@ -89,13 +79,24 @@ abstract class SslBaseScript extends Script {
         new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
     }
 
-    private void rehydrateDelegate(Closure closure, AbstractEntityBuilder<DataSource> builder) {
+    private void rehydrateClosureWithBuilder(Closure closure, AbstractEntityBuilder<DataSource> builder) {
         def code = closure.rehydrate(builder, this, this)
         try {
             code()
         } catch (MissingMethodException mme) {
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\" not recognized, misspelled or wrong(s) parameter(s)"))
+            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\"" +
+                    "not recognized, misspelled or wrong(s) parameter(s)"))
         }
+    }
+
+    def createOrResetDB(String name) { //do not put static
+        if (name == null) {
+            name = "influxdb"
+        }
+        InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root")
+        String dbName = name
+        influxDB.deleteDatabase(dbName)
+        influxDB.createDatabase(dbName)
     }
 
     private int getCurrentLine() {
