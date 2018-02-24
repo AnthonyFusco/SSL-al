@@ -31,13 +31,6 @@ public class Runner {
         app.accept(visitor);
     }
 
-    private void buildDataSources(Application app) {
-        model.getDataSourcesBuilders().forEach(builder -> {
-            DataSource dataSource = builder.build();
-            app.addDataSource(dataSource);
-        });
-    }
-
     private void validateDataSources() {
         model.getDataSourcesBuilders().forEach(builder -> {
             builder.validate();
@@ -47,5 +40,12 @@ public class Runner {
 
     private boolean anyError() {
         return model.getDataSourcesBuilders().stream().anyMatch(EntityBuilder::isInErrorState);
+    }
+
+    private void buildDataSources(Application app) {
+        model.getDataSourcesBuilders().forEach(builder -> {
+            DataSource dataSource = builder.build();
+            app.addDataSource(dataSource);
+        });
     }
 }

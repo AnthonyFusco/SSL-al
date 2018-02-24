@@ -11,23 +11,27 @@ import java.text.SimpleDateFormat
 abstract class SslBaseScript extends Script {
 
     def methodMissing(String name, def args) {
+        def closure = args[0] as Closure
         switch (name) {
             case "composite":
-                return handleBuilder(new CompositeBuilder<>(getCurrentLine()), args[0] as Closure)
+                return handleBuilder(new CompositeBuilder<>(getCurrentLine()), closure)
             case "randomLaw":
-                return handleBuilder(new RandomBuilder<>(getCurrentLine()), args[0] as Closure)
+                return handleBuilder(new RandomBuilder<>(getCurrentLine()), closure)
             case "markovLaw":
-                return handleBuilder(new MarkovBuilder<>(getCurrentLine()), args[0] as Closure)
+                return handleBuilder(new MarkovBuilder<>(getCurrentLine()), closure)
             case "mathFunction":
-                return handleBuilder(new MathFunctionBuilder<>(getCurrentLine()), args[0] as Closure)
+                return handleBuilder(new MathFunctionBuilder<>(getCurrentLine()), closure)
             case "jsonReplay":
-                return handleBuilder(new JsonReplayBuilder<>(getCurrentLine()), args[0] as Closure)
+                return handleBuilder(new JsonReplayBuilder<>(getCurrentLine()), closure)
             case "csvReplay":
-                return handleBuilder(new ReplayBuilder<>(getCurrentLine()), args[0] as Closure)
+                return handleBuilder(new ReplayBuilder<>(getCurrentLine()), closure)
             case "sensorLot":
-                return handleBuilder(new SensorsLotBuilder<>(getCurrentLine()), args[0] as Closure)
+                return handleBuilder(new SensorsLotBuilder<>(getCurrentLine()), closure)
             default:
-                println("no idea")
+                println "\u001B[31m" +
+                        "method " + name + " not recognized method does not exists or is misspelled " +
+                        ".(" + Runner.currentFile + ":" + getCurrentLine() + ")" +
+                        "\u001B[37m"
         }
     }
 
