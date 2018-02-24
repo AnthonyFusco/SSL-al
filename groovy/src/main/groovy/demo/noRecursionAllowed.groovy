@@ -2,7 +2,7 @@ package demo
 
 //Only for error handling example
 
-createOrResetDB("influxdb")
+createOrResetDB()
 
 recursionFunction = { t ->
     def f = { ->

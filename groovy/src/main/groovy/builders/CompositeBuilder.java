@@ -60,8 +60,6 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
 
     @Override
     public void validate() {
-        //todo identity for functions
-        //check executables are executables or !!!replays!!!
         if (filterPredicate == null) {
             this.filterPredicate = (Predicate<Double>) aDouble -> true;
             addWarning("No predicate function defined, using Identity by default");

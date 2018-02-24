@@ -1,6 +1,6 @@
 package demo
 
-createOrResetDB("influxdb")
+createOrResetDB()
 
 //todo validation
 

@@ -31,17 +31,12 @@ public class InfluxDbHelper implements DatabaseHelper {
 
             Point point = Point.measurement(sensorLotName + measurement.getSensorName())
                     .time(measurement.getTimeStamp(), TimeUnit.MILLISECONDS)
-//                    .addField("sensorLot", sensorLotName)
-//                    .addField("law", lawName)
                     .fields(map)
                     .build();
             batchPoints.point(point);
         }
 
-//        System.out.println(batchPoints);
         influxDB.write(batchPoints);
         influxDB.close();
-//        Query query = new Query("SELECT * FROM " + measurements.get(0).getSensorName(), dbName);
-//        System.out.println(influxDB.query(query));
     }
 }

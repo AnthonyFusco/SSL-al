@@ -69,12 +69,9 @@ abstract class SslBaseScript extends Script {
         }
     }
 
-    def createOrResetDB(String name) { //do not put static
-        if (name == null) {
-            name = "influxdb"
-        }
+    def createOrResetDB() { //do not put static
         InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root")
-        String dbName = name
+        String dbName = "influxdb"
         influxDB.deleteDatabase(dbName)
         influxDB.createDatabase(dbName)
     }

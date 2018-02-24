@@ -18,7 +18,7 @@ class SslDSL {
 
     SslDSL() {
         binding = new SslBinding()
-        binding.setModel(new SslModel(binding))
+        binding.setModel(new SslModel())
         configuration = getDSLConfiguration()
         configuration.setScriptBaseClass("dsl.SslBaseScript")
         shell = new GroovyShell(configuration)
@@ -43,7 +43,6 @@ class SslDSL {
 
             staticImportsWhitelist = []
             staticStarImportsWhitelist = []
-//			tokensBlacklist= [Types.KEYWORD_DEF]
             tokensWhitelist = [
                     Types.PLUS_PLUS,
                     Types.PLUS_EQUAL,
@@ -59,7 +58,7 @@ class SslDSL {
                     Types.COMPARE_LESS_THAN_EQUAL,
                     Types.COMPARE_GREATER_THAN,
                     Types.COMPARE_GREATER_THAN_EQUAL,
-//                    Types.ASSIGN,
+                    Types.ASSIGN,
                     Types.POWER,
                     Types.LEFT_SQUARE_BRACKET,
                     Types.RIGHT_SQUARE_BRACKET,
@@ -94,9 +93,8 @@ class SslDSL {
             getMin { -> new Duration(delegate as double, TimeUnit.Minute) }
             getH { -> new Duration(delegate as double, TimeUnit.Hour) }
             getD { -> new Duration(delegate as double, TimeUnit.Day) }
-
-
         }
+
         Number.metaClass.div = { Duration d -> new Frequency(delegate as int, d) }
 
         def configuration = new CompilerConfiguration()
@@ -126,7 +124,4 @@ class SslDSL {
 
     }
 
-    SslBinding getBinding() {
-        return binding
-    }
 }

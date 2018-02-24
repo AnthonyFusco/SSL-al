@@ -13,8 +13,6 @@ public class Application implements NamedElement, Visitable {
     private String name;
     private Date endDate;
     private Date startDate;
-    //    private List<Replay> replays = new ArrayList<>();
-//    private List<Simulation> simulations = new ArrayList<>();
     private List<DataSource> dataSources = new ArrayList<>();
 
     @Override
@@ -47,22 +45,6 @@ public class Application implements NamedElement, Visitable {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
-
-    /*public void addReplay(Replay replay) {
-        this.replays.add(replay);
-    }
-
-    public List<Replay> getReplays() {
-        return replays;
-    }
-
-    public void addSimulation(Simulation simulation) {
-        this.simulations.add(simulation);
-    }
-
-    public List<Simulation> getExecutableSources() {
-        return simulations;
-    }*/
 
     public void addDataSource(DataSource dataSource) {
         this.dataSources.add(dataSource);

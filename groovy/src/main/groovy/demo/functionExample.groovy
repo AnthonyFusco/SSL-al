@@ -1,6 +1,6 @@
 package demo
 
-createOrResetDB("influxdb")
+createOrResetDB()
 
 SensorTempExt = mathFunction {
     expression { t ->

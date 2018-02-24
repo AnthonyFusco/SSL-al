@@ -10,10 +10,7 @@ import java.util.List;
 public class SslModel {
     private List<EntityBuilder<DataSource>> dataSourcesBuilders;
 
-    private Binding binding;
-
-    public SslModel(Binding binding) {
-        this.binding = binding;
+    public SslModel() {
         this.dataSourcesBuilders = new ArrayList<>();
     }
 

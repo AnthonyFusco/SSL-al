@@ -1,6 +1,6 @@
 package demo
 
-createOrResetDB("influxdb")
+createOrResetDB()
 
 markov = markovLaw {
     matrix([[0.5, 0.5, 0.5], [0.5, 0.6]])

@@ -7,6 +7,7 @@ import kernel.datasources.executables.replay.Replay;
 import kernel.datasources.executables.simulations.Simulation;
 import kernel.datasources.laws.DataSource;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,17 +42,22 @@ public class SslVisitor implements Visitor {
         int numberIterations = (int) ((endTime - startTime) / period);
 
         System.out.println("Starting the " + simulation.getName() + " " + simulation.getExecutableName() +
-                " (" + numberIterations + " points)");
+                " (" + numberIterations + " points per sensors)");
 
+        List<Measurement> measurements = new ArrayList<>();
         for (double t = startDate.getTime(); t < endDate.getTime(); t += period) {
-            List<Measurement> measurement = simulation.generateNextMeasurement(t);
-            databaseHelper.sendToDatabase(
-                    measurement,
-                    simulation.getExecutableName() + "_",
-                    "");
+            measurements.addAll(simulation.generateNextMeasurement(t));
+            if (measurements.size() > 15_000) {
+                flushSimulationToDatabase(simulation, measurements);
+                measurements = new ArrayList<>();
+            }
         }
-
+        flushSimulationToDatabase(simulation, measurements);
         System.out.println(simulation.getName() + " done\n");
+    }
+
+    private void flushSimulationToDatabase(Simulation simulation, List<Measurement> measurements) {
+        databaseHelper.sendToDatabase(measurements, simulation.getExecutableName() + "_", "");
     }
 
     @Override

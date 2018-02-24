@@ -1,6 +1,6 @@
 package demo
 
-createOrResetDB("influxdb")
+createOrResetDB()
 
 eurecomMarkov = markovLaw {
     matrix([[0.7, 0.3], [0.3, 0.7]])
