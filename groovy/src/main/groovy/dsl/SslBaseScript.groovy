@@ -3,6 +3,7 @@ package dsl
 import builders.*
 import kernel.datasources.laws.DataSource
 import org.influxdb.InfluxDB
+import org.influxdb.InfluxDBException
 import org.influxdb.InfluxDBFactory
 
 abstract class SslBaseScript extends Script {
@@ -91,6 +92,8 @@ abstract class SslBaseScript extends Script {
             } catch (MissingMethodException mme) {
                 printError("Keyword " + mme.getMethod() + mme.printStackTrace() +
                         " not recognized, misspelled or wrong(s) parameter(s)")
+            }catch(InfluxDBException ife){
+                printError("Error while sending messages to influxDB, some functions might not cover the entire range of time values")
             }
         } else {
             println "Run method is disabled"
