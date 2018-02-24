@@ -25,21 +25,16 @@ public class Runner {
 
         if (anyError()) return;
 
-        dispatchDataSourcesByType(app);
+        buildDataSources(app);
 
         SslVisitor visitor = new SslVisitor(new InfluxDbHelper());
         app.accept(visitor);
     }
 
-    private void dispatchDataSourcesByType(Application app) {
+    private void buildDataSources(Application app) {
         model.getDataSourcesBuilders().forEach(builder -> {
             DataSource dataSource = builder.build();
             app.addDataSource(dataSource);
-            /*if (dataSource instanceof Replay) {
-                app.addReplay((Replay) dataSource);
-            } else if (dataSource instanceof Simulation) {
-                app.addSimulation((Simulation) dataSource);
-            }*/
         });
     }
 
