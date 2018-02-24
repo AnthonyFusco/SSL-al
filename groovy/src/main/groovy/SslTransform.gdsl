@@ -1,60 +1,56 @@
-def ctx = context(filetypes: [".ssl", "ssl"])
+def ctx = context()
 
 contributor(ctx) {
-    method name: 'dataSource', type: 'builders.LawBuilder', params: [name: 'java.lang.String']
-    method name: 'sensorLot', type: 'builders.SensorsLotBuilder', params: [name: 'java.lang.String']
+    method name: 'simulate', type: 'builders.ApplicationBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'sensorLot', type: 'builders.SensorsLotBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'composite', type: 'builders.CompositeBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'csvReplay', type: 'builders.ReplayBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'jsonReplay', type: 'builders.JsonReplayBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'randomLaw', type: 'builders.RandomBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'mathFunction', type: 'builders.MathFunctionBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'markovLaw', type: 'builders.MarkovBuilder', params: [name: 'groovy.lang.Closure']
 
-    method name: 'replay', type: 'builders.ReplayBuilder', params: [name: 'java.lang.String']
-
-    method name: 'simulate', type: 'void'
-
-    method name: 'parkingLaw', type: 'builders.MarkovBuilder', params: [name: 'java.lang.String']
-    method name: 'randomLaw', type: 'void', params: [name: 'java.lang.String']
-    method name: 'parkingComposite', type: 'builders.CompositeBuilder', params: [name: 'java.lang.String']
-    method name: 'composite', type: 'builders.CompositeBuilder', params: [name: 'java.lang.String']
     method name: 'createOrResetDB', type: 'void'
 }
 
-
-contribute(currentType('builders.SensorsLotBuilder')) {
-    method name: 'sensorsNumber', type: 'builders.SensorsLotBuilder', params: [n: 'java.lang.Integer']
-    method name: 'law', type: 'builders.SensorsLotBuilder', params: [law: 'java.lang.String']
-    method name: 'frequency', type: 'builders.SensorsLotBuilder', params: [freq: 'kernel.units.Frequency']
-}
-
-
 def contributorBody = context(scope: closureScope(isArg: true))
 contributor([contributorBody]) {
-    if (enclosingCall("ofType")) {
-        property name: "MarkovLaw", type: 'java.lang.String'
+    if (enclosingCall("simulate")) {
+        method name: 'start', params: [start: 'java.lang.Object']
+        method name: 'end', params: [end: 'java.lang.Object']
+        method name: 'play', params: [play: 'java.lang.Object[]']
+    }
+    if (enclosingCall("sensorLot")) {
+        method name: 'sensorsNumber', params: [sensorsNumber: 'java.lang.Integer']
+        method name: 'law', params: [law: 'java.lang.Object']
+        method name: 'frequency', params: [frequency: 'java.lang.Object']
+    }
+    if (enclosingCall("composite")) {
+        method name: 'withSensors', params: [withSensors: 'java.lang.Object']
+        method name: 'filter', params: [filter: 'java.lang.Object']
+        method name: 'map', params: [map: 'java.lang.Object']
+        method name: 'reduce', params: [reduce: 'java.lang.Object']
+        method name: 'frequency', params: [frequency: 'java.lang.Object']
+    }
+    if (enclosingCall("csvReplay")) {
+        method name: 'path', params: [path: 'java.lang.Object']
+        method name: 'offset', params: [offset: 'java.lang.Object']
+        method name: 'columns', params: [columns: 'java.lang.Object']
+        method name: 'noise', params: [noise: 'java.lang.Object']
+    }
+    if (enclosingCall("jsonReplay")) {
+        method name: 'path', params: [path: 'java.lang.Object']
+        method name: 'offset', params: [offset: 'java.lang.Object']
+        method name: 'noise', params: [noise: 'java.lang.Object']
+    }
+    if (enclosingCall("randomLaw")) {
+        method name: 'range', params: [range: 'java.lang.Object']
+    }
+    if (enclosingCall("mathFunction")) {
+        method name: 'expression', params: [expression: 'java.lang.Object']
+    }
+    if (enclosingCall("markovLaw")) {
+        method name: 'matrix', params: [matrix: 'java.lang.Object']
+        method name: 'stateFrequency', params: [stateFrequency: 'java.lang.Object']
     }
 }
-
-
-contribute(currentType('builders.LawBuilder')) {
-
-    method name: 'ofType', type: 'builders.LawBuilder',
-            params: [type: 'java.lang.String']
-}
-
-/*contribute(currentType('typeLaw')){
-
-
-      property(name: 'RandomLaw', type: 'java.lang.String')
-      property(name: 'MarkovLaw', type: 'java.lang.String')
-      property(name: 'FunctionLaw', type: 'java.lang.String')
-
-}*/
-/*
-contribute(currentType('StatesDeclaration')){
-    method name: 'transitions', type: 'TransitionDeclaration', params: [from: 'java.lang.String']
-}
-contribute(currentType('TransitionDeclaration')){
-    method name: 'to', type: 'TransitionDeclaration', params: [to: 'java.lang.String']
-    method name: 'with', type: 'TransitionDeclaration', params: [p: 'java.lang.Double']
-    method name: 'and', type: 'TransitionDeclaration', params: [from: 'java.lang.String']
-}
-
-
-
-*/
