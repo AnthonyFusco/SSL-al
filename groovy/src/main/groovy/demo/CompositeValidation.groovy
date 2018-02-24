@@ -1,9 +1,11 @@
 package demo
 
+//We haven't been able to prevent recursion inside of a filter/map/reduce closure
+
 createOrResetDB()
 
 markov = markovLaw {
-    matrix([[0.5, 0.5], [0.5, 0.5]])
+    matrix([[0.5, 0.4], [0.4, 0.5]])
     stateFrequency 1 / h
 }
 
@@ -27,6 +29,8 @@ valroseComposite = composite {
     ])
 }
 
-play valroseComposite
-
-runSimulation "10/02/2018 08:00:00", "10/02/2018 19:00:00"
+simulate {
+    start "10/02/2018 08:00:00"
+    end "10/02/2018 19:00:00"
+    play valroseComposite
+}

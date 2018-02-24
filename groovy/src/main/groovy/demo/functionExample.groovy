@@ -30,6 +30,8 @@ lab = sensorLot {
     frequency 3 / 40.min
 }
 
-play lab, ext
-
-runSimulation "10/02/2018 07:25:00", "10/02/2018 18:30:00"
+simulate {
+    start "10/02/2018 07:25:00"
+    end "10/02/2018 18:30:00"
+    play lab, ext
+}

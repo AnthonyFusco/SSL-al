@@ -53,7 +53,7 @@ public class SslVisitor implements Visitor {
             }
         }
         flushSimulationToDatabase(simulation, measurements);
-        System.out.println(simulation.getName() + " done\n");
+        System.out.println(simulation.getExecutableName() + " done\n");
     }
 
     private void flushSimulationToDatabase(Simulation simulation, List<Measurement> measurements) {
@@ -66,7 +66,7 @@ public class SslVisitor implements Visitor {
         System.out.println("Starting the replay " + replay.getExecutableName() +
                 " (" + measurements.size() + " values)");
         databaseHelper.sendToDatabase(measurements, replay.getExecutableName() + "_", "Replay");
-        System.out.println(replay.getName() + " done\n");
+        System.out.println(replay.getExecutableName() + " done\n");
     }
 
 }

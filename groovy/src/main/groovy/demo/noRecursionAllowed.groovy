@@ -22,6 +22,8 @@ recursionLot = sensorLot {
     frequency 1 / min
 }
 
-play recursionLot
-
-runSimulation "10/02/2018 07:25:00", "10/02/2018 18:30:00"
+simulate {
+    start "10/02/2018 08:00:00"
+    end "10/02/2018 19:00:00"
+    play recursionLot
+}

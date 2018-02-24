@@ -46,6 +46,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         return this;
     }
 
+    @Override
     public Composite build() {
         Composite composite = new Composite();
         composite.setFilterPredicate(filterPredicate);

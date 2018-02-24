@@ -5,9 +5,6 @@ import kernel.datasources.laws.DataSource
 import org.influxdb.InfluxDB
 import org.influxdb.InfluxDBFactory
 
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-
 abstract class SslBaseScript extends Script {
 
     def methodMissing(String name, def args) {
@@ -27,30 +24,12 @@ abstract class SslBaseScript extends Script {
                 return handleBuilder(new ReplayBuilder<>(getCurrentLine()), closure)
             case "sensorLot":
                 return handleBuilder(new SensorsLotBuilder<>(getCurrentLine()), closure)
+            case "simulate":
+                return buildRunner(closure)
             default:
-                println "\u001B[31m" +
-                        "method " + name + " not recognized method does not exists or is misspelled " +
-                        ".(" + Runner.currentFile + ":" + getCurrentLine() + ")" +
-                        "\u001B[37m"
+                printError("method " + name + " not recognized method does not exists or is misspelled " +
+                        ".(" + Runner.currentFile + ":" + getCurrentLine() + ")")
         }
-    }
-
-    def play(EntityBuilder<DataSource>... builders) {
-        for (EntityBuilder<DataSource> builder : builders) {
-            builder.setExecutable(true)
-            getBinding().getVariables().entrySet().stream()
-                    .filter({ entry -> entry.value == builder })
-                    .map({ entry -> entry.key })
-                    .findFirst()
-                    .ifPresent({ name -> builder.setExecutableName(name.toString()) })
-        }
-    }
-
-    def runSimulation(String startDateString, String endDateString) {
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH)
-        Date startDate = format.parse(startDateString)
-        Date endDate = format.parse(endDateString)
-        new Runner(((SslBinding) getBinding()).getModel()).runSimulation(startDate, endDate)
     }
 
     private AbstractEntityBuilder<DataSource> handleBuilder(AbstractEntityBuilder<DataSource> builder, Closure closure) {
@@ -59,17 +38,31 @@ abstract class SslBaseScript extends Script {
         return builder
     }
 
-    private void rehydrateClosureWithBuilder(Closure closure, AbstractEntityBuilder<DataSource> builder) {
+    private void buildRunner(Closure closure) {
+        def app = new ApplicationBuilder()
+        rehydrateClosureWithBuilder(closure, app)
+        for (EntityBuilder<DataSource> builder : app.getBuilders()) {
+            builder.setExecutable(true)
+            getBinding().getVariables().entrySet().stream()
+                    .filter({ entry -> entry.value == builder })
+                    .map({ entry -> entry.key })
+                    .findFirst()
+                    .ifPresent({ name -> builder.setExecutableName(name.toString()) })
+        }
+        new Runner(((SslBinding) getBinding()).getModel())
+                .runSimulation(app.getStartDate(), app.getEndDate())
+    }
+
+    private void rehydrateClosureWithBuilder(Closure closure, Object builder) {
         def code = closure.rehydrate(builder, this, this)
         try {
             code()
         } catch (MissingMethodException mme) {
-            builder.addError(new Exception("Keyword \"" + mme.getMethod() + "\"" +
-                    "not recognized, misspelled or wrong(s) parameter(s)"))
+            printError("Keyword " + mme.getMethod() + " not recognized, misspelled or wrong(s) parameter(s)")
         }
     }
 
-    def createOrResetDB() { //do not put static
+    def createOrResetDB() { //do not make static
         InfluxDB influxDB = InfluxDBFactory.connect("http://localhost:8086", "root", "root")
         String dbName = "influxdb"
         influxDB.deleteDatabase(dbName)
@@ -78,6 +71,10 @@ abstract class SslBaseScript extends Script {
 
     private int getCurrentLine() {
         this.getBinding().getVariable(ScriptTransformer.LINE_COUNT_VARIABLE_NAME) as int
+    }
+
+    private void printError(String message) {
+        println("\u001B[31m" + message + "\u001B[37m")
     }
 
     int count = 0
@@ -90,14 +87,10 @@ abstract class SslBaseScript extends Script {
             try {
                 scriptBody()
             } catch (MissingPropertyException e) {
-                println "\u001B[31m" +
-                        e.getMessageWithoutLocationText().replace("Script1", getProperty("name").toString()) +
-                        "\u001B[37m"
+                printError(e.getMessageWithoutLocationText().replace("Script1", getProperty("name").toString()))
             } catch (MissingMethodException mme) {
-                println "\u001B[31m" +
-                        "Keyword \"" + mme.getMethod() + mme.printStackTrace() +
-                        "\" not recognized, misspelled or wrong(s) parameter(s)" +
-                        "\u001B[37m"
+                printError("Keyword " + mme.getMethod() + mme.printStackTrace() +
+                        " not recognized, misspelled or wrong(s) parameter(s)")
             }
         } else {
             println "Run method is disabled"

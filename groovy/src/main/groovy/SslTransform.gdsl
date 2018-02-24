@@ -5,11 +5,9 @@ contributor(ctx) {
     method name: 'sensorLot', type: 'builders.SensorsLotBuilder', params: [name: 'java.lang.String']
 
     method name: 'replay', type: 'builders.ReplayBuilder', params: [name: 'java.lang.String']
-    method name: 'runSimulation', type: 'void', params: [
-            name : 'java.lang.String',
-            begin: 'java.lang.String',
-            end  : 'java.lang.String'
-    ]
+
+    method name: 'simulate', type: 'void'
+
     method name: 'parkingLaw', type: 'builders.MarkovBuilder', params: [name: 'java.lang.String']
     method name: 'randomLaw', type: 'void', params: [name: 'java.lang.String']
     method name: 'parkingComposite', type: 'builders.CompositeBuilder', params: [name: 'java.lang.String']
