@@ -237,4 +237,4 @@ $ ./run.sh scripts/demo/random.groovy
 
 Le dossier scripts/demo contient des examples faisant le tour des fonctionnalité du language.
 
-Les données sont envoyé dans InfluxDB dans la t
+Les données sont envoyé dans InfluxDB dans la database nommé "influxdb"
