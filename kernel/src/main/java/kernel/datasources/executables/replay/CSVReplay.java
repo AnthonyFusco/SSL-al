@@ -20,7 +20,7 @@ public class CSVReplay extends Replay {
     private List<BigDecimal> noise;
 
     public CSVReplay() {
-        this.name = "CSV Replay";
+        this.name = "CSVReplay";
     }
 
     @Override
@@ -48,15 +48,12 @@ public class CSVReplay extends Replay {
                 if (noise != null) {
                     BigDecimal inf = noise.get(0);
                     BigDecimal sup = noise.get(1);
-                    /*noiseValue = new Random()
-                            .nextInt(sup + 1 - inf) + inf;*/
                     double random = new Random().nextDouble();
                     noiseValue = inf.doubleValue() + (random * (sup.doubleValue() - inf.doubleValue()));
                     v = Double.parseDouble((String) v) + noiseValue;
                 }
                 measurementList.add(new Measurement<>(s, t, v));
             }
-
             return measurementList;
         } catch (IOException e) {
             e.printStackTrace();

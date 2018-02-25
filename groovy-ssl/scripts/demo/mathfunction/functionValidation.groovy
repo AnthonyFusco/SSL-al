@@ -1,4 +1,4 @@
-
+//all mathematical law validation
 
 createOrResetDB()
 

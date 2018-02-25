@@ -1,4 +1,4 @@
-
+//validation of the simulate method
 
 createOrResetDB()
 

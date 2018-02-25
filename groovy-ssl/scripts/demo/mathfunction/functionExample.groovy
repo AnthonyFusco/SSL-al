@@ -1,4 +1,4 @@
-
+//simple mathematical law
 
 createOrResetDB()
 
@@ -16,6 +16,7 @@ func2 = { t -> t * 2 + 1 }
 
 SensorLab = mathFunction {
     expression func2
+    noise([-5, 5.9])
 }
 
 ext = sensorLot {

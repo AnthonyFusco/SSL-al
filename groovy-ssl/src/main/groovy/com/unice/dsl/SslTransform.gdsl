@@ -58,6 +58,7 @@ contributor([contributorBody]) {
     if (enclosingCall("mathFunction")) {
         method name: 'expression', params: [expression: 'java.lang.Object']
         method name: 'expression', params: [expression: 'groovy.lang.Closure']
+        method name: 'noise', params: [noise: 'java.lang.Object']
     }
     if (enclosingCall("markovChain")) {
         method name: 'matrix', params: [matrix: 'java.lang.Object']

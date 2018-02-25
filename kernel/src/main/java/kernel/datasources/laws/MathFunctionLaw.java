@@ -4,8 +4,10 @@ import groovy.lang.Closure;
 import groovy.lang.MissingMethodException;
 import kernel.datasources.Measurement;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class MathFunctionLaw implements DataSource {
 
@@ -13,6 +15,7 @@ public class MathFunctionLaw implements DataSource {
     private Closure expression;
     private int counter;
     private boolean isExecutable;
+    private List<Number> noise;
 
     public MathFunctionLaw() {
         this.counter = 0;
@@ -24,13 +27,21 @@ public class MathFunctionLaw implements DataSource {
         expression.setResolveStrategy(Closure.DELEGATE_ONLY);
         expression.setDelegate(this); //just so the namespace is different and it crashes on recursions
 
-        Object value;
+        Double value;
         try {
-            value = expression.call(counter);
+            value = Double.valueOf(expression.call(counter).toString());
         } catch (MissingMethodException e) {
             throw new IllegalArgumentException("No Recursions allowed.");
         }
         counter++;
+
+        if (noise != null) {
+            Number inf = noise.get(0);
+            Number sup = noise.get(1);
+            double random = new Random().nextDouble();
+            double noiseValue = inf.doubleValue() + (random * (sup.doubleValue() - inf.doubleValue()));
+            value += noiseValue;
+        }
         return Collections.singletonList(new Measurement<>(name, (long) t, value));
     }
 
@@ -55,5 +66,9 @@ public class MathFunctionLaw implements DataSource {
 
     public void setExpression(Closure expression) {
         this.expression = expression;
+    }
+
+    public void setNoise(List<Number> noise) {
+        this.noise = noise;
     }
 }

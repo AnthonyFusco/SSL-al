@@ -1,6 +1,5 @@
 
-
-//Only for error handling example
+//Special recursion validation case
 
 createOrResetDB()
 

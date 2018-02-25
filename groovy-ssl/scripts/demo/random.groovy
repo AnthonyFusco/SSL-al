@@ -1,4 +1,4 @@
-
+//simple random law simulation
 
 createOrResetDB()
 
