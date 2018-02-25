@@ -1,0 +1,66 @@
+package com.unice.dsl
+
+def ctx = context()
+
+contributor(ctx) {
+    method name: 'simulate', type: 'com.unice.dsl.builders.ApplicationBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'sensorLot', type: 'com.unice.dsl.builders.SensorsLotBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'composite', type: 'com.unice.dsl.builders.CompositeBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'csvReplay', type: 'com.unice.dsl.builders.ReplayBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'jsonReplay', type: 'com.unice.dsl.builders.JsonReplayBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'randomLaw', type: 'com.unice.dsl.builders.RandomBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'mathFunction', type: 'com.unice.dsl.builders.MathFunctionBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'markovChain', type: 'com.unice.dsl.builders.MarkovBuilder', params: [name: 'groovy.lang.Closure']
+
+    method name: 'createOrResetDB', type: 'void'
+}
+
+def contributorBody = context(scope: closureScope(isArg: true))
+contributor([contributorBody]) {
+    if (enclosingCall("simulate")) {
+        method name: 'start', params: [start: 'java.lang.Object']
+        method name: 'end', params: [end: 'java.lang.Object']
+        method name: 'play', params: [play: 'java.lang.Object[]']
+        method name: 'play', params: [play: 'java.lang.Object']
+    }
+    if (enclosingCall("sensorLot")) {
+        method name: 'sensorsNumber', params: [sensorsNumber: 'java.lang.Integer']
+        method name: 'law', params: [law: 'java.lang.Object']
+        method name: 'law', params: [law: 'groovy.lang.Closure']
+        method name: 'law', params: [law: 'com.unice.dsl.builders.LawBuilder']
+        method name: 'frequency', params: [frequency: 'java.lang.Object']
+    }
+    if (enclosingCall("composite")) {
+        method name: 'withSensors', params: [withSensors: 'java.lang.Object[]']
+        method name: 'withSensors', params: [withSensors: 'java.lang.Object']
+        method name: 'filter', params: [filter: 'java.lang.Object']
+        method name: 'filter', params: [filter: 'groovy.lang.Closure']
+        method name: 'map', params: [map: 'java.lang.Object']
+        method name: 'map', params: [map: 'groovy.lang.Closure']
+        method name: 'reduce', params: [reduce: 'java.lang.Object']
+        method name: 'reduce', params: [reduce: 'groovy.lang.Closure']
+        method name: 'frequency', params: [frequency: 'java.lang.Object']
+    }
+    if (enclosingCall("csvReplay")) {
+        method name: 'path', params: [path: 'java.lang.Object']
+        method name: 'offset', params: [offset: 'java.lang.Object']
+        method name: 'columns', params: [columns: 'java.lang.Object']
+        method name: 'noise', params: [noise: 'java.lang.Object']
+    }
+    if (enclosingCall("jsonReplay")) {
+        method name: 'path', params: [path: 'java.lang.Object']
+        method name: 'offset', params: [offset: 'java.lang.Object']
+        method name: 'noise', params: [noise: 'java.lang.Object']
+    }
+    if (enclosingCall("randomLaw")) {
+        method name: 'range', params: [range: 'java.lang.Object']
+    }
+    if (enclosingCall("mathFunction")) {
+        method name: 'expression', params: [expression: 'java.lang.Object']
+        method name: 'expression', params: [expression: 'groovy.lang.Closure']
+    }
+    if (enclosingCall("markovChain")) {
+        method name: 'matrix', params: [matrix: 'java.lang.Object']
+        method name: 'stateFrequency', params: [stateFrequency: 'java.lang.Object']
+    }
+}
