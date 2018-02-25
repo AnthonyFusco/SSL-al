@@ -9,7 +9,7 @@ recursionFunction = { t ->
         f()
     }
     f()
-    recursion(t)
+    recursionFunction(t)
 }
 
 recursionLaw = mathFunction {

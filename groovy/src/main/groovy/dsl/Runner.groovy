@@ -6,7 +6,7 @@ import kernel.visitor.InfluxDbHelper
 import kernel.visitor.SslVisitor
 
 
-class Runner {
+final class Runner {
     public static String currentFile = ""
     private SslModel model
 

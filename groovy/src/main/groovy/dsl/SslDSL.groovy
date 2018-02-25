@@ -10,7 +10,7 @@ import org.codehaus.groovy.control.MultipleCompilationErrorsException
 import org.codehaus.groovy.control.customizers.SecureASTCustomizer
 import org.codehaus.groovy.syntax.Types
 
-class SslDSL {
+final class SslDSL {
     private GroovyShell shell
     private CompilerConfiguration configuration
     private SslBinding binding

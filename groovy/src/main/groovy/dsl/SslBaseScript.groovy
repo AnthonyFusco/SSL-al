@@ -33,7 +33,7 @@ abstract class SslBaseScript extends Script {
         }
     }
 
-    private AbstractEntityBuilder<DataSource> handleBuilder(AbstractEntityBuilder<DataSource> builder, Closure closure) {
+    private AbstractEntityBuilder handleBuilder(AbstractEntityBuilder builder, Closure closure) {
         ((SslBinding) getBinding()).getModel().addDataSourcesBuilder(builder)
         rehydrateClosureWithBuilder(closure, builder)
         return builder
@@ -49,6 +49,17 @@ abstract class SslBaseScript extends Script {
                     .map({ entry -> entry.key })
                     .findFirst()
                     .ifPresent({ name -> builder.setExecutableName(name.toString()) })
+        }
+        if (app.getBuilders() == null) {
+            System.out.println("\u001B[33m" + "nothing to play" + "\u001B[37m")
+        }
+        if (app.getStartDate() == null || app.getEndDate() == null) {
+            printError("You need to specify a start date and an end date of the format dd/MM/yyyy HH:mm:ss")
+            return
+        }
+        if (app.getStartDate() >= app.getEndDate()) {
+            printError("The start date must be > to the end date")
+            return
         }
         new Runner(((SslBinding) getBinding()).getModel())
                 .runSimulation(app.getStartDate(), app.getEndDate())

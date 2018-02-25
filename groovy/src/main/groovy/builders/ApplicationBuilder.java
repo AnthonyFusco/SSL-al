@@ -20,7 +20,7 @@ public class ApplicationBuilder {
         try {
             this.startDate = format.parse(startDateString);
         } catch (ParseException e) {
-            e.printStackTrace();
+            printError("The start date must be formatted as dd/MM/yyyy HH:mm:ss");
         }
         return this;
     }
@@ -29,7 +29,7 @@ public class ApplicationBuilder {
         try {
             this.endDate = format.parse(endDateString);
         } catch (ParseException e) {
-            e.printStackTrace();
+            printError("The end date must be formatted as dd/MM/yyyy HH:mm:ss");
         }
         return this;
     }
@@ -49,5 +49,9 @@ public class ApplicationBuilder {
 
     public List<EntityBuilder<DataSource>> getBuilders() {
         return builders;
+    }
+
+    private void printError(String message) {
+        System.out.println("\u001B[31m" + message + "\u001B[37m");
     }
 }

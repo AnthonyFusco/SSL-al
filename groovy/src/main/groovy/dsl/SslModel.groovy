@@ -3,7 +3,7 @@ package dsl
 import builders.EntityBuilder
 import kernel.datasources.laws.DataSource
 
-class SslModel {
+final class SslModel {
     private List<EntityBuilder<DataSource>> dataSourcesBuilders
 
     SslModel() {

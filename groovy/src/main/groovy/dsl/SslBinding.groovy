@@ -1,6 +1,6 @@
 package dsl
 
-class SslBinding extends Binding {
+final class SslBinding extends Binding {
     private Script script
 
     private SslModel model
