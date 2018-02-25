@@ -230,7 +230,7 @@ $ mvn -q clean package
 
 $ cd groovy-ssl
 
-$ ./build.sk
+$ ./build.sh
 
 $ ./run.sh scripts/demo/random.groovy
 
