@@ -7,8 +7,10 @@ import kernel.visitor.Visitor;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class JsonReplay extends Replay {
 
@@ -52,6 +54,13 @@ public class JsonReplay extends Replay {
 
                 JsonElement jsonvalue = sensor.get(sensorValueToken);
                 Double value = jsonvalue.getAsDouble();
+                if (noiseRange != null) {
+                    Integer inf = noiseRange.get(0);
+                    Integer sup = noiseRange.get(1);
+                    double random = new Random().nextDouble();
+                    double noiseValue = inf.doubleValue() + (random * (sup.doubleValue() - inf.doubleValue()));
+                    value = value + noiseValue;
+                }
                 JsonElement jsontime = sensor.get(sensorRelativeTimeToken);
                 long relativeTime = jsontime.getAsLong() + (long) startDate + (long) offset.getValue();
                 Measurement m = new Measurement<>(sensorname.getAsString(), relativeTime, value);
