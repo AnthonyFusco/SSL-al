@@ -97,6 +97,8 @@ longTrip = csvReplay {
     columns([t: 0, s: 1, v: 6])
 }
 
+//A stupid composite of all that
+
 fac = composite {
     withSensors([valroseComposite, eurecomTop, eurecomBottom])
     filter({ x -> x != 0 })
@@ -104,8 +106,6 @@ fac = composite {
     reduce({ res, sensor -> res / sensor })
     frequency 1 / h
 }
-
-//A stupid composite of all that
 
 ////////////////////////////////////
 
