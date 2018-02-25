@@ -12,6 +12,11 @@ bike2 = jsonReplay {
     path "datafiles/bike_bad2.json"
     offset 10.s
     noise(["100X", 200])
+    recordToken "z"
+    valueToken "z"
+    nameToken "z"
+    timeToken "z"
+
 }
 
 simulate {
