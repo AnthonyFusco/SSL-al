@@ -80,6 +80,24 @@ public class JsonReplayBuilder extends AbstractEntityBuilder<DataSource> {
 
     @Override
     public void validate() {
+
+        if(noiseRange != null){
+            if(noiseRange.size() != 2){
+                addError(new IllegalArgumentException("You must specify only a lower and an upper limit to the noise range ex :[0, 10]"));
+            }else{
+                try{
+                    Double inf = noiseRange.get(0).doubleValue();
+                    Double sup = noiseRange.get(1).doubleValue();
+
+                    if(noiseRange.get(0) > noiseRange.get(1)){
+                        addWarning("Your noise lower limit is greater than your upper limit, unexpected results can occur");
+                    }
+                }catch (ClassCastException nfe){
+                    addError(new IllegalArgumentException("You must use integer for your noise range"));
+                }
+
+            }
+        }
         if (path.isEmpty() || path == null) {
             addError(new IllegalArgumentException("The path must not be empty or null"));
         } else {

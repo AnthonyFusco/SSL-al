@@ -105,7 +105,7 @@ abstract class SslBaseScript extends Script {
                         " not recognized, misspelled or wrong(s) parameter(s)")
             }catch(InfluxDBException ignore){
                 printError("Error while sending messages to influxDB, " +
-                        "some functions might not cover the entire range of time values")
+                        "some functions might not cover the entire range of time values, or influxDB isn't up")
             }
         } else {
             println "Run method is disabled"

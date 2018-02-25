@@ -5,13 +5,13 @@ createOrResetDB()
 bike = jsonReplay {
     path "datafiles/bike_bad.json"
     offset 10.s
-    noise([100, 200])
+    noise([100,50])
 }
 
 bike2 = jsonReplay {
     path "datafiles/bike_bad2.json"
     offset 10.s
-    noise([100, 200])
+    noise(["100X", 200])
 }
 
 simulate {
