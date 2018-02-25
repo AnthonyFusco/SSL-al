@@ -2,7 +2,7 @@
 
 ## Lois implémenté :
 
-###Loi Aléatoire
+### Loi Aléatoire
 
 Example :
 
@@ -17,7 +17,7 @@ randomLaw {
  }
 ```
 
-###Chaine de Markov
+### Chaine de Markov
 
 Une chaine de Markov se déclare avec le mot clef markovChain.
 
@@ -36,7 +36,7 @@ markovChain {
 }
 ```
 
-###Fonction Mathématique
+### Fonction Mathématique
 
 Examples :
 
@@ -63,7 +63,7 @@ La loi prend en paramètre :
 
 ## Replay de fichier implémenté :
 
-###Replay de CSV
+### Replay de CSV
 
 Examples :
 
@@ -89,7 +89,7 @@ La loi prend en paramètre :
 - Une range sous le mot clef noise
   - représente une range de valeur dans laquel sera prise une valeur aléatoire qui sera ajouté à chaque valeur du fichier 
 
-###Replay de Json
+### Replay de Json
 
 TODO JEREMY
 
