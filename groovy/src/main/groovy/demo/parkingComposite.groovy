@@ -5,7 +5,7 @@ createOrResetDB()
 //a simple simulation of a parking
 valroseTop = sensorLot {
     sensorsNumber 5
-    law markovLaw {
+    law markovChain {
         matrix([[0.9, 0.1], [0.1, 0.9]])
         stateFrequency 2 / h
     }
@@ -15,7 +15,7 @@ valroseTop = sensorLot {
 //a simple simulation of a parking
 valroseMiddle = sensorLot {
     sensorsNumber 15
-    law markovLaw {
+    law markovChain {
         matrix([[0.8, 0.2], [0.3, 0.7]])
         stateFrequency 1 / h
     }
@@ -28,7 +28,7 @@ valroseComposite = composite {
             valroseTop,
             valroseMiddle,
             sensorLot {
-                law markovLaw {
+                law markovChain {
                     matrix([[0.7, 0.3], [0.3, 0.7]])
                     stateFrequency 2 / h
                 }
@@ -43,7 +43,7 @@ valroseComposite = composite {
 //a simple simulation of a parking
 eurecomTop = sensorLot {
     sensorsNumber 3
-    law markovLaw {
+    law markovChain {
         matrix([[0.6, 0.4], [0.1, 0.9]])
         stateFrequency 2 / h
     }
@@ -53,7 +53,7 @@ eurecomTop = sensorLot {
 //a simple simulation of a parking
 eurecomBottom = sensorLot {
     sensorsNumber 7
-    law markovLaw {
+    law markovChain {
         matrix([[0.8, 0.2], [0.3, 0.7]])
         stateFrequency 1 / h
     }

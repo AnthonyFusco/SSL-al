@@ -4,7 +4,7 @@ createOrResetDB()
 
 markovLot = sensorLot {
     sensorsNumber 5
-    law markovLaw {
+    law  markovChain {
         matrix([[0.8, 0.1, 0.1], [0.1, 0.7, 0.2], [0.2, 0.2, 0.6]])
         stateFrequency 2 / h
     }

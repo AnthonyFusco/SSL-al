@@ -15,7 +15,7 @@ abstract class SslBaseScript extends Script {
                 return handleBuilder(new CompositeBuilder<>(getCurrentLine()), closure)
             case "randomLaw":
                 return handleBuilder(new RandomBuilder<>(getCurrentLine()), closure)
-            case "markovLaw":
+            case "markovChain":
                 return handleBuilder(new MarkovBuilder<>(getCurrentLine()), closure)
             case "mathFunction":
                 return handleBuilder(new MathFunctionBuilder<>(getCurrentLine()), closure)

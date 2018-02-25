@@ -8,7 +8,7 @@ contributor(ctx) {
     method name: 'jsonReplay', type: 'builders.JsonReplayBuilder', params: [name: 'groovy.lang.Closure']
     method name: 'randomLaw', type: 'builders.RandomBuilder', params: [name: 'groovy.lang.Closure']
     method name: 'mathFunction', type: 'builders.MathFunctionBuilder', params: [name: 'groovy.lang.Closure']
-    method name: 'markovLaw', type: 'builders.MarkovBuilder', params: [name: 'groovy.lang.Closure']
+    method name: 'markovChain', type: 'builders.MarkovBuilder', params: [name: 'groovy.lang.Closure']
 
     method name: 'createOrResetDB', type: 'void'
 }
@@ -51,7 +51,7 @@ contributor([contributorBody]) {
     if (enclosingCall("mathFunction")) {
         method name: 'expression', params: [expression: 'java.lang.Object']
     }
-    if (enclosingCall("markovLaw")) {
+    if (enclosingCall("markovChain")) {
         method name: 'matrix', params: [matrix: 'java.lang.Object']
         method name: 'stateFrequency', params: [stateFrequency: 'java.lang.Object']
     }

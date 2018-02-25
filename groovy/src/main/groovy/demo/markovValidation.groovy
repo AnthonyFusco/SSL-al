@@ -2,7 +2,7 @@ package demo
 
 createOrResetDB()
 
-markov = markovLaw {
+markov = markovChain {
     matrix([[0.5, 0.5, 0.5], [0.5, 0.6]])
     stateFrequency 1 / h
 }
