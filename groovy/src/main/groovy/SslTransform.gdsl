@@ -19,6 +19,7 @@ contributor([contributorBody]) {
         method name: 'start', params: [start: 'java.lang.Object']
         method name: 'end', params: [end: 'java.lang.Object']
         method name: 'play', params: [play: 'java.lang.Object[]']
+        method name: 'play', params: [play: 'java.lang.Object']
     }
     if (enclosingCall("sensorLot")) {
         method name: 'sensorsNumber', params: [sensorsNumber: 'java.lang.Integer']
@@ -26,6 +27,7 @@ contributor([contributorBody]) {
         method name: 'frequency', params: [frequency: 'java.lang.Object']
     }
     if (enclosingCall("composite")) {
+        method name: 'withSensors', params: [withSensors: 'java.lang.Object[]']
         method name: 'withSensors', params: [withSensors: 'java.lang.Object']
         method name: 'filter', params: [filter: 'java.lang.Object']
         method name: 'map', params: [map: 'java.lang.Object']

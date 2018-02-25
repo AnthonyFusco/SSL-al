@@ -48,6 +48,7 @@ class SslDSL {
                     Types.PLUS_EQUAL,
                     Types.DIVIDE,
                     Types.PLUS,
+                    Types.MINUS,
                     Types.MULTIPLY,
                     Types.POWER,
                     Types.EQUAL,

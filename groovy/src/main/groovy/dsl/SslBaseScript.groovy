@@ -92,8 +92,9 @@ abstract class SslBaseScript extends Script {
             } catch (MissingMethodException mme) {
                 printError("Keyword " + mme.getMethod() + mme.printStackTrace() +
                         " not recognized, misspelled or wrong(s) parameter(s)")
-            }catch(InfluxDBException ife){
-                printError("Error while sending messages to influxDB, some functions might not cover the entire range of time values")
+            }catch(InfluxDBException ignore){
+                printError("Error while sending messages to influxDB, " +
+                        "some functions might not cover the entire range of time values")
             }
         } else {
             println "Run method is disabled"

@@ -32,7 +32,7 @@ composite = composite {
     withSensors([markovLot, functionLot, sprint])
     filter({ x -> x == x })
     map({ x -> x == 0 ? 10 : x })
-    reduce({ res, sensor -> res / sensor })
+    reduce({ res, sensor -> res - sensor })
     frequency 2 / h
 }
 
