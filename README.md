@@ -222,3 +222,12 @@ simulate {
   
 ## Execution :
 
+A la racine du projet
+
+$ docker-compose up -d
+$ mvn -q clean package
+$ cd groovy-ssl
+$ ./build.sk
+$ ./run.sh scripts/demo/random.groovy
+
+Le dossier scripts/demo contient des examples faisant le tour des fonctionnalité du language.

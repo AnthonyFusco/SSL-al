@@ -11,7 +11,7 @@
 
     <modules>
         <module>kernel</module>
-        <module>groovy</module>
+        <module>groovy-ssl</module>
     </modules>
 
 </project>
