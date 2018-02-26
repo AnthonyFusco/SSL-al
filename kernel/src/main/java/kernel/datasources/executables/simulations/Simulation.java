@@ -1,8 +1,8 @@
 package kernel.datasources.executables.simulations;
 
-import kernel.datasources.executables.ExecutableSource;
+import kernel.datasources.executables.PhysicalDataSource;
 
-public abstract class Simulation extends ExecutableSource {
+public abstract class Simulation extends PhysicalDataSource {
 
     public abstract double getFrequencyValue();
 

@@ -1,7 +1,7 @@
 package kernel.datasources.executables.simulations.composite;
 
 import kernel.datasources.Measurement;
-import kernel.datasources.executables.ExecutableSource;
+import kernel.datasources.executables.PhysicalDataSource;
 import kernel.datasources.executables.simulations.Simulation;
 import kernel.visitor.Visitor;
 
@@ -18,7 +18,7 @@ public class Composite extends Simulation {
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
-    private List<ExecutableSource> executables = new ArrayList<>();
+    private List<PhysicalDataSource> executables = new ArrayList<>();
     private double frequency;
 
     public Composite() {
@@ -28,8 +28,8 @@ public class Composite extends Simulation {
     @Override
     public List<Measurement> generateNextMeasurement(double t) {
         List<Double> values = new ArrayList<>();
-        for (ExecutableSource executableSource : executables) {
-            List<Measurement> measurements = executableSource.generateNextMeasurement(t);
+        for (PhysicalDataSource physicalDataSource : executables) {
+            List<Measurement> measurements = physicalDataSource.generateNextMeasurement(t);
             for (Measurement measurement : measurements) {
                 values.add(Double.valueOf(measurement.getValue().toString()));
             }
@@ -57,7 +57,7 @@ public class Composite extends Simulation {
         this.reduceFunction = reduceFunction;
     }
 
-    public void setExecutables(List<ExecutableSource> executables) {
+    public void setExecutables(List<PhysicalDataSource> executables) {
         this.executables = executables;
     }
 

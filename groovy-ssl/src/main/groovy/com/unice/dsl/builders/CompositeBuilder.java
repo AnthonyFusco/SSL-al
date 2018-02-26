@@ -1,6 +1,6 @@
 package com.unice.dsl.builders;
 
-import kernel.datasources.executables.ExecutableSource;
+import kernel.datasources.executables.PhysicalDataSource;
 import kernel.datasources.executables.simulations.composite.Composite;
 import kernel.units.Frequency;
 
@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
-    private List<EntityBuilder<ExecutableSource>> executables;
+    private List<EntityBuilder<PhysicalDataSource>> executables;
     private Predicate<? super Double> filterPredicate;
     private Function<Double, Double> mapFunction;
     private BinaryOperator<Double> reduceFunction;
@@ -21,7 +21,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         super(definitionLine);
     }
 
-    public CompositeBuilder withSensors(List<EntityBuilder<ExecutableSource>> sensors) {
+    public CompositeBuilder withSensors(List<EntityBuilder<PhysicalDataSource>> sensors) {
         this.executables = sensors;
         return this;
     }
@@ -68,10 +68,9 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         try {
             filterPredicate.test(1.0);
         } catch (Exception e) {
-            addError(new IllegalArgumentException("filter function not applicable. " +
+            addError(new IllegalArgumentException("Filter function not applicable. " +
                     "The closure must be of the form { x -> x != 42 }"));
         }
-
         if (mapFunction == null) {
             this.mapFunction = Function.identity();
             addWarning("No map function defined, using Identity by default");
@@ -79,7 +78,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         try {
             mapFunction.apply(1.0);
         } catch (Exception e) {
-            addError(new IllegalArgumentException("map function not applicable. " +
+            addError(new IllegalArgumentException("Map function not applicable. " +
                     "The closure must be of the form { x -> x * 2 }"));
         }
         if (reduceFunction == null) {
@@ -88,7 +87,7 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
         try {
             reduceFunction.apply(1.0, 1.0);
         } catch (Exception e) {
-            addError(new IllegalArgumentException("map function not applicable. " +
+            addError(new IllegalArgumentException("Reduce function not applicable. " +
                     "The closure must be of the form { res, sensors -> res + sensors }"));
         }
         boolean isNotExecutable = executables.stream().anyMatch(source -> source instanceof LawBuilder);

@@ -7,7 +7,7 @@ import kernel.datasources.laws.DataSource;
 import java.util.List;
 import java.util.UUID;
 
-public class Sensor implements NamedElement {
+public class Sensor implements DataSource {
     private String name;
     private DataSource dataSource;
 
@@ -26,9 +26,15 @@ public class Sensor implements NamedElement {
         this.name = name;
     }
 
+    @Override
     public List<Measurement> generateNextMeasurement(double t) {
         List<Measurement> values = dataSource.generateNextMeasurement(t);
         values.forEach(v -> v.setSensorName(name));
         return values;
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return false;
     }
 }

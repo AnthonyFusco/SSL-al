@@ -2,7 +2,7 @@ package kernel.visitor;
 
 import kernel.Application;
 import kernel.datasources.Measurement;
-import kernel.datasources.executables.ExecutableSource;
+import kernel.datasources.executables.PhysicalDataSource;
 import kernel.datasources.executables.replay.Replay;
 import kernel.datasources.executables.simulations.Simulation;
 import kernel.datasources.laws.DataSource;
@@ -28,7 +28,7 @@ public class SslVisitor implements Visitor {
 
         application.getDataSources().stream()
                 .filter(DataSource::isExecutable)
-                .map(dataSource -> (ExecutableSource) dataSource)
+                .map(dataSource -> (PhysicalDataSource) dataSource)
                 .forEach(executableSource -> executableSource.accept(this));
     }
 

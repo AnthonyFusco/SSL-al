@@ -1,7 +1,7 @@
 package kernel.datasources.executables.replay;
 
-import kernel.datasources.executables.ExecutableSource;
+import kernel.datasources.executables.PhysicalDataSource;
 
-public abstract class Replay extends ExecutableSource {
+public abstract class Replay extends PhysicalDataSource {
 
 }
