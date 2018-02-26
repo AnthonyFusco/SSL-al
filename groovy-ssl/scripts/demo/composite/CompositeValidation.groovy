@@ -29,8 +29,16 @@ valroseComposite = composite {
     ])
 }
 
+fac = composite {
+    withSensors([valroseComposite])
+    filter({ x,y  -> x == y })
+    map({ x,y -> x })
+    reduce({ res, sensor, j -> res + sensor })
+    frequency 2 / h
+}
+
 simulate {
     start "10/02/2018 08:00:00"
     end "10/02/2018 19:00:00"
-    play valroseComposite
+    play valroseComposite, fac
 }

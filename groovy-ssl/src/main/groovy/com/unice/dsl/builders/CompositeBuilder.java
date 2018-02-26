@@ -65,12 +65,31 @@ public class CompositeBuilder extends AbstractEntityBuilder<Composite> {
             this.filterPredicate = (Predicate<Double>) aDouble -> true;
             addWarning("No predicate function defined, using Identity by default");
         }
+        try {
+            filterPredicate.test(1.0);
+        } catch (Exception e) {
+            addError(new IllegalArgumentException("filter function not applicable. " +
+                    "The closure must be of the form { x -> x != 42 }"));
+        }
+
         if (mapFunction == null) {
             this.mapFunction = Function.identity();
             addWarning("No map function defined, using Identity by default");
         }
+        try {
+            mapFunction.apply(1.0);
+        } catch (Exception e) {
+            addError(new IllegalArgumentException("map function not applicable. " +
+                    "The closure must be of the form { x -> x * 2 }"));
+        }
         if (reduceFunction == null) {
             addError(new IllegalArgumentException("Reduce function cannot be null"));
+        }
+        try {
+            reduceFunction.apply(1.0, 1.0);
+        } catch (Exception e) {
+            addError(new IllegalArgumentException("map function not applicable. " +
+                    "The closure must be of the form { res, sensors -> res + sensors }"));
         }
         boolean isNotExecutable = executables.stream().anyMatch(source -> source instanceof LawBuilder);
         if (isNotExecutable) {

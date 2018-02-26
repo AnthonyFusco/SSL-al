@@ -34,8 +34,6 @@ valroseComposite = composite {
                 }
             }
     ])
-    filter({ x -> x == x })
-    map({ x -> x })
     reduce({ res, sensor -> res + sensor })
     frequency 2 / h
 }
