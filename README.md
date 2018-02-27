@@ -1,5 +1,23 @@
 # SSL Groupe G
 
+## Execution :
+
+A la racine du projet
+
+$ docker-compose up -d
+
+$ mvn -q clean package
+
+$ cd groovy-ssl
+
+$ ./build.sh
+
+$ ./run.sh scripts/demo/random.groovy
+
+Le dossier scripts/demo contient des examples faisant le tour des fonctionnalité du language.
+
+Les données sont envoyé dans InfluxDB dans la database nommé "influxdb"
+
 ## Lois implémenté :
 
 ### Loi Aléatoire
@@ -219,22 +237,3 @@ simulate {
     play eurecom
 }
 ```
-  
-## Execution :
-
-A la racine du projet
-
-$ docker-compose up -d
-
-$ mvn -q clean package
-
-$ cd groovy-ssl
-
-$ ./build.sh
-
-$ ./run.sh scripts/demo/random.groovy
-
-
-Le dossier scripts/demo contient des examples faisant le tour des fonctionnalité du language.
-
-Les données sont envoyé dans InfluxDB dans la database nommé "influxdb"
